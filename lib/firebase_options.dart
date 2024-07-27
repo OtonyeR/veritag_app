@@ -4,8 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-import 'config.dart';
-
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -52,7 +50,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: apiKey,
+    apiKey: 'AIzaSyCY753AhYaacmgYCrg456ZYmrx4r0-gjTU',
     appId: '1:554362535300:android:0f09f6cb574b2820ab31d1',
     messagingSenderId: '554362535300',
     projectId: 'veritag-5b2cf',
