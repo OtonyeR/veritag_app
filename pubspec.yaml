@@ -40,7 +40,7 @@ dependencies:
   geolocator: ^11.1.0
   geocoding: ^3.0.0
   uuid: ^4.4.2
-  image_picker: ^1.1.2
+  image_picker: ^1.0.8
 
 dev_dependencies:
   flutter_test:

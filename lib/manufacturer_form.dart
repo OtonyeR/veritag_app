@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:uuid/uuid.dart';
+import 'package:veritag_app/location.dart';
 import 'package:veritag_app/utils/image_picker.dart';
 
 class ManufacturerForm extends StatefulWidget {
@@ -12,19 +15,34 @@ class ManufacturerForm extends StatefulWidget {
 
 class _ManufacturerFormState extends State<ManufacturerForm> {
   final _formKey = GlobalKey<FormState>();
+  String currentAddress = '';
+  Position? currentPosition;
+  final LocationService locationService = LocationService();
+  String uuid = const Uuid().v4();
+  String? imagePath;
 
   // Form fields controllers
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _manufacturerNameController =
       TextEditingController();
-  final TextEditingController _manufacturerLocationController =
-      TextEditingController();
+  // final TextEditingController _manufacturerLocationController =
+  //     TextEditingController();
   final TextEditingController _productDescriptionController =
       TextEditingController();
   final TextEditingController _additionalInfoController =
       TextEditingController();
 
-  String? imagePath;
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+  }
+
+  void generateNewUuid() {
+    setState(() {
+      uuid = const Uuid().v4();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +61,12 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                   children: [
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: _manufacturerLocationController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'UID',
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
+                        hintText: uuid,
                       ),
                       readOnly: true,
-
-
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
@@ -85,14 +101,14 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: _manufacturerLocationController,
-                      decoration: const InputDecoration(
-                        labelText: 'Manufacturer Location',
-                        border: OutlineInputBorder(),
-                      ),
+                      decoration: InputDecoration(
+                          labelText: 'Manufacturer Location',
+                          border: const OutlineInputBorder(),
+                          hintText: currentAddress),
                       readOnly: true,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        value = currentAddress;
+                        if (value.isEmpty) {
                           return 'Please enable location permissions';
                         }
                         return null;
@@ -100,13 +116,11 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: _manufacturerLocationController,
-                      decoration: const InputDecoration(
-                        labelText: 'Manufacture Date',
-                        border: OutlineInputBorder(),
-                      ),
+                      decoration: InputDecoration(
+                          labelText: 'Manufacture Date',
+                          border: const OutlineInputBorder(),
+                          hintText: DateTime.now().toString()),
                       readOnly: true,
-
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
@@ -135,8 +149,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                               setState(() {
                                 imagePath = path;
                               });
-                              if (imagePath != null) {
-                              }
+                              if (imagePath != null) {}
                             },
                             icon: const Icon(
                               Icons.file_upload_outlined,
@@ -155,10 +168,8 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                               height: 100,
                               width: 200,
                               child: Image.file(
-                                File(
-                                    imagePath!), 
+                                File(imagePath!),
                                 height: 100,
-
                                 fit: BoxFit.cover,
                               ),
                             )),
@@ -185,5 +196,20 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
 
   _submitForm() {
     // Handle form submission
+  }
+
+  Future<void> getCurrentLocation() async {
+    try {
+      Position position = await locationService.getCurrentLocation();
+      String address = await locationService.getAddressFromLatLng(position);
+      setState(() {
+        currentAddress = address;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        currentAddress = 'Failed to get address';
+      });
+    }
   }
 }
