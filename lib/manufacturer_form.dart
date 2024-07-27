@@ -24,7 +24,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   final TextEditingController _additionalInfoController =
       TextEditingController();
 
-  String? imagePath; // Changed to nullable
+  String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +156,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                               width: 200,
                               child: Image.file(
                                 File(
-                                    imagePath!), // Show image if path is available
+                                    imagePath!), 
                                 height: 100,
 
                                 fit: BoxFit.cover,
