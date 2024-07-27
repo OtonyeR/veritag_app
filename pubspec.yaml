@@ -37,6 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_core: ^3.2.0
   cloud_firestore: ^5.1.0
+  firebase_core: ^2.27.0
+  nfc_manager: ^3.5.0
+  geolocator: ^11.1.0
+  geocoding: ^3.0.0
+  uuid: ^4.4.2
 
 dev_dependencies:
   flutter_test:
