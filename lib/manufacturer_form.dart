@@ -156,7 +156,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                               width: 200,
                               child: Image.file(
                                 File(
-                                    imagePath!), 
+                                    imagePath!),
                                 height: 100,
 
                                 fit: BoxFit.cover,
