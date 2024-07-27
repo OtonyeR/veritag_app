@@ -4,7 +4,7 @@ class Product {
   final String productName; // Name of product
   final String productImage; //Image uploaded with image_picker package
   final DateTime manufactureDate; //Current date gotten from time of product register
-  final Map<String, String> manufactureLocation; //manufacture location from geolocation api
+  final List<Map<String, String>> manufactureLocation; //manufacture location from geolocation api
   final bool isSentOut;  // Indicates if the product has been sent out from the manufacturer
   String? productDescription; //brief description of product (optional)
 
