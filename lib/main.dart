@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'manufacturer_form.dart';
-import 'package:veritag_app/homepage.dart';
-import 'package:veritag_app/manufacture_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -21,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'VeriTag',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      // home: const ManufactureScreen(),
       home: const ManufacturerForm(),
     );
   }
