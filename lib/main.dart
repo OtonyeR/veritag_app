@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veritag_app/homepage.dart';
-import 'package:veritag_app/manufacture_screen.dart';
+import 'package:veritag_app/views/manufacture_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {

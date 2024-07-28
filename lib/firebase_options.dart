@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -64,6 +61,16 @@ class DefaultFirebaseOptions {
     projectId: 'veritag-5b2cf',
     storageBucket: 'veritag-5b2cf.appspot.com',
     iosBundleId: 'com.example.veritagApp',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCD9snSy0IPDU6LArIEWDMl-OPsWUEpMPA',
+    appId: '1:554362535300:web:913d04c9bb61f4faab31d1',
+    messagingSenderId: '554362535300',
+    projectId: 'veritag-5b2cf',
+    authDomain: 'veritag-5b2cf.firebaseapp.com',
+    storageBucket: 'veritag-5b2cf.appspot.com',
+    measurementId: 'G-LMMQW1D3WT',
   );
 
 }

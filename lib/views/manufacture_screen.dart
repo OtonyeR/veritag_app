@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
-import 'package:veritag_app/location.dart';
+import 'package:veritag_app/services/location.dart';
 
 class ManufactureScreen extends StatefulWidget {
   const ManufactureScreen({super.key});
