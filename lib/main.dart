@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:veritag_app/homepage.dart';
+import 'package:veritag_app/manufacture_screen.dart';
 import 'firebase_options.dart';
 import 'views/onboarding_page.dart';
 import 'package:provider/provider.dart';
@@ -20,27 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => OnboardingController(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'VeriTag',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          }),
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'onboarding',
-        routes: {
-          'onboarding': (context) => OnboardingScreen(),
-          'bnav': (context) => const BottomNav(),
-        },
-      ),
+    return MaterialApp(
+      title: 'VeriTag',
+      theme: ThemeData(useMaterial3: true),
+      home: const ManufactureScreen(),
     );
   }
 }
