@@ -1,19 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veritag_app/views/manufacture_screen.dart';
 import 'firebase_options.dart';
 import 'views/onboarding_page.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'utils/onboarding_controller.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-
 
   runApp(const MyApp());
 }
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
         routes: {
           'onboarding': (context) => OnboardingScreen(),
           'bnav': (context) => const BottomNav(),
-           },
+        },
       ),
     );
   }
