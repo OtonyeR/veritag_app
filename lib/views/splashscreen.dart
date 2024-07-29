@@ -25,7 +25,7 @@ class _SplashscreenState extends State<Splashscreen> {
     return Container(
         color: colorPrimary,
         child: const Image(
-          image: AssetImage('assets/logo.png'))
+          image: AssetImage('assets/vlogow.png'))
         );
   }
 }
