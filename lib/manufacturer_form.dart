@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
-import 'package:veritag_app/services/location.dart';
-import 'package:veritag_app/test_read_page.dart';
-import 'package:veritag_app/models/product.dart';
-import 'package:veritag_app/utils/image_picker.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/location.dart';
+import 'package:veritag_app/utils/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManufacturerForm extends StatefulWidget {
   const ManufacturerForm({super.key});
@@ -96,8 +95,8 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
 
   Future<void> _submitForm() async {
     await _writeNfcTag(uuid);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const NFCReadPage()));
+    // Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (context) => const NFCReadPage()));
 
     // if (_formKey.currentState!.validate()) {
     //   Product product = Product(
@@ -121,9 +120,9 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
 
   Future<void> _pickImage() async {
     final path = await getImagePath(ImageSource.gallery);
-    setState(() {
-      imagePath = path;
-    });
+    // setState(() {
+    //   imagePath = ImageSource.gallery;
+    // });
   }
 
   @override
