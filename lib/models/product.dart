@@ -26,7 +26,8 @@ class Product {
   final String manufacturerName; // Name of manufacturer
   final String productName; // Name of product
   final String productImage; //Image uploaded with image_picker package
-  final DateTime manufactureDate; //Current date gotten from time of product register
+  final DateTime
+      manufactureDate; //Current date gotten from time of product register
   final String manufactureLocation; //manufacture location from geolocation api
   String? productDescription; //brief description of product (optional)
 
@@ -48,7 +49,6 @@ class Product {
       'productImage': productImage,
       'manufactureDate': manufactureDate.millisecondsSinceEpoch,
       'manufactureLocation': manufactureLocation,
-     
       'productDescription': productDescription,
     };
   }
@@ -59,14 +59,15 @@ class Product {
       manufacturerName: map['manufacturerName'] ?? '',
       productName: map['productName'] ?? '',
       productImage: map['productImage'] ?? '',
-      manufactureDate: DateTime.fromMillisecondsSinceEpoch(map['manufactureDate']),
+      manufactureDate:
+          DateTime.fromMillisecondsSinceEpoch(map['manufactureDate']),
       manufactureLocation: map['manufactureLocation'] ?? '',
-     
       productDescription: map['productDescription'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromJson(String source) => Product.fromMap(json.decode(source));
+  factory Product.fromJson(String source) =>
+      Product.fromMap(json.decode(source));
 }
