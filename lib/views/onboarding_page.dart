@@ -1,5 +1,4 @@
 import '../utils/constants.dart';
-import '../utils/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';

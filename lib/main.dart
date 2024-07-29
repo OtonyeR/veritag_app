@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
 import 'package:veritag_app/views/splashscreen.dart';
+import 'package:veritag_app/views/router_screen.dart';
+
 
 
 void main() {
@@ -30,6 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'splashscreen': (context) => const Splashscreen(),
         'onboarding': (context) => const OnboardingScreen(),
+        'routing': (context) => const RouterScreen(),
         'bnav': (context) => const BottomNav(),
       },
     );
