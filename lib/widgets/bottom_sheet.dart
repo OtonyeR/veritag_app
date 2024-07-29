@@ -3,23 +3,22 @@ import 'package:veritag_app/widgets/primary_button.dart';
 
 class ScanBottomSheet extends StatelessWidget {
   final String title;
-  final String subText;
+  String? subText;
   final Widget icon;
   final String buttonText;
   final void Function()? buttonPressed;
 
-  const ScanBottomSheet(
+  ScanBottomSheet(
       {super.key,
       required this.title,
-      required this.subText,
       required this.icon,
       required this.buttonText,
-      this.buttonPressed});
+      this.buttonPressed, this.subText,});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 36.0, vertical: 30.0),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
@@ -32,21 +31,21 @@ class ScanBottomSheet extends StatelessWidget {
             style: const TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w500,
-              color: Color.fromRGBO(143, 142, 148, 1),
+              color: Color.fromRGBO(0, 124, 130, 1),
             ),
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 36.0),
           icon,
-          const SizedBox(height: 16.0),
-          Text(
-            subText,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.grey[600],
-            ),
-          ),
           const SizedBox(height: 24.0),
+          subText!.isNotEmpty ? Text(
+            subText!,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16.0,
+              color: Color.fromRGBO(34, 34, 34, 1.0),
+            ),
+          ) : Container(),
+          const SizedBox(height: 18.0),
           PrimaryButton(
               buttonText: buttonText,
               buttonFunction: () {},
