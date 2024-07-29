@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/manufacture_home/components/nfc_row_box.dart';
-import 'package:veritag_app/manufacturer_form.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 
-class ManufactureHome extends StatelessWidget {
-  const ManufactureHome({super.key});
+class ConsumerHomePage extends StatelessWidget {
+  const ConsumerHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class ManufactureHome extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     NfcRowBox(
                       image: 'assets/scan_nfc.png',
@@ -50,18 +48,7 @@ class ManufactureHome extends StatelessWidget {
                         showScanModal(context);
                       },
                     ),
-                    NfcRowBox(
-                      image: 'assets/add.png',
-                      title: 'Add product',
-                      color: colorsClass.greenColor,
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const ManufacturerFormScreen();
-                          },
-                        ));
-                      },
-                    ),
+         
                   ],
                 ),
               ),

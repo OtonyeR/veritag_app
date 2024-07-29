@@ -15,7 +15,7 @@ class _ScanNfcResultPageState extends State<ScanNfcResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: VeritagAppbar(appbarTitle: 'Scan Nfc'),
+      appBar: VeritagAppbar(appbarTitle: 'Scan Nfc', arrowBackRequired: true,),
       body: SafeArea(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,

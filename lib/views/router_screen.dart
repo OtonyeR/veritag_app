@@ -1,3 +1,6 @@
+import 'package:veritag_app/views/consumer_home_page.dart';
+import 'package:veritag_app/widgets/bottom_nav_consumer.dart';
+
 import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,7 +85,7 @@ class RouterScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const BottomNav(), // Replace with your page
+                                  const BottomNavConsumer(), // Replace with your page
                             ),
                           );
                         },

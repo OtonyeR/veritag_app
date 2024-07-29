@@ -1,5 +1,7 @@
 import 'package:veritag_app/manufacture_home/maufacture_home.dart';
+import 'package:veritag_app/views/consumer_home_page.dart';
 import 'package:veritag_app/views/history_page.dart';
+import 'package:veritag_app/views/history_page_consumer.dart';
 
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,14 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/router_screen.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
+class BottomNavConsumer extends StatefulWidget {
+  const BottomNavConsumer({super.key});
 
   @override
-  State<BottomNav> createState() => _BottomNavState();
+  State<BottomNavConsumer> createState() => _BottomNavConsumerState();
 }
 
-class _BottomNavState extends State<BottomNav> {
+class _BottomNavConsumerState extends State<BottomNavConsumer> {
   int _selectedIndex = 0;
 
   @override
@@ -95,9 +97,9 @@ class _BottomNavState extends State<BottomNav> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return const ManufactureHome();
+        return const ConsumerHomePage();
       case 1:
-        return const HistoryPage();
+        return const HistoryPageConsumer();
       default:
         return const RouterScreen();
     }

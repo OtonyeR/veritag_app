@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:veritag_app/views/scan_nfc_result_page.dart';
 import 'package:veritag_app/widgets/veritag_appbar.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+class HistoryPageConsumer extends StatefulWidget {
+  const HistoryPageConsumer({super.key});
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<HistoryPageConsumer> createState() => _HistoryPageConsumerState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

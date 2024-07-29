@@ -45,7 +45,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const VeritagAppbar(appbarTitle: 'Product Details'),
+      appBar: const VeritagAppbar(appbarTitle: 'Product Details', arrowBackRequired: true,),
       body: SafeArea(
         child: Column(
           children: [
