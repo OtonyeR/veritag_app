@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
+import 'views/product_details_screen.dart';
 import 'views/manufacturer_form_screen.dart';
 
 void main() {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
 
       ),
-      home: const ManufacturerForm(),
+      home: const ProductDetailsScreen(),
     );
   }
 }
