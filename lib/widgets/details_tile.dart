@@ -19,7 +19,7 @@ class DetailTile extends StatelessWidget {
           style: TextStyle(
               fontSize: 18, color: colorPrimary, fontWeight: FontWeight.w500),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 4),
         Text(
           detailInfo, // Assuming this should be a different text
           style: TextStyle(
