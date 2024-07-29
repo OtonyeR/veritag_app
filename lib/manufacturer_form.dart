@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/utils/image_picker.dart';
 import 'package:veritag_app/widgets/primary_button.dart';
+import 'package:veritag_app/widgets/veritag_appbar.dart';
 
 class ManufacturerForm extends StatefulWidget {
   const ManufacturerForm({super.key});
@@ -44,29 +45,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(0, 124, 130, 1.0),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: colorBg,
-            )),
-        title: const Text(
-          'Product Details',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: colorBg,
-          ),
-        ),
-        toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
-      ),
+      appBar: const VeritagAppbar(appbarTitle: 'Product Details'),
       body: SafeArea(
         child: Column(
           children: [
@@ -179,9 +158,9 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                             });
                           },
                         ),
-                       imageDetailsList![0] == null
+                       imageDetailsList?[0] == null
                             ? Container()
-                            : Text('Image Selected: ${imageDetailsList![0]}'),
+                            : Text('Image Selected: ${imageDetailsList?[0]}'),
                         const SizedBox(height: 20),
                         SizedBox(
                           width: double.maxFinite,
