@@ -1,7 +1,5 @@
 import 'views/onboarding_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'utils/onboarding_controller.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
 
 
@@ -12,29 +10,22 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => OnboardingController(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'VeriTag',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          }),
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'onboarding',
-        routes: {
-          'onboarding': (context) => OnboardingScreen(),
-          'bnav': (context) => const BottomNav(),
-           },
+    return MaterialApp(
+      title: 'VeriTag',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        }),
       ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'onboarding',
+      routes: {
+        'onboarding': (context) => const OnboardingScreen(),
+        'bnav': (context) => const BottomNav(),
+      },
     );
   }
 }

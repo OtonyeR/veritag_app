@@ -2,12 +2,19 @@ import '../utils/constants.dart';
 import '../utils/bottom_nav.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';
 
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
 
-class OnboardingScreen extends StatelessWidget {
+  @override
+  _OnboardingScreenState createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final OnboardingController _controller = OnboardingController();
+  
   final List<OnboardingModel> onboardingPages = [
     OnboardingModel(
       title: 'Tired of fake products?',
@@ -26,102 +33,107 @@ class OnboardingScreen extends StatelessWidget {
     ),
   ];
 
-  OnboardingScreen({super.key});
+  @override
+  void dispose() {
+    _controller.pageController.dispose(); 
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<OnboardingController>(
-        builder: (context, controller, child) {
-          return Stack(
-            children: [
-              PageView.builder(
-                controller: controller.pageController,
-                onPageChanged: (index) {
-                  controller.currentPage = index;
-                  controller.notifyListeners();
-                },
-                itemCount: onboardingPages.length,
-                itemBuilder: (context, index) {
-                  final page = onboardingPages[index];
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Lottie.network(page.lottieAnimation),
-                      const SizedBox(height: 18),
-                      Text(
-                        page.title,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        page.description,
-                        style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  );
-                },
-              ),
-              Positioned(
-                bottom: 30,
-                left: 20,
-                right: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        controller.skipToEnd();
-                      },
-                      child: const Text('Skip'),
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: _controller.pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _controller.currentPage = index;
+              });
+            },
+            itemCount: onboardingPages.length,
+            itemBuilder: (context, index) {
+              final page = onboardingPages[index];
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.network(page.lottieAnimation),
+                  const SizedBox(height: 18),
+                  Text(
+                    page.title,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Row(
-                      children: List.generate(
-                        onboardingPages.length,
-                        (index) => AnimatedContainer(
-                          duration: const Duration(milliseconds: 100),
-                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                          width: controller.currentPage == index ? 12 : 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: controller.currentPage == index
-                                ? colorPrimary
-                                : Colors.grey,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (controller.currentPage == onboardingPages.length - 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BottomNav(),
-                            ),
-                          );
-                        } else {
-                          controller.nextPage();
-                        }
-                      },
-                      child: Text(
-                        controller.currentPage == onboardingPages.length - 1
-                            ? 'Start'
-                            : 'Next',
-                      ),
-                    ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    page.description,
+                    style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            },
+          ),
+          Positioned(
+            bottom: 30,
+            left: 20,
+            right: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _controller.skipToEnd();
+                    });
+                  },
+                  child: const Text('Skip'),
                 ),
-              ),
-            ],
-          );
-        },
+                Row(
+                  children: List.generate(
+                    onboardingPages.length,
+                    (index) => AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      margin: const EdgeInsets.symmetric(horizontal: 3),
+                      width: _controller.currentPage == index ? 12 : 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: _controller.currentPage == index
+                            ? colorPrimary
+                            : Colors.grey,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (_controller.currentPage == onboardingPages.length - 1) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomNav(),
+                        ),
+                      );
+                    } else {
+                      setState(() {
+                        _controller.nextPage();
+                      });
+                    }
+                  },
+                  child: Text(
+                    _controller.currentPage == onboardingPages.length - 1
+                        ? 'Start'
+                        : 'Next',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

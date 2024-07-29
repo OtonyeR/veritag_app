@@ -22,7 +22,6 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a simple container that switches content based on the selected navigation item
     return Scaffold(
       backgroundColor: Colors.black,
       extendBody: true,
