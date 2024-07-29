@@ -53,11 +53,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
           children: [
             const CustomAppBar(
               appBarTitle: 'Product Details',
-              appBarIcon: Icon(
-                CupertinoIcons.back,
-                color: Colors.white,
-                size: 24,
-              ),
+
             ),
             Expanded(
               child: SingleChildScrollView(
