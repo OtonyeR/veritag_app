@@ -51,7 +51,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 267,
-      width: 393,
+      width: double.maxFinite,
       color: colorsClass.greenColor,
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
