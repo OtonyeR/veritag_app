@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 import '../utils/image_picker.dart';
 import '../widgets/bottom_sheet.dart';
 import '../widgets/primary_button.dart';
@@ -52,7 +51,14 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(),
+            const CustomAppBar(
+              appBarTitle: 'Product Details',
+              appBarIcon: Icon(
+                CupertinoIcons.back,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -189,9 +195,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                   buttonText: 'Submit',
                   buttonFunction: () {
                     if (_formKey.currentState!.validate() &&
-                        imageDetailsList != null) {
-
-                    }
+                        imageDetailsList != null) {}
                   },
                   buttonWidth: MediaQuery.sizeOf(context).width),
             ),
@@ -205,6 +209,3 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     // Handle form submission
   }
 }
-
-
-
