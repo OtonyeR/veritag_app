@@ -3,6 +3,8 @@ import '../utils/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';
+import 'package:veritag_app/views/router_screen.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -153,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const BottomNav(),
+                      builder: (context) => const RouterScreen(),
                     ),
                   );
                 } else {
