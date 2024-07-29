@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:veritag_app/services/remote_db.dart';
 
+import '../services/location.dart';
 import '../utils/constants.dart';
 import '../utils/image_picker.dart';
-import '../widgets/bottom_sheet.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
 import '../widgets/image_field.dart';
@@ -21,6 +22,8 @@ class ManufacturerFormScreen extends StatefulWidget {
 
 class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final LocationService _locationService = LocationService();
 
   // Form fields controllers
   final TextEditingController _uuidController = TextEditingController();
@@ -46,6 +49,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     _dateController.text =
         '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
     _uuidController.text = const Uuid().v4();
+    _setAddress();
     super.initState();
   }
 
@@ -209,5 +213,18 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   _submitForm() {
     // Handle form submission
     var productservice = ProductService();
+  }
+
+  Future<void> _setAddress() async {
+    try {
+      Position position = await _locationService.getCurrentLocation();
+      String address = await _locationService.getAddressFromLatLng(position);
+      setState(() {
+        _manufacturerLocationController.text = address;
+      });
+    } catch (e) {
+      // Handle exceptions, possibly showing a message to the user
+      print('Failed to get address: $e');
+    }
   }
 }
