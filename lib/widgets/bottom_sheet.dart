@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/widgets/primary_button.dart';
+
+import 'primary_button.dart';
 
 class ScanBottomSheet extends StatelessWidget {
   final String title;
@@ -54,4 +55,48 @@ class ScanBottomSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+//The actual usage sheets
+
+
+showScanModal(BuildContext context) {
+  return showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return ScanBottomSheet(
+        title: 'Ready to scan',
+        icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+              'assets/scan_icon.png',
+              fit: BoxFit.cover,
+            )),
+        buttonText: 'Continue',
+        subText:
+        'Put your device near the NFC Tag you want to read',
+      );
+    },
+  );
+}
+
+showDoneModal(BuildContext context) {
+  return showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return ScanBottomSheet(
+        title: 'Done',
+        icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+              'assets/done_icon.png',
+              fit: BoxFit.cover,
+            )),
+        buttonText: 'See Result',
+
+      );
+    },
+  );
 }
