@@ -1,8 +1,8 @@
 import 'views/onboarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
 import 'package:veritag_app/views/splashscreen.dart';
-
 
 
 void main() {
@@ -17,8 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'VeriTag',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
-        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(
+          ThemeData.light().textTheme.apply()
+        ),
+         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         }),
       ),
