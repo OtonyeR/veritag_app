@@ -50,7 +50,7 @@ class ManufactureHome extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const NFCReadPage()));
-                        showScanModal(context);
+                       // showScanModal(context);
                       },
                     ),
                     NfcRowBox(

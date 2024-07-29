@@ -15,7 +15,7 @@ class _NFCReadPageState extends State<NFCReadPage> {
   @override
   void initState() {
     super.initState();
-    _startNFCSession();
+   // _startNFCSession();
   }
 
   void _startNFCSession() {

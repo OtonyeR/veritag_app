@@ -1,4 +1,4 @@
-import 'package:veritag_app/manufacture_home/maufacture_home.dart';
+
 import 'package:veritag_app/views/consumer_home_page.dart';
 import 'package:veritag_app/views/history_page.dart';
 import 'package:veritag_app/views/history_page_consumer.dart';
