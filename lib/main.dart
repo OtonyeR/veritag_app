@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacture_home/maufacture_home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veritag_app/firebase_options.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
@@ -33,8 +32,13 @@ class MyApp extends StatelessWidget {
         }),
       ),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: const ManufacturerForm(),
+      initialRoute: 'splashscreen',
+      routes: {
+        'splashscreen': (context) => const Splashscreen(),
+        'onboarding': (context) => const OnboardingScreen(),
+        'routing': (context) => const RouterScreen(),
+        'bnav': (context) => const BottomNav(),
+      },
     );
   }
 }
