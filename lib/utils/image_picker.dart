@@ -6,7 +6,7 @@ Future<XFile?> pickImage(ImageSource source) async {
   return pickedFile;
 }
 
-Future<String?> getImagePath(ImageSource source) async {
+Future<List<String?>> getImagePath(ImageSource source) async {
   final imageFile = await pickImage(source); // Await the Future
-  return imageFile?.path; // Handle the possibility of imageFile being null
+  return [imageFile?.name,imageFile?.path]; // Handle the possibility of imageFile being null
 }
