@@ -10,7 +10,7 @@ import '../utils/onboarding_controller.dart';
 class OnboardingScreen extends StatelessWidget {
   final List<OnboardingModel> onboardingPages = [
     OnboardingModel(
-      title: 'Tried of fake products?',
+      title: 'Tired of fake products?',
       description: 'We have a solution for you!',
       lottieAnimation: 'https://lottie.host/b86c6859-7f83-4740-8034-5917455d6ee6/s3sbl78wzy.json',
     ),
