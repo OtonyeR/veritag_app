@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:veritag_app/manufacture_home/maufacture_home.dart';
 import 'manufacturer_form.dart';
 import 'firebase_options.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'VeriTag',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      home: const ManufacturerForm(),
+      home: const ManufactureHome(),
     );
   }
 }
