@@ -46,3 +46,5 @@ pubspec.lock
 
 # FVM Version Cache
 .fvm/
+
+.idx/

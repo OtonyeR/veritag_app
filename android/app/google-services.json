@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "554362535300",
+    "project_id": "veritag-5b2cf",
+    "storage_bucket": "veritag-5b2cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554362535300:android:0f09f6cb574b2820ab31d1",
+        "android_client_info": {
+          "package_name": "com.example.veritag_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY753AhYaacmgYCrg456ZYmrx4r0-gjTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

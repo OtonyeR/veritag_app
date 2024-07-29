@@ -31,7 +31,7 @@ class LocationService {
   Future<String> getAddressFromLatLng(Position position) async {
     try {
       List<Placemark> placemarks =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude);
 
       Placemark place = placemarks[0];
       return "${place.street}, ${place.administrativeArea}, ${place.country}";
