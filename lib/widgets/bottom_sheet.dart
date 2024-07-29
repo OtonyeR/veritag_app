@@ -3,12 +3,12 @@ import 'package:veritag_app/widgets/primary_button.dart';
 
 class ScanBottomSheet extends StatelessWidget {
   final String title;
-  String? subText;
+ final String? subText;
   final Widget icon;
   final String buttonText;
   final void Function()? buttonPressed;
 
-  ScanBottomSheet(
+const  ScanBottomSheet(
       {super.key,
       required this.title,
       required this.icon,
