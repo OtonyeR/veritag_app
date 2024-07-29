@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../utils/constants.dart';
 import '../utils/image_picker.dart';
 import '../widgets/bottom_sheet.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
-import '../widgets/appbar.dart';
 import '../widgets/image_field.dart';
 
 class ManufacturerForm extends StatefulWidget {
@@ -25,13 +25,13 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   final TextEditingController _productPriceController = TextEditingController();
 
   final TextEditingController _manufacturerNameController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _manufacturerLocationController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _productDescriptionController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _additionalInfoController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
   List? imageDetailsList;
@@ -41,20 +41,42 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     // TODO: implement initState
     final DateTime date = DateTime.now();
     _dateController.text =
-        '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
+    '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date
+        .minute} ${date.timeZoneName}';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: colorPrimary,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: colorBg,
+            )),
+        title: const Text(
+          'Product Details',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: colorBg,
+          ),
+        ),
+        toolbarHeight: MediaQuery
+            .sizeOf(context)
+            .height * 0.1,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const CustomAppBar(
-              appBarTitle: 'Product Details',
-
-            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -85,28 +107,30 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                           },
                         ),
                         ImageField(
-                          onPressedCam: () async {
-                            final path = await getImagePath(ImageSource.camera);
-                            setState(() {
-                              imageDetailsList = path;
-                            });
-                          },
-                          onPressedGallery: () async {
-                            final imageDetails =
-                                await getImagePath(ImageSource.gallery);
-                            setState(() {
-                              imageDetailsList = imageDetails;
-                            });
-                          },
-                          imageDetail: imageDetailsList![0] == null
-                              ? Container()
-                              : Center(
-                                  child: Text(
+                            onPressedCam: () async {
+                              final path = await getImagePath(
+                                  ImageSource.camera);
+                              setState(() {
+                                imageDetailsList = path;
+                              });
+                            },
+                            onPressedGallery: () async {
+                              final imageDetails =
+                              await getImagePath(ImageSource.gallery);
+                              setState(() {
+                                imageDetailsList = imageDetails;
+                              });
+                            },
+                            imageDetail: imageDetailsList != null &&
+                                imageDetailsList!.first != null
+                                ? Center(
+                                child: Text(
                                   'Image Selected: ${imageDetailsList![0]}',
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500),
-                                )),
+                                ))
+                                : Container()
                         ),
                         const SizedBox(height: 28),
                         CustomFormField(
@@ -186,14 +210,16 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
             ),
             Container(
               padding:
-                  const EdgeInsets.symmetric(vertical: 44.0, horizontal: 24.0),
+              const EdgeInsets.symmetric(vertical: 44.0, horizontal: 24.0),
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
                     if (_formKey.currentState!.validate() &&
                         imageDetailsList != null) {}
                   },
-                  buttonWidth: MediaQuery.sizeOf(context).width),
+                  buttonWidth: MediaQuery
+                      .sizeOf(context)
+                      .width),
             ),
           ],
         ),
