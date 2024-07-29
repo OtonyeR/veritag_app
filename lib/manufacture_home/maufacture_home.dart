@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/manufacture_home/components/nfc_row_box.dart';
+import 'package:veritag_app/manufacturer_form.dart';
 import 'package:veritag_app/utils/color.dart';
 
 class ManufactureHome extends StatelessWidget {
@@ -13,9 +14,12 @@ class ManufactureHome extends StatelessWidget {
           const HomeHeaderBoxWidget(),
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                const SizedBox(
+                  height: 300,
+                ),
                 Image.asset(
                   'assets/veritag.png',
                   fit: BoxFit.contain,
@@ -46,7 +50,13 @@ class ManufactureHome extends StatelessWidget {
                       image: 'assets/add.png',
                       title: 'Add product',
                       color: colorsClass.greenColor,
-                      onTap: () {},
+                      onTap: () {
+                         Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const ManufacturerForm();
+                          },
+                        ));
+                      },
                     ),
                   ],
                 ),
