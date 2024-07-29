@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
+import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/utils/image_picker.dart';
 import 'package:veritag_app/widgets/primary_button.dart';
 
@@ -35,41 +37,43 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     final DateTime date = DateTime.now();
     _dateController.text =
         '${date.day} / ${date.month} / ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
+   _uuidController.text = const Uuid().v4();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(0, 124, 130, 1.0),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: colorBg,
+            )),
+        title: const Text(
+          'Product Details',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: colorBg,
+          ),
+        ),
+        toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: MediaQuery.sizeOf(context).height * 0.1,
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(0, 124, 130, 1.0),
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(50)),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                  ),
-                  SizedBox(width: MediaQuery.sizeOf(context).width * 0.4),
-                  const Text('Product Details')
-                ],
-              ),
-            ),
-            const SizedBox(height: 52),
+            //const SizedBox(height: 52),
             Expanded(
               child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Form(
@@ -179,13 +183,32 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                             ? Container()
                             : Text('Image Selected: $imagePath'),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _submitForm();
-                            }
-                          },
-                          child: const Text('Submit'),
+                        SizedBox(
+                          width: double.maxFinite,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                backgroundColor: const WidgetStatePropertyAll(
+                                    Color.fromRGBO(0, 124, 130, 1.0))),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _submitForm();
+                              }
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: colorBg,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 20),
                       ],
@@ -225,7 +248,7 @@ class FormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         fieldTitle,
         style: const TextStyle(
@@ -271,7 +294,7 @@ class ImageField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text(
         'Enter Product Image',
         style: TextStyle(
@@ -281,7 +304,7 @@ class ImageField extends StatelessWidget {
       ),
       const SizedBox(height: 12),
       Container(
-        height: MediaQuery.sizeOf(context).height * 0.14,
+        height: MediaQuery.sizeOf(context).height * 0.3,
         width: MediaQuery.sizeOf(context).width,
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 68),
         decoration: BoxDecoration(
@@ -315,8 +338,8 @@ class ImageField extends StatelessWidget {
             )
           ],
         ),
-      )
+      ),
+      //PrimaryButton(buttonText: 'buttonText', buttonFunction: buttonFunction, buttonWidth: buttonWidth)
     ]);
   }
 }
-
