@@ -47,7 +47,11 @@ dependencies:
   fvm: ^3.1.7
   fluid_bottom_nav_bar: ^1.4.0
   google_fonts: ^6.2.1
+<<<<<<< HEAD
   firebase_storage: ^12.1.1
+=======
+
+>>>>>>> d7c5f79c182e5d64b7df58f3563cddcc888b46a5
 
 dev_dependencies:
   flutter_test:

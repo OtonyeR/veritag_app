@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacture_home/components/nfc_row_box.dart';
+import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 

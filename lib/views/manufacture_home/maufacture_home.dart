@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/manufacturer_form.dart';
+import 'package:veritag_app/test_read_page.dart';
+import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/manufacturer_form_screen.dart';
-import 'package:veritag_app/widgets/bottom_sheet.dart';
 
 class ManufactureHome extends StatelessWidget {
   const ManufactureHome({super.key});
@@ -16,12 +15,9 @@ class ManufactureHome extends StatelessWidget {
           const HomeHeaderBoxWidget(),
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const SizedBox(
-                  height: 300,
-                ),
                 Image.asset(
                   'assets/veritag.png',
                   fit: BoxFit.contain,
@@ -47,7 +43,8 @@ class ManufactureHome extends StatelessWidget {
                       title: 'Verify tag',
                       color: colorsClass.pinkColor,
                       onTap: () {
-                        showScanModal(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const NFCReadPage()));
                       },
                     ),
                     NfcRowBox(
@@ -55,11 +52,8 @@ class ManufactureHome extends StatelessWidget {
                       title: 'Add product',
                       color: colorsClass.greenColor,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const ManufacturerFormScreen();
-                          },
-                        ));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ManufacturerForm()));
                       },
                     ),
                   ],

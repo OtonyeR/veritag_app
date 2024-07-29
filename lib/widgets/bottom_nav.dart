@@ -1,5 +1,4 @@
-import 'package:veritag_app/manufacture_home/maufacture_home.dart';
-import 'package:veritag_app/views/history_page.dart';
+import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
 
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +62,8 @@ class _BottomNavState extends State<BottomNav> {
     );
   }
 
-  Widget _buildNavItem({required IconData icon, required String label, required int index}) {
+  Widget _buildNavItem(
+      {required IconData icon, required String label, required int index}) {
     return Expanded(
       child: InkWell(
         onTap: () => _handleNavigationChange(index),
@@ -97,7 +97,7 @@ class _BottomNavState extends State<BottomNav> {
       case 0:
         return const ManufactureHome();
       case 1:
-        return const HistoryPage();
+        return const RouterScreen(); // Replace with actual screen
       default:
         return const RouterScreen();
     }

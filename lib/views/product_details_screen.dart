@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/product.dart';
 import '../utils/size.dart';
 import '../utils/constants.dart';
 import '../widgets/details_tile.dart';
 
-
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  final Product productInfo;
+
+  const ProductDetailsScreen({super.key, required this.productInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
                   image: DecorationImage(
-                    image: AssetImage('assets/placeholder.jpg'),
+                    image: NetworkImage(productInfo.productImage),
                     // Your image asset path
                     fit: BoxFit
                         .cover, // Adjust the fit as needed (cover, contain, fill, etc.)
@@ -57,25 +59,34 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               Expanded(
-                child:               SingleChildScrollView(
-                    child: Column(children: [
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                      const DetailTile(
-                          detailTitle: 'Product Name', detailInfo: 'Tape Of Healing'),
-                    ]))
-
-              )
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      DetailTile(
+                          detailTitle: 'Product Name',
+                          detailInfo: productInfo.productName),
+                      DetailTile(
+                          detailTitle: 'Manufacturer Name',
+                          detailInfo: productInfo.manufacturerName),
+                      DetailTile(
+                          detailTitle: 'Manufacturer Location',
+                          detailInfo: productInfo.manufactureLocation),
+                      DetailTile(
+                          detailTitle: 'Manufacture Date',
+                          detailInfo: productInfo.manufactureDate),
+                      DetailTile(
+                          detailTitle: 'Product Price',
+                          detailInfo: productInfo.productPrice),
+                      DetailTile(
+                          detailTitle: 'Product Description',
+                          detailInfo: productInfo.productDescription!),
+                      DetailTile(
+                          detailTitle: 'Additional Info',
+                          detailInfo: productInfo.additionalInfo!),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -83,4 +94,3 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 }
-
