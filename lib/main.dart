@@ -1,12 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:veritag_app/homepage.dart';
-import 'package:veritag_app/manufacture_screen.dart';
+import 'package:veritag_app/views/manufacture_screen.dart';
 import 'firebase_options.dart';
-import 'views/onboarding_page.dart';
-import 'package:provider/provider.dart';
-import 'utils/onboarding_controller.dart';
-import 'package:veritag_app/utils/bottom_nav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
