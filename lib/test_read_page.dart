@@ -12,11 +12,11 @@ class _NFCReadPageState extends State<NFCReadPage> {
   String _nfcData = 'Scan an NFC tag to read its data';
   bool _isScanning = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _startNFCSession();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _startNFCSession();
+  // }
 
   void _startNFCSession() {
     setState(() {
