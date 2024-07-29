@@ -861,14 +861,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.3.2"
-  uiblock:
-    dependency: "direct main"
-    description:
-      name: uiblock
-      sha256: cf2c55b7e27a13617a0f02cca07f965cdf514dc0cd9321c3b5537a6c7d01accf
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.3"
   uri:
     dependency: transitive
     description:

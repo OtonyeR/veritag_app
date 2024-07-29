@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uiblock/uiblock.dart';
 import 'package:uuid/uuid.dart';
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/remote_db.dart';
 
 import '../services/location.dart';
-import '../utils/constants.dart';
 import '../utils/image_picker.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
