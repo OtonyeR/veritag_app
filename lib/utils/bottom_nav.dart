@@ -1,3 +1,5 @@
+import 'package:veritag_app/manufacture_home/maufacture_home.dart';
+
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -92,7 +94,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return const RouterScreen(); // Replace with actual screen
+        return const ManufactureHome(); // Replace with actual screen
       case 1:
         return const RouterScreen(); // Replace with actual screen
       default:
