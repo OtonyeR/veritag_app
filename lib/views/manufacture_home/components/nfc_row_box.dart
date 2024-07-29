@@ -70,7 +70,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
                         color: Colors.white),
                   ),
                   Text(
-                    'Get to set/write a Tag as a manufacturer and Read/Scan a Tag as a customer',
+                    'Add or Scan A Product',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 12,

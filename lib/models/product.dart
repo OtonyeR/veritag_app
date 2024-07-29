@@ -9,6 +9,8 @@ class Product {
   final String manufactureDate; //Current date gotten from time of product register
   final String manufactureLocation; //manufacture location from geolocation api
   String? productDescription; //brief description of product (optional)
+  String? additionalInfo; //brief description of product (optional)
+
 
   Product({
     required this.uid,
@@ -19,6 +21,7 @@ class Product {
     required this.manufactureDate,
     required this.manufactureLocation,
     this.productDescription,
+    this.additionalInfo,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +33,7 @@ class Product {
       'manufactureDate': manufactureDate,
       'manufactureLocation': manufactureLocation,
       'productDescription': productDescription,
+      'additionalInfo': additionalInfo,
     };
   }
 
@@ -42,7 +46,8 @@ class Product {
       productImage: map['productImage'] ?? '',
       manufactureDate: map['manufactureDate'],
       manufactureLocation: map['manufactureLocation'] ?? '',
-      productDescription: map['productDescription'],
+      productDescription: map['productDescription'] ?? '',
+      additionalInfo: map['additionalInfo'] ?? '',
     );
   }
 

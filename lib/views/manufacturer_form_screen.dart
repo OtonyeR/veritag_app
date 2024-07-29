@@ -144,9 +144,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter the manufacturer name';
                             }
-                            if (value.length < 10) {
-                              return 'Please enter a valid name';
-                            }
                             return null;
                           },
                         ),
