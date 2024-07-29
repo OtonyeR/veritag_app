@@ -39,3 +39,50 @@ class NfcRowBox extends StatelessWidget {
     );
   }
 }
+
+
+
+class HomeHeaderBoxWidget extends StatelessWidget {
+  const HomeHeaderBoxWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 267,
+      width: 393,
+      color: colorsClass.greenColor,
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 246,
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Welcome to VERItag',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    'Get to set/write a Tag as a manufacturer and Read/Scan a Tag as a customer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
