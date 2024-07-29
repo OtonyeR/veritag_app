@@ -1,4 +1,5 @@
 import 'package:veritag_app/manufacture_home/maufacture_home.dart';
+import 'package:veritag_app/views/history_page.dart';
 
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _BottomNavState extends State<BottomNav> {
       case 0:
         return const ManufactureHome(); // Replace with actual screen
       case 1:
-        return const RouterScreen(); // Replace with actual screen
+        return const HistoryPage(); // Replace with actual screen
       default:
         return const RouterScreen();
     }
