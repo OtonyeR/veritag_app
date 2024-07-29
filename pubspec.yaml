@@ -43,10 +43,10 @@ dependencies:
   uuid: ^4.4.2
   image_picker: ^1.1.2
   lottie: ^3.1.2
-  provider: ^6.1.2
-  fluid_bottom_nav_bar: ^1.4.0
   iconsax_plus: ^1.0.0
   fvm: ^3.1.7
+  fluid_bottom_nav_bar: ^1.4.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -73,7 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-  #   - images/a_dot_ham.jpeg
+    - assets/illustrations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -86,6 +86,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family:  Ohome
+      fonts:
+       - asset: fonts/Ohome.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

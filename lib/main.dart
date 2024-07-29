@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'firebase_options.dart';
-import 'utils/bottom_nav.dart';
-import 'utils/onboarding_controller.dart';
-import 'views/onboarding_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:veritag_app/firebase_options.dart';
+import 'package:veritag_app/utils/bottom_nav.dart';
+import 'package:veritag_app/views/onboarding_page.dart';
+import 'package:veritag_app/views/splashscreen.dart';
+import 'package:veritag_app/views/router_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,35 +13,37 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+
+
   runApp(const MyApp());
+
+
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => OnboardingController(),
+    return MaterialApp(
+      title: 'VeriTag',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(
+          ThemeData.light().textTheme.apply()
         ),
-      ],
-      child: MaterialApp(
-        title: 'VeriTag',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          }),
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'onboarding',
-        routes: {
-          'onboarding': (context) => OnboardingScreen(),
-          'bnav': (context) => const BottomNav(),
-        },
+         pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        }),
       ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'splashscreen',
+      routes: {
+        'splashscreen': (context) => const Splashscreen(),
+        'onboarding': (context) => const OnboardingScreen(),
+        'routing': (context) => const RouterScreen(),
+        'bnav': (context) => const BottomNav(),
+      },
     );
   }
 }

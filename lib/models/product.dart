@@ -22,23 +22,21 @@
 import 'dart:convert';
 
 class Product {
-  final String uid;
-  final String productName;
-  final String manufacturerName; 
-  final String? productImage; 
-  final DateTime manufactureDate;
-  final String manufactureLocation;
-  final bool isSentOut;  
-  String? productDescription;
+  final String uid; // unique id generated from uuid
+  final String manufacturerName; // Name of manufacturer
+  final String productName; // Name of product
+  final String productImage; //Image uploaded with image_picker package
+  final DateTime manufactureDate; //Current date gotten from time of product register
+  final String manufactureLocation; //manufacture location from geolocation api
+  String? productDescription; //brief description of product (optional)
 
   Product({
     required this.uid,
     required this.productName,
     required this.manufacturerName,
-    this.productImage,
+    required this.productImage,
     required this.manufactureDate,
     required this.manufactureLocation,
-    required this.isSentOut,
     this.productDescription,
   });
 
@@ -50,7 +48,7 @@ class Product {
       'productImage': productImage,
       'manufactureDate': manufactureDate.millisecondsSinceEpoch,
       'manufactureLocation': manufactureLocation,
-      'isSentOut': isSentOut,
+     
       'productDescription': productDescription,
     };
   }
@@ -63,7 +61,7 @@ class Product {
       productImage: map['productImage'] ?? '',
       manufactureDate: DateTime.fromMillisecondsSinceEpoch(map['manufactureDate']),
       manufactureLocation: map['manufactureLocation'] ?? '',
-      isSentOut: map['isSentOut'] ?? false,
+     
       productDescription: map['productDescription'],
     );
   }

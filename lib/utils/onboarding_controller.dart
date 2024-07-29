@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OnboardingController with ChangeNotifier {
+class OnboardingController {
   final PageController pageController = PageController();
   int currentPage = 0;
 
@@ -12,7 +12,6 @@ class OnboardingController with ChangeNotifier {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
       );
-      notifyListeners();
     }
   }
 
@@ -23,6 +22,5 @@ class OnboardingController with ChangeNotifier {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeIn,
     );
-    notifyListeners();
   }
 }
