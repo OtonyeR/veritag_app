@@ -1,6 +1,8 @@
 import 'views/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:veritag_app/utils/bottom_nav.dart';
+import 'package:veritag_app/views/splashscreen.dart';
+
 
 
 void main() {
@@ -21,8 +23,9 @@ class MyApp extends StatelessWidget {
         }),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'onboarding',
+      initialRoute: 'splashscreen',
       routes: {
+        'splashscreen': (context) => const Splashscreen(),
         'onboarding': (context) => const OnboardingScreen(),
         'bnav': (context) => const BottomNav(),
       },
