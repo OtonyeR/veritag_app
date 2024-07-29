@@ -13,26 +13,21 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
-
   runApp(const MyApp());
-
-
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
- @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'VeriTag',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.poppinsTextTheme(
-          ThemeData.light().textTheme.apply()
-        ),
-         pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        textTheme:
+            GoogleFonts.poppinsTextTheme(ThemeData.light().textTheme.apply()),
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         }),
       ),
