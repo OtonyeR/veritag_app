@@ -14,6 +14,10 @@ class ProductService {
     }
   }
 
+  Future<void> addProductToDb(Product product) async {
+    await _db.collection("testproducts").doc(product.uid).set(product.toMap());
+  }
+
 //Gets all products in db.
   Future<List<Product>> getDataFromDb() async {
     final querySnapshot = await _db.collection("testproducts").get();

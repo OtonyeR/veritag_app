@@ -7,7 +7,6 @@ class Product {
   final String productImage; //Image uploaded with image_picker package
   final DateTime manufactureDate; //Current date gotten from time of product register
   final String manufactureLocation; //manufacture location from geolocation api
-  final bool isSentOut;  // Indicates if the product has been sent out from the manufacturer
   String? productDescription; //brief description of product (optional)
 
   Product({
@@ -18,7 +17,6 @@ class Product {
     required this.manufactureDate,
     required this.manufactureLocation,
     this.productDescription,
-    required this.isSentOut,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,9 +25,8 @@ class Product {
       'manufacturerName': manufacturerName,
       'productName': productName,
       'productImage': productImage,
-      'manufactureDate': manufactureDate.millisecondsSinceEpoch,
+      'manufactureDate': manufactureDate,
       'manufactureLocation': manufactureLocation,
-      'isSentOut': isSentOut,
       'productDescription': productDescription,
     };
   }
@@ -40,9 +37,8 @@ class Product {
       manufacturerName: map['manufacturerName'] ?? '',
       productName: map['productName'] ?? '',
       productImage: map['productImage'] ?? '',
-      manufactureDate: DateTime.fromMillisecondsSinceEpoch(map['manufactureDate']),
+      manufactureDate: map['manufactureDate'],
       manufactureLocation: map['manufactureLocation'] ?? '',
-      isSentOut: map['isSentOut'] ?? false,
       productDescription: map['productDescription'],
     );
   }

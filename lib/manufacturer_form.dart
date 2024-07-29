@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/location.dart';
 import 'package:veritag_app/utils/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManufacturerForm extends StatefulWidget {
@@ -19,13 +19,6 @@ class ManufacturerForm extends StatefulWidget {
 class _ManufacturerFormState extends State<ManufacturerForm> {
   final _formKey = GlobalKey<FormState>();
   final LocationService locationService = LocationService();
-  final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _manufacturerNameController =
-      TextEditingController();
-  final TextEditingController _productDescriptionController =
-      TextEditingController();
-  final TextEditingController _additionalInfoController =
-      TextEditingController();
 
   String currentAddress = '';
   Position? currentPosition;
@@ -41,10 +34,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   @override
   void dispose() {
     NfcManager.instance.stopSession();
-    _productNameController.dispose();
-    _manufacturerNameController.dispose();
-    _productDescriptionController.dispose();
-    _additionalInfoController.dispose();
     super.dispose();
   }
 
@@ -72,12 +61,14 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     }
   }
 
+
   Future<void> _writeNfcTag(String uuid) async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       var ndef = Ndef.from(tag);
       if (ndef == null || !ndef.isWritable) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Tag is not writable')));
+        NfcManager.instance.stopSession();
         return;
       }
 
@@ -89,6 +80,8 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Failed to write message to tag')));
+      } finally {
+        NfcManager.instance.stopSession();
       }
     });
   }
@@ -118,13 +111,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     // }
   }
 
-  Future<void> _pickImage() async {
-    final path = await getImagePath(ImageSource.gallery);
-    // setState(() {
-    //   imagePath = ImageSource.gallery;
-    // });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,37 +133,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                       hintText: uuid,
                     ),
                     readOnly: true,
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _productNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Product Name',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _manufacturerNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Manufacturer Name',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the manufacturer name';
-                      }
-                      if (value.length < 10) {
-                        return 'Please enter a valid name';
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -205,44 +160,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                     ),
                     readOnly: true,
                   ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _productDescriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Product Description (Optional)',
-                      border: OutlineInputBorder(),
-                    ),
-                    maxLines: 2,
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _additionalInfoController,
-                    decoration: const InputDecoration(
-                      labelText:
-                          'Additional Product Information (e.g., batch number, certifications)',
-                      border: OutlineInputBorder(),
-                    ),
-                    maxLines: 4,
-                  ),
-                  const SizedBox(height: 20),
-                  imagePath == null
-                      ? IconButton(
-                          onPressed: _pickImage,
-                          icon: const Icon(
-                            Icons.file_upload_outlined,
-                            size: 32,
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: _pickImage,
-                          child: SizedBox(
-                            height: 100,
-                            width: 200,
-                            child: Image.file(File(imagePath!),
-                                height: 100, fit: BoxFit.cover),
-                          ),
-                        ),
-                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
