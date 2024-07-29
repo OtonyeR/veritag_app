@@ -1,7 +1,8 @@
 import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:veritag_app/views/splashscreen.dart';
+import 'package:veritag_app/utils/bottom_nav.dart';
+
 
 class RouterScreen extends StatelessWidget {
   const RouterScreen({super.key});
@@ -50,7 +51,7 @@ class RouterScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const Splashscreen(), // Replace with your page
+                                  const BottomNav(), // Replace with your page
                             ),
                           );
                         },
@@ -81,7 +82,7 @@ class RouterScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const Splashscreen(), // Replace with your page
+                                  const BottomNav(), // Replace with your page
                             ),
                           );
                         },

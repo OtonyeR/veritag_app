@@ -4,7 +4,6 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/router_screen.dart';
 
-
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
 

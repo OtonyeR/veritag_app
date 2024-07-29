@@ -4,7 +4,6 @@ import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';
 import 'package:veritag_app/views/router_screen.dart';
 
-
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -56,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           
-  // PageView for onboarding
+          // PageView for onboarding
           PageView.builder(
             controller: _controller.pageController,
             onPageChanged: (index) {
@@ -74,8 +73,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   SizedBox(
                     height: 195.68,
                     width: 273.31,
-                    child:                   
-                  Image.asset(page.image), ),
+                    child: Image.asset(page.image),
+                  ),
                   const SizedBox(height: 150),
                   Text(
                     page.title,
@@ -91,8 +90,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     page.description,
                     style: const TextStyle(
                       fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                     textAlign: TextAlign.center,
                     softWrap: true,
                   ),
@@ -108,9 +108,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               right: 20,
               child: TextButton(
                 onPressed: () {
-                  setState(() {
-                    _controller.skipToEnd();
-                  });
+                  // Navigates to RouterScreen when "Skip" is pressed
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RouterScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Skip'),
               ),
@@ -118,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           // Dot controllers
           Positioned(
-            bottom: 100, // Adjust this value to position the dots higher or lower
+            bottom: 100, // here to adjust the position of the dots
             left: 0,
             right: 0,
             child: Center(
