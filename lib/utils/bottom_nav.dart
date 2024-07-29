@@ -1,15 +1,15 @@
+import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/router_screen.dart';
-import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
+
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
 
   @override
-  State<BottomNav> createState() {
-    return _BottomNavState();
-  }
+  State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav> {
@@ -31,31 +31,53 @@ class _BottomNavState extends State<BottomNav> {
         duration: const Duration(milliseconds: 500),
         child: _getCurrentScreen(),
       ),
-      bottomNavigationBar: FluidNavBar(
-        icons: [
-          FluidNavBarIcon(
-            selectedForegroundColor: colorBgW,
-            backgroundColor: colorPrimary,
-            unselectedForegroundColor: colorSec,
-              icon: Icons.home_outlined,
-              extras: {"label": "Home"}),
-          FluidNavBarIcon(
-              icon: Icons.calendar_today_outlined,
-              extras: {"label": "History"}),
-          FluidNavBarIcon(
-              icon: Icons.lightbulb_outline_rounded,
-              extras: {"label": "Activity"}),
-        ],
-        onChange: _handleNavigationChange,
-        style: const FluidNavBarStyle(
-            barBackgroundColor: Colors.white,
-            iconUnselectedForegroundColor: colorBl,
-            iconSelectedForegroundColor: colorPrimary),
-        scaleFactor: 1.5,
-        defaultIndex: _selectedIndex,
-        itemBuilder: (icon, item) => Semantics(
-          label: icon.extras!["label"],
-          child: item,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          children: <Widget>[
+            _buildNavItem(
+              icon: Ohome.oc_home,
+              label: 'Home',
+              index: 0,
+            ),
+            const Spacer(),
+            _buildNavItem(
+              icon: IconsaxPlusLinear.clock_1,
+              label: 'History',
+              index: 1,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: colorBgW,
+        onPressed: () {
+          // Action for the FloatingActionButton
+        },
+        backgroundColor: colorPrimary,
+        child: const Icon(IconsaxPlusBold.scan),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Widget _buildNavItem({required IconData icon, required String label, required int index}) {
+    return Expanded(
+      child: InkWell(
+        onTap: () => _handleNavigationChange(index),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: _selectedIndex == index ? colorPrimary : colorBl,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                color: _selectedIndex == index ? colorPrimary : colorBl,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -70,10 +92,8 @@ class _BottomNavState extends State<BottomNav> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return const RouterScreen();
-      case 1:
         return const RouterScreen(); // Replace with actual screen
-      case 2:
+      case 1:
         return const RouterScreen(); // Replace with actual screen
       default:
         return const RouterScreen();
