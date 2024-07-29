@@ -29,7 +29,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
       TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
-  String? imagePath;
+ List? imageDetailsList;
 
   @override
   void initState() {
@@ -168,20 +168,20 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                           onPressedCam: () async {
                             final path = await getImagePath(ImageSource.camera);
                             setState(() {
-                              imagePath = path;
+                              imageDetailsList = path;
                             });
                           },
                           onPressedGallery: () async {
                             final path =
                                 await getImagePath(ImageSource.gallery);
                             setState(() {
-                              imagePath = path;
+                              imageDetailsList = path;
                             });
                           },
                         ),
-                        imagePath == null
+                       imageDetailsList![0] == null
                             ? Container()
-                            : Text('Image Selected: $imagePath'),
+                            : Text('Image Selected: ${imageDetailsList![0]}'),
                         const SizedBox(height: 20),
                         SizedBox(
                           width: double.maxFinite,
