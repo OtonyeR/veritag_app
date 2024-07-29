@@ -48,6 +48,7 @@ class _BottomNavState extends State<BottomNav> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
         foregroundColor: colorBgW,
         onPressed: () {
           // Action for the FloatingActionButton
