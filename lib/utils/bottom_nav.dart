@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/utils/constants.dart';
-import 'package:veritag_app/views/dummy_content.dart';
+import 'package:veritag_app/views/router_screen.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 
 class BottomNav extends StatefulWidget {
@@ -70,13 +70,13 @@ class _BottomNavState extends State<BottomNav> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return const DummyScreen();
+        return const RouterScreen();
       case 1:
-        return const DummyScreen(); // Replace with actual screen
+        return const RouterScreen(); // Replace with actual screen
       case 2:
-        return const DummyScreen(); // Replace with actual screen
+        return const RouterScreen(); // Replace with actual screen
       default:
-        return const DummyScreen();
+        return const RouterScreen();
     }
   }
 }
