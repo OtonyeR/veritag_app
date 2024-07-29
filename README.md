@@ -95,4 +95,3 @@ We welcome contributions from the community! Please follow these steps to contri
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-

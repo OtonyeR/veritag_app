@@ -15,7 +15,7 @@ class Product {
     required this.productImage,
     required this.manufactureDate,
     required this.manufactureLocation,
-    required this.isSentOut,
     this.productDescription,
+    required this.isSentOut,
   });
 }
