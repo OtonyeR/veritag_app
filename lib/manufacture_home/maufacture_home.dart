@@ -45,20 +45,16 @@ class ManufactureHome extends StatelessWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
+          Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const SizedBox(height: 200),
-                SizedBox(
-                    height: 199,
-                    width: 246,
-                    child: Image.asset(
-                      'assets/veritag.png',
-                      fit: BoxFit.contain,
-                    )),
+                Image.asset(
+                  'assets/veritag.png',
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 100)
               ],
             ),
           ),
