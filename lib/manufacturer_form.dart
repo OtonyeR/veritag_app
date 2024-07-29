@@ -122,7 +122,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   Future<void> _pickImage() async {
     final path = await getImagePath(ImageSource.gallery);
     setState(() {
-      imagePath = path;
+      imagePath = path[1];
     });
   }
 

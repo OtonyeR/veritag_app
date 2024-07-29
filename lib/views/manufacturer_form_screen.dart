@@ -172,6 +172,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
                         CustomFormField(
                           fieldTitle: 'Manufacturer Location',
                           hintText: 'Your Location',
+                          initialText: 'Getting Your Location',
                           controller: _manufacturerLocationController,
                           readOnly: true,
                           textInputType: TextInputType.text,
