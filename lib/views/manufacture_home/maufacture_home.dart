@@ -6,9 +6,38 @@ import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:ndef/ndef.dart' as ndef;
 
-class ManufactureHome extends StatelessWidget {
+class ManufactureHome extends StatefulWidget {
   const ManufactureHome({super.key});
+
+  @override
+  State<ManufactureHome> createState() => _ManufactureHomeState();
+}
+
+class _ManufactureHomeState extends State<ManufactureHome> {
+  String nfcData = '';
+  Future<void> _readNfc() async {
+    try {
+      NFCTag tag = await FlutterNfcKit.poll();
+      if (tag.ndefAvailable != null) {
+        var ndef = await FlutterNfcKit.readNDEFRecords();
+        if (ndef.isNotEmpty) {
+          setState(() {
+            nfcData = ndef.map((e) => e).join(', ');
+          });
+          showDoneModal(context);
+        }
+      } else {
+        _showErrorMessage('NDEF not available');
+      }
+    } catch (e) {
+      _showErrorMessage('Error: $e');
+    } finally {
+      await FlutterNfcKit.finish();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +78,9 @@ class ManufactureHome extends StatelessWidget {
                       title: 'Verify tag',
                       color: colorsClass.pinkColor,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const NFCReadPage()));
-                        // showScanModal(context);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => const NFCReadPage()));
+                        _showScanModal(context);
                       },
                     ),
                     NfcRowBox(
@@ -59,13 +88,13 @@ class ManufactureHome extends StatelessWidget {
                       title: 'Add product',
                       color: colorsClass.greenColor,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ManufacturerFormNfc()));
-                        // Navigator.push(context, MaterialPageRoute(
-                        //   builder: (context) {
-                        //     return const ManufacturerFormScreen();
-                        //   },
-                        // ));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => const ManufacturerFormNfc()));
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const ManufacturerFormScreen();
+                          },
+                        ));
                       },
                     ),
                   ],
@@ -76,5 +105,34 @@ class ManufactureHome extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _showScanModal(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: 'Ready to scan',
+          icon: SizedBox(
+              height: 108,
+              width: 108,
+              child: Image.asset(
+                'assets/scan_icon.png',
+                fit: BoxFit.cover,
+              )),
+          buttonText: 'Continue',
+          subText: 'Put your device near the NFC Tag you want to write to',
+        );
+      },
+    );
+  }
+
+  void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+    setState(() {
+      nfcData = message;
+    });
+    FlutterNfcKit.finish();
   }
 }

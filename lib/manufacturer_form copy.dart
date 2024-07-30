@@ -18,7 +18,6 @@ class ManufacturerFormNfc extends StatefulWidget {
 class _ManufacturerFormNfcState extends State<ManufacturerFormNfc> {
   final _formKey = GlobalKey<FormState>();
   final LocationService locationService = LocationService();
-
   String currentAddress = '';
   Position? currentPosition;
   String uuid = const Uuid().v4();

@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:veritag_app/services/remote_db.dart';
-
+import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:ndef/ndef.dart' as ndef;
 import '../services/location.dart';
 import '../utils/constants.dart';
 import '../utils/image_picker.dart';
@@ -44,7 +47,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     final DateTime date = DateTime.now();
     _dateController.text =
         '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
@@ -199,8 +201,12 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
-                    if (_formKey.currentState!.validate() &&
-                        imageDetailsList != null) {}
+                    // if (_formKey.currentState!.validate() &&
+                    //     imageDetailsList != null) {
+
+                    // }
+                    _showScanModal(context);
+                    _submitForm();
                   },
                   buttonWidth: MediaQuery.sizeOf(context).width),
             ),
@@ -210,9 +216,30 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     );
   }
 
+  _showScanModal(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: 'Ready to scan',
+          icon: SizedBox(
+              height: 108,
+              width: 108,
+              child: Image.asset(
+                'assets/scan_icon.png',
+                fit: BoxFit.cover,
+              )),
+          buttonText: 'Continue',
+          subText: 'Put your device near the NFC Tag you want to write to',
+        );
+      },
+    );
+  }
+
   _submitForm() {
     // Handle form submission
     var productservice = ProductService();
+    _writeNfc(_uuidController.text);
   }
 
   Future<void> _setAddress() async {
@@ -223,8 +250,67 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
         _manufacturerLocationController.text = address;
       });
     } catch (e) {
-      // Handle exceptions, possibly showing a message to the user
       print('Failed to get address: $e');
     }
+  }
+
+  Future<void> _writeNfc(String uuid) async {
+    try {
+      NFCTag tag = await FlutterNfcKit.poll();
+
+      if (tag.ndefWritable != null) {
+        print('availablea-$uuid');
+        await FlutterNfcKit.writeNDEFRecords([
+          ndef.TextRecord(text: uuid, language: 'en'),
+          ndef.MimeRecord(
+              decodedType: 'Content-type',
+              payload: Uint8List.fromList('com.example.veritag_app'.codeUnits)),
+        ]);
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Message written to tag!')));
+        _showDoneModal(context);
+      } else {
+        print('availableabbbb-$uuid');
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to write message to tag')));
+      }
+    } catch (e) {
+      print('ablea-$e');
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to write message to tag:$e')));
+    } finally {
+      try {
+        await FlutterNfcKit.finish();
+      } catch (e) {
+        try {
+          await FlutterNfcKit.finish();
+        } on PlatformException catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Error finishing NFC session: ${e.message}')),
+          );
+        }
+      }
+    }
+  }
+
+  _showDoneModal(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: 'Done',
+          icon: SizedBox(
+              height: 108,
+              width: 108,
+              child: Image.asset(
+                'assets/done_icon.png',
+                fit: BoxFit.cover,
+              )),
+          buttonText: 'done',
+          buttonPressed: () {},
+        );
+      },
+    );
   }
 }

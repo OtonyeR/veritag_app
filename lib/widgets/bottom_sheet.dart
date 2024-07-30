@@ -48,7 +48,7 @@ const  ScanBottomSheet(
           const SizedBox(height: 18.0),
           PrimaryButton(
               buttonText: buttonText,
-              buttonFunction: () {},
+              buttonFunction: buttonPressed,
               buttonWidth: MediaQuery.sizeOf(context).width)
         ],
       ),
