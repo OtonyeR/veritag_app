@@ -77,7 +77,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     isManufacturer == true
-                        ? 'Set and read your product tags and read'
+                        ? 'Set and read your product tags'
                         : 'Scan to verify a product',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
