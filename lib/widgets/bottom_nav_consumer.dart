@@ -7,6 +7,7 @@ import 'package:veritag_app/views/router_screen.dart';
 import 'package:veritag_app/views/consumer_home_page.dart';
 import 'package:veritag_app/views/history_page_consumer.dart';
 
+
 class BottomNavConsumer extends StatefulWidget {
   const BottomNavConsumer({super.key});
 

@@ -18,7 +18,7 @@ class CustomFormField extends StatelessWidget {
     required this.readOnly,
     required this.textInputType,
     this.validator,
-    this.maxLines
+    this.maxLines,
   });
 
   // final TextEditingController _manufacturerLocationController;

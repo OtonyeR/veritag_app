@@ -31,7 +31,7 @@ class VeritagAppbar extends StatelessWidget implements PreferredSizeWidget {
           color: colorBg,
         ),
       ),
-      toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
+      toolbarHeight: MediaQuery.sizeOf(context).height * 0.06,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
     );

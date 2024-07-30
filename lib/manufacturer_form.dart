@@ -227,43 +227,40 @@ class FormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          fieldTitle,
-          style: const TextStyle(
-              fontSize: 16,
-              color: Color.fromRGBO(95, 99, 119, 1),
-              fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 12),
-        TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: const TextStyle(
-                  fontSize: 14,
-                  color: Color.fromRGBO(26, 32, 61, 0.3),
-                  fontWeight: FontWeight.w400),
-              contentPadding: const EdgeInsets.all(12.0),
-              fillColor: const Color.fromRGBO(252, 252, 253, 1),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(2),
-                  borderSide: const BorderSide(
-                    color: Color.fromRGBO(95, 99, 119, 0.5),
-                  )),
-              focusColor: const Color.fromRGBO(232, 255, 247, 1),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(2),
-                  borderSide: const BorderSide(
-                    color: Color.fromRGBO(0, 124, 130, 1.0),
-                  ))),
-          readOnly: readOnly,
-          validator: validator,
-        ),
-      ]),
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        fieldTitle,
+        style: const TextStyle(
+            fontSize: 16,
+            color: Color.fromRGBO(95, 99, 119, 1),
+            fontWeight: FontWeight.w500),
+      ),
+      const SizedBox(height: 12),
+      TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: const TextStyle(
+                fontSize: 14,
+                color: Color.fromRGBO(26, 32, 61, 0.3),
+                fontWeight: FontWeight.w400),
+            contentPadding: const EdgeInsets.all(12.0),
+            fillColor: const Color.fromRGBO(252, 252, 253, 1),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(2),
+                borderSide: const BorderSide(
+                  color: Color.fromRGBO(95, 99, 119, 0.5),
+                )),
+            focusColor: const Color.fromRGBO(232, 255, 247, 1),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(2),
+                borderSide: const BorderSide(
+                  color: Color.fromRGBO(0, 124, 130, 1.0),
+                ))),
+        readOnly: readOnly,
+        validator: validator,
+      ),
+    ]);
   }
 }
 
@@ -276,9 +273,7 @@ class ImageField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child:  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text(
         'Enter Product Image',
         style: TextStyle(
@@ -288,6 +283,7 @@ class ImageField extends StatelessWidget {
       ),
       const SizedBox(height: 12),
       Container(
+        height: MediaQuery.sizeOf(context).height * 0.3,
         width: MediaQuery.sizeOf(context).width,
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 68),
         decoration: BoxDecoration(
@@ -305,7 +301,7 @@ class ImageField extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text('Take Photo'),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             const Text(
               'Or',
               style: TextStyle(
@@ -323,6 +319,6 @@ class ImageField extends StatelessWidget {
         ),
       ),
       //PrimaryButton(buttonText: 'buttonText', buttonFunction: buttonFunction, buttonWidth: buttonWidth)
-    ]));
+    ]);
   }
 }
