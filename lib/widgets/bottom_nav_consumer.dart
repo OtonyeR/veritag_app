@@ -101,7 +101,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return const ConsumerHomePage();
+        return ConsumerHomePage();
       case 1:
         return const HistoryPageConsumer();
       default:
