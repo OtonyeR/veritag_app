@@ -18,14 +18,19 @@ class _NFCReadPageState extends State<NFCReadPage> {
     // _startNFCSession();
   }
 
-  void _startNFCSession() {
-    setState(() {
-      _isScanning = true;
-    });
+  void _startNFCSession() async {
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable) {
+      setState(() {
+        _isScanning = true;
+      });
 
-    NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      await _handleNFCDiscovered(tag);
-    });
+      NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+        await _handleNFCDiscovered(tag);
+      });
+    } else {
+      _showErrorMessage('Device not availabe for nfc');
+    }
   }
 
   Future<void> _handleNFCDiscovered(NfcTag tag) async {

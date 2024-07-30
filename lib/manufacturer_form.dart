@@ -64,23 +64,33 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
       NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('NFC Tag Detected: ${tag.data}')));
+
         var ndef = Ndef.from(tag);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('NDEF Detected: ${ndef}')));
+
         if (ndef == null || !ndef.isWritable) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Tag is not writable')));
           NfcManager.instance.stopSession();
           return;
         }
+
         NdefRecord ndefRecord = NdefRecord.createText(uuid);
         NdefMessage ndefMessage = NdefMessage([ndefRecord]);
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('NFC Message: ${ndefMessage}')));
+
         try {
-          await ndef.write(ndefMessage);
+          await Ndef.from(tag)?.write(ndefMessage);
+          final payload = ndefMessage.records.first.payload;
+          String textMsg = String.fromCharCodes(payload);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(textMsg)));
+          //  await ndef.write(ndefMessage);
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Message written to tag!')));
+          NfcManager.instance.stopSession();
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Failed to write message to tag')));
