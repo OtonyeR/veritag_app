@@ -97,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   cross_file:
     dependency: transitive
     description:
@@ -233,30 +241,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.17.3"
-  firebase_storage:
-    dependency: "direct main"
-    description:
-      name: firebase_storage
-      sha256: "472e8532dfdcffd00ed8cc1ff57fda76af6f0a8a26547908bc20f25079922408"
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.1.1"
-  firebase_storage_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_storage_platform_interface
-      sha256: f07b5dbf0efcaab0f7d38910851791f7509b8864d491bb11c079f67339f31b27
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.26"
-  firebase_storage_web:
-    dependency: transitive
-    description:
-      name: firebase_storage_web
-      sha256: ef9d27afcd68a1c2b90d0cad2b02cf6333a053655988f4a2f6cba2796134cae5
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.11"
   fixnum:
     dependency: transitive
     description:
@@ -286,6 +270,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_nfc_kit:
+    dependency: "direct main"
+    description:
+      name: flutter_nfc_kit
+      sha256: fe0b86f4883e4a0ebeb6d1fbbc5a86123b95969a4d225bc5a760acda5e3f42e8
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -294,14 +286,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.21"
-  flutter_screenutil:
-    dependency: "direct main"
-    description:
-      name: flutter_screenutil
-      sha256: "8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.9.3"
   flutter_svg:
     dependency: transitive
     description:
@@ -364,10 +348,10 @@ packages:
     dependency: "direct main"
     description:
       name: geolocator
-      sha256: "6cb9fb6e5928b58b9a84bdf85012d757fd07aab8215c5205337021c4999bad27"
+      sha256: "149876cc5207a0f5daf4fdd3bfcf0a0f27258b3fe95108fa084f527ad0568f1b"
       url: "https://pub.dev"
     source: hosted
-    version: "11.1.0"
+    version: "12.0.0"
   geolocator_android:
     dependency: transitive
     description:
@@ -396,10 +380,10 @@ packages:
     dependency: transitive
     description:
       name: geolocator_web
-      sha256: "49d8f846ebeb5e2b6641fe477a7e97e5dd73f03cbfef3fd5c42177b7300fb0ed"
+      sha256: "7a22f400d831f924a89d931ba126a10e6b8b437f31e6b9311320435f3e1571bd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "4.0.0"
   geolocator_windows:
     dependency: transitive
     description:
@@ -536,6 +520,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.1"
   json_annotation:
     dependency: transitive
     description:
@@ -584,6 +576,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   lottie:
     dependency: "direct main"
     description:
@@ -632,6 +632,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  ndef:
+    dependency: "direct main"
+    description:
+      name: ndef
+      sha256: "634d2b5c6f2c186e953218bac9905f3f5e1824b15e30bd1ed6e03a91cdbc7293"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3"
   nfc_manager:
     dependency: "direct main"
     description:
@@ -784,62 +792,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.1"
-  shared_preferences:
-    dependency: "direct main"
-    description:
-      name: shared_preferences
-      sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: "3d4571b3c5eb58ce52a419d86e655493d0bc3020672da79f72fa0c16ca3a8ec1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.4"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "0a8a893bf4fd1152f93fec03a415d11c27c74454d96e2318a7ac38dd18683ab7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: "9f2cbcf46d4270ea8be39fa156d86379077c8a5228d9dfdb1164ae0bb93f1faa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.2"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: "034650b71e73629ca08a0bd789fd1d83cc63c2d1e405946f7cef7bc37432f93a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: "9aee1089b36bd2aafe06582b7d7817fd317ef05fc30e6ba14bff247d0933042a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: "841ad54f3c8381c480d0c9b508b89a34036f512482c407e6df7a9c4aa2ef8f59"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.2"
   sky_engine:
     dependency: transitive
     description: flutter

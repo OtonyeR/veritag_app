@@ -1,3 +1,6 @@
+import 'package:veritag_app/views/history_page.dart';
+import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
+import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import '../ohome_icons.dart';
 import '../test_read_page.dart';
 import 'package:flutter/material.dart';
