@@ -284,7 +284,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     } on PlatformException catch (e) {
       print('abbbb-$uuid');
       setState(() {
-        controller.isScanned.value = true;
+        controller.isScanned.value = false;
         controller.resultMsg.value = '${e.message}';
       });
     } catch (e) {
@@ -300,10 +300,10 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
         try {
           await FlutterNfcKit.finish();
         } on PlatformException catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text('Error finishing NFC session: ${e.message}')),
-          );
+          setState(() {
+            controller.isScanned.value = false;
+            controller.resultMsg.value = '${e.message}';
+          });
         }
       }
     }

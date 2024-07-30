@@ -1,14 +1,15 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:get/get.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/views/history_page.dart';
 import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
-import 'package:veritag_app/views/manufacturer_form_screen.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
 import '../ohome_icons.dart';
-import '../test_read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
-import 'package:veritag_app/views/history_page.dart';
 import 'package:veritag_app/views/router_screen.dart';
-import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -19,10 +20,94 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
+  String nfcData = '';
+  final controller = Get.put(BottomNavHomeController());
 
   @override
   void initState() {
+    controller.isScanned.value = false;
+    controller.resultMsg.value =
+        'Put your device near the NFC Tag you want to read';
+
     super.initState();
+  }
+
+  Future<void> _readNfc() async {
+    try {
+      NFCTag tag = await FlutterNfcKit.poll();
+      if (tag.ndefAvailable != null) {
+        var ndef = await FlutterNfcKit.readNDEFRecords();
+        if (ndef.isNotEmpty) {
+          setState(() {
+            nfcData = ndef.map((e) => e).join(', ');
+            controller.isScanned.value = true;
+            controller.resultMsg.value = 'Succesfully read tag:$nfcData';
+          });
+        } else {
+          _showErrorMessage('Tag is Empty');
+        }
+      } else {
+        _showErrorMessage('NDEF not available');
+      }
+    } on PlatformException catch (e) {
+      _showErrorMessage('${e.message}');
+    } catch (e) {
+      _showErrorMessage('Error: $e');
+    } finally {
+      await FlutterNfcKit.finish();
+    }
+  }
+
+  _showScanModal(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Obx(
+          () => ScanBottomSheet(
+            title: 'Ready to scan',
+            icon: SizedBox(
+                height: 108,
+                width: 108,
+                child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
+            buttonPressed: !controller.isScanned.value
+                ? () {}
+                : () => _showDoneModal(context),
+            buttonText:
+                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+            subText: controller.resultMsg.value,
+          ),
+        );
+      },
+    );
+  }
+
+  _showDoneModal(BuildContext context) {
+    Navigator.of(context).pop();
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: 'Done',
+          icon: SizedBox(
+              height: 108,
+              width: 108,
+              child: Image.asset(
+                'assets/done_icon.png',
+                fit: BoxFit.cover,
+              )),
+          buttonText: 'Show result',
+          buttonPressed: () {},
+        );
+      },
+    );
+  }
+
+  void _showErrorMessage(String message) {
+    setState(() {
+      controller.isScanned.value = false;
+      controller.resultMsg.value = message;
+    });
+    FlutterNfcKit.finish();
   }
 
   @override
@@ -56,13 +141,13 @@ class _BottomNavState extends State<BottomNav> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         foregroundColor: colorBgW,
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const NFCReadPage(),
-            ),
-          );
-          // Action for the FloatingActionButton
+        onPressed: () async {
+          controller.isScanned.value = false;
+          controller.resultMsg.value =
+              'Put your device near the NFC Tag you want to read';
+          _showScanModal(context);
+          await Future.delayed(const Duration(seconds: 2));
+          _readNfc();
         },
         backgroundColor: colorPrimary,
         child: const Icon(IconsaxPlusBold.scan),
