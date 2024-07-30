@@ -40,8 +40,6 @@ class NfcRowBox extends StatelessWidget {
   }
 }
 
-
-
 class HomeHeaderBoxWidget extends StatelessWidget {
   const HomeHeaderBoxWidget({
     super.key,
@@ -51,7 +49,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 267,
-      width: double.maxFinite,
+      width: double.infinity, // Updated to use double.infinity for full width
       color: colorsClass.greenColor,
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,16 +59,20 @@ class HomeHeaderBoxWidget extends StatelessWidget {
             width: 246,
             child: Center(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Welcome to VERItag',
+                    'Welcome to VeriTag',
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
+                    maxLines: 1, // Ensure the text stays on one line
+                    overflow: TextOverflow.ellipsis, // Handle overflow
+                    textAlign: TextAlign.center, // Center align text
                   ),
                   Text(
-                    'Get to set/write a Tag as a manufacturer and Read/Scan a Tag as a customer',
+                    'Set/write a Tag as a manufacturer and Read Tag as a customer',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 12,

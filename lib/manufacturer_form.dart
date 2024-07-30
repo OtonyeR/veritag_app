@@ -61,7 +61,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     }
   }
 
-
   Future<void> _writeNfcTag(String uuid) async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       var ndef = Ndef.from(tag);
@@ -71,7 +70,7 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
         NfcManager.instance.stopSession();
         return;
       }
-
+      // NdefRecord ndefRecord = NdefRecord.createText(uuid);
       NdefMessage ndefMessage = NdefMessage([NdefRecord.createText(uuid)]);
       try {
         await ndef.write(ndefMessage);

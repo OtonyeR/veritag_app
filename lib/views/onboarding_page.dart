@@ -21,14 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       description: 'We have a solution for you!',
     ),
     OnboardingModel(
-      image: 'assets/illustrations/ndi1.png',
+      image: 'assets/illustrations/scan1.png',
       title: 'With your NFC enabled device',
       description: 'Streamline your production process and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',
       title: 'Simple and Fast',
-      description: 'Just like that, you know your product',
+      description: 'Just like that, you`ve discovered more',
     ),
   ];
 
