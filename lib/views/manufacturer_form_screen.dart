@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:ndef/ndef.dart' as ndef;
@@ -45,13 +47,17 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   final TextEditingController _dateController = TextEditingController();
 
   List? imageDetailsList;
-
+  final controller = Get.put(VeriTagController());
   @override
   void initState() {
     final DateTime date = DateTime.now();
     _dateController.text =
         '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
     _uuidController.text = const Uuid().v4();
+    controller.isScanned.value = false;
+    controller.resultMsg.value =
+        'Put your device near the NFC Tag you want to write to';
+
     _setAddress();
     super.initState();
   }
@@ -199,11 +205,15 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
-                    if (_formKey.currentState!.validate() &&
-                        imageDetailsList != null) {
-                      _showScanModal(context);
+                    setState(() {
                       _submitForm();
-                    }
+                    });
+
+                    // if (_formKey.currentState!.validate() &&
+                    //     imageDetailsList != null) {
+                    //   _showScanModal(context);
+                    //   _submitForm();
+                    // }
                   },
                   buttonWidth: MediaQuery.sizeOf(context).width),
             ),
@@ -213,32 +223,8 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     );
   }
 
-  _showScanModal(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return ScanBottomSheet(
-          title: 'Ready to scan',
-          icon: SizedBox(
-              height: 108,
-              width: 108,
-              child: Image.asset(
-                'assets/scan_icon.png',
-                fit: BoxFit.cover,
-              )),
-          buttonPressed: () {},
-          buttonText: 'Continue',
-          subText: 'Put your device near the NFC Tag you want to write to',
-        );
-      },
-    );
-  }
-
   _submitForm() async {
     // Handle form submission
-
-    //TODO: Please don't delete this block of code
-
     // var productservice = ProductService();
     // var imageUrl = await productservice.uploadProductImage(
     //     imageDetailsList?[0], imageDetailsList?[1]);
@@ -251,6 +237,11 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     //   manufactureDate: _dateController.text.trim(),
     //   manufactureLocation: _manufacturerLocationController.text.trim(),
     // ));
+
+    _showScanModal(context);
+
+    await Future.delayed(const Duration(seconds: 2));
+
     _writeNfc(_uuidController.text);
   }
 
@@ -278,18 +269,30 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               decodedType: 'Content-type',
               payload: Uint8List.fromList('com.example.veritag_app'.codeUnits)),
         ]);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Message written to tag!')));
-        _showDoneModal(context);
+        setState(() {
+          controller.isScanned.value = true;
+          controller.resultMsg.value = 'Message succesfully written to tag!';
+        });
       } else {
         print('availableabbbb-$uuid');
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to write message to tag')));
+        setState(() {
+          controller.isScanned.value = false;
+          controller.resultMsg.value =
+              'Writing to tag failed, please try again!';
+        });
       }
+    } on PlatformException catch (e) {
+      print('abbbb-$uuid');
+      setState(() {
+        controller.isScanned.value = true;
+        controller.resultMsg.value = '${e.message}';
+      });
     } catch (e) {
       print('ablea-$e');
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to write message to tag:$e')));
+      setState(() {
+        controller.isScanned.value = false;
+        controller.resultMsg.value = 'Failed to write message to tag';
+      });
     } finally {
       try {
         await FlutterNfcKit.finish();
@@ -306,7 +309,38 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     }
   }
 
+  _showScanModal(BuildContext context) {
+    return showModalBottomSheet(
+      isDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return Obx(
+            () => ScanBottomSheet(
+              title: 'Ready to scan',
+              icon: SizedBox(
+                  height: 108,
+                  width: 108,
+                  child:
+                      Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
+              buttonPressed: !controller.isScanned.value
+                  ? () {}
+                  : () => _showDoneModal(context),
+              buttonText: !controller.isScanned.value
+                  ? 'Writing to tag....'
+                  : 'Continue',
+              subText: controller.resultMsg.value,
+            ),
+          );
+        });
+      },
+    );
+  }
+
   _showDoneModal(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -320,7 +354,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                 fit: BoxFit.cover,
               )),
           buttonText: 'done',
-          buttonPressed: () {},
+          buttonPressed: () => Navigator.of(context).pop(),
         );
       },
     );

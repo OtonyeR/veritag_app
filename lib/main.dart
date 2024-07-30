@@ -1,5 +1,4 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'utils/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +8,7 @@ import 'package:veritag_app/widgets/bottom_nav.dart';
 import 'package:veritag_app/views/splashscreen.dart';
 import 'package:veritag_app/views/router_screen.dart';
 import 'package:veritag_app/views/onboarding_page.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: false,
       builder: (context, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           title: 'VeriTag',
           theme: ThemeData(
             primarySwatch: Colors.blue,
