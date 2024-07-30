@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacturer_form%20copy.dart';
-import 'package:veritag_app/manufacturer_form.dart';
-import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:ndef/ndef.dart' as ndef;
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 class ManufactureHome extends StatefulWidget {
@@ -124,7 +119,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 fit: BoxFit.cover,
               )),
           buttonText: 'Continue',
-          subText: 'Put your device near the NFC Tag you want to write to',
+          subText: 'Put your device near the NFC Tag you want to read',
         );
       },
     );
