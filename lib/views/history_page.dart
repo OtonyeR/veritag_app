@@ -10,11 +10,14 @@ class ProductListScreen extends StatefulWidget {
   _ProductListScreenState createState() => _ProductListScreenState();
 }
 
+enum ProductHistoryState { loading, loaded, error }
+
 class _ProductListScreenState extends State<ProductListScreen> {
   final ProductService _productService = ProductService();
   List<Product> _products = [];
-  bool _isLoading = true;
-
+  // bool _isLoading = true;
+  ProductHistoryState productHistoryState = ProductHistoryState.loading;
+  String error = '';
   @override
   void initState() {
     super.initState();
@@ -26,13 +29,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
       final products = await _productService.getDataFromDb();
       setState(() {
         _products = products;
-        _isLoading = false;
+        // _isLoading = false;
+        productHistoryState = ProductHistoryState.loaded;
       });
     } catch (e) {
       // Handle errors appropriately
       print("Error fetching products: $e");
       setState(() {
-        _isLoading = false;
+        //   _isLoading = false;
+        productHistoryState = ProductHistoryState.error;
       });
     }
   }
@@ -40,13 +45,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const VeritagAppbar(
-        appbarTitle: 'History',
-        arrowBackRequired: false,
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: colorPrimary,))
-          :SafeArea(
+        appBar: const VeritagAppbar(
+          appbarTitle: 'History',
+          arrowBackRequired: false,
+        ),
+        body: switch (productHistoryState) {
+          ProductHistoryState.loading => const Center(
+              child: CircularProgressIndicator(
+                color: colorPrimary,
+              ),
+            ),
+          ProductHistoryState.loaded => SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,6 +100,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 ],
               ),
             ),
-    );
+          ProductHistoryState.error => Center(
+              child: Text(error),
+            )
+        });
   }
 }
