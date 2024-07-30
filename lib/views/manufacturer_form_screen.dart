@@ -5,6 +5,7 @@ import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:ndef/ndef.dart' as ndef;
@@ -34,13 +35,13 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   final TextEditingController _productPriceController = TextEditingController();
 
   final TextEditingController _manufacturerNameController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _manufacturerLocationController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _productDescriptionController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _additionalInfoController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
   List? imageDetailsList;
@@ -49,8 +50,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   void initState() {
     final DateTime date = DateTime.now();
     _dateController.text =
-    '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date
-        .minute} ${date.timeZoneName}';
+        '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
     _uuidController.text = const Uuid().v4();
     _setAddress();
     super.initState();
@@ -98,27 +98,27 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                         ImageField(
                             onPressedCam: () async {
                               final path =
-                              await getImagePath(ImageSource.camera);
+                                  await getImagePath(ImageSource.camera);
                               setState(() {
                                 imageDetailsList = path;
                               });
                             },
                             onPressedGallery: () async {
                               final imageDetails =
-                              await getImagePath(ImageSource.gallery);
+                                  await getImagePath(ImageSource.gallery);
                               setState(() {
                                 imageDetailsList = imageDetails;
                               });
                             },
                             imageDetail: imageDetailsList != null &&
-                                imageDetailsList!.first != null
+                                    imageDetailsList!.first != null
                                 ? Center(
-                                child: Text(
-                                  'Image Selected: ${imageDetailsList![0]}',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                ))
+                                    child: Text(
+                                    'Image Selected: ${imageDetailsList![0]}',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500),
+                                  ))
                                 : Container()),
                         const SizedBox(height: 28),
                         CustomFormField(
@@ -195,7 +195,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
             ),
             Container(
               padding:
-              const EdgeInsets.symmetric(vertical: 44.0, horizontal: 24.0),
+                  const EdgeInsets.symmetric(vertical: 44.0, horizontal: 24.0),
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
@@ -205,9 +205,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                       _submitForm();
                     }
                   },
-                  buttonWidth: MediaQuery
-                      .sizeOf(context)
-                      .width),
+                  buttonWidth: MediaQuery.sizeOf(context).width),
             ),
           ],
         ),
@@ -236,10 +234,21 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     );
   }
 
-  _submitForm() {
+  _submitForm() async {
     // Handle form submission
     var productservice = ProductService();
-    _writeNfc(_uuidController.text);
+    var imageUrl = await productservice.uploadProductImage(
+        imageDetailsList?[0], imageDetailsList?[1]);
+    productservice.addProductToDb(Product(
+      uid: _uuidController.text.trim(),
+      manufacturerName: _manufacturerNameController.text.trim(),
+      productName: _productNameController.text.trim(),
+      productPrice: _productPriceController.text.trim(),
+      productImage: imageUrl,
+      manufactureDate: _dateController.text.trim(),
+      manufactureLocation: _manufacturerLocationController.text.trim(),
+    ));
+    // _writeNfc(_uuidController.text);
   }
 
   Future<void> _setAddress() async {

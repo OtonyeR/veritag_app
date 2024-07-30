@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:veritag_app/utils/constants.dart';
 
 import '../models/product.dart';
@@ -13,11 +14,13 @@ class HistoryPageConsumer extends StatefulWidget {
   State<HistoryPageConsumer> createState() => _HistoryPageConsumerState();
 }
 
+enum ProductHistoryState { loading, loaded, error }
+
 class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   final ScannedProductService _scannedProductService = ScannedProductService();
   List<Product> _scannedProducts = [];
-  bool _isLoading = true;
-
+  ProductHistoryState productHistoryState = ProductHistoryState.loading;
+  String error = '';
   @override
   void initState() {
     super.initState();
@@ -25,17 +28,19 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   }
 
   Future<void> _fetchScannedProducts() async {
+     productHistoryState = ProductHistoryState.loading;
     try {
       final scannedProducts = await _scannedProductService.getScannedProducts();
       setState(() {
         _scannedProducts = scannedProducts;
-        _isLoading = false;
+        productHistoryState = ProductHistoryState.loaded;
       });
-    } catch (e) {
+    }catch (e) {
       // Handle errors appropriately
-      print("Error fetching scanned products: $e");
+      // print("Error fetching scanned products: $e");
       setState(() {
-        _isLoading = false;
+        error = e.toString();
+        productHistoryState = ProductHistoryState.error;
       });
     }
   }
@@ -43,52 +48,61 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const VeritagAppbar(
-        appbarTitle: 'Scan History',
-        arrowBackRequired: false,
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: colorPrimary,))
-          : SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 24, top: 40),
-            child: Text(
-              'Recent Scans',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        appBar: const VeritagAppbar(
+          appbarTitle: 'Scan History',
+          arrowBackRequired: false,
+        ),
+        body: switch (productHistoryState) {
+          ProductHistoryState.loading => const Center(
+              child: CircularProgressIndicator(
+                color: colorPrimary,
+              ),
             ),
-          ),
-          ListView.builder(
-              itemCount: _scannedProducts.length,
-              itemBuilder: (context, index) {
-                final product = _scannedProducts[index];
-                return ListTile(
-                  leading: SizedBox(
-                    height: 19.5,
-                    width: 21.3,
-                    child: Image.asset('assets/box_icon.png'),
+          ProductHistoryState.loaded => SafeArea(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 24, top: 40),
+                  child: Text(
+                    'Recent Scans',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
-                  title: Text(product.productName),
-                  subtitle: Text(product.manufactureDate),
-                  trailing: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(
-                              productInfo: product,
-                            ),
-                          ));
-                    },
-                    child: const Icon(Icons.arrow_forward_ios),
-                  ),
-                );
-              })
-          //Placeholder
-        ],
-      )),
-    );
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: _scannedProducts.length,
+                      itemBuilder: (context, index) {
+                        final product = _scannedProducts[index];
+                        return ListTile(
+                          leading: SizedBox(
+                            height: 19.5,
+                            width: 21.3,
+                            child: Image.asset('assets/box_icon.png'),
+                          ),
+                          title: Text(product.productName),
+                          subtitle: Text(product.manufactureDate),
+                          trailing: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailsScreen(
+                                      productInfo: product,
+                                    ),
+                                  ));
+                            },
+                            child: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        );
+                      }),
+                )
+                //Placeholder
+              ],
+            )),
+          ProductHistoryState.error => Center(
+              child: Text(error),
+            )
+        });
   }
 }
