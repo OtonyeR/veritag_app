@@ -1,19 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 import 'package:veritag_app/services/location.dart';
 import 'package:veritag_app/models/product.dart';
-import 'package:nfc_manager/nfc_manager.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:ndef/ndef.dart' as ndef;
 
-class ManufacturerForm extends StatefulWidget {
-  const ManufacturerForm({super.key});
+class ManufacturerFormNfc extends StatefulWidget {
+  const ManufacturerFormNfc({super.key});
 
   @override
-  State<ManufacturerForm> createState() => _ManufacturerFormState();
+  State<ManufacturerFormNfc> createState() => _ManufacturerFormNfcState();
 }
 
-class _ManufacturerFormState extends State<ManufacturerForm> {
+class _ManufacturerFormNfcState extends State<ManufacturerFormNfc> {
   final _formKey = GlobalKey<FormState>();
   final LocationService locationService = LocationService();
 
@@ -52,57 +54,47 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     }
   }
 
-  Future<void> _writeNfcTag(String uuid) async {
-    bool isAvailable = await NfcManager.instance.isAvailable();
-    print('isavailable:$uuid');
-    if (isAvailable) {
-      print('isavailablebbb:$uuid');
-      try {
-        NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-          print('isavebbb:$uuid');
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('NFC Tag Detected: ${tag.data}')));
+  Future<void> _writeNfc(String uuid) async {
+    try {
+      NFCTag tag = await FlutterNfcKit.poll();
 
-          var ndef = Ndef.from(tag);
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('NDEF Detected: ${ndef}')));
-
-          if (ndef == null || !ndef.isWritable) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Tag is not writable')));
-            NfcManager.instance.stopSession();
-            return;
-          }
-
-          NdefRecord ndefRecord = NdefRecord.createText(uuid);
-          NdefMessage ndefMessage = NdefMessage([ndefRecord]);
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('NFC Message: ${ndefMessage}')));
-
-          await Ndef.from(tag)?.write(ndefMessage);
-          final payload = ndefMessage.records.first.payload;
-          String textMsg = String.fromCharCodes(payload);
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(textMsg)));
-          //  await ndef.write(ndefMessage);
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Message written to tag!')));
-          NfcManager.instance.stopSession();
-        });
-      } catch (e) {
+      if (tag.ndefWritable != null) {
+        print('availablea-$uuid');
+        await FlutterNfcKit.writeNDEFRecords([
+          ndef.TextRecord(text: uuid, language: 'en'),
+          ndef.MimeRecord(
+              decodedType: 'Content-type',
+              payload: Uint8List.fromList('com.example.veritag_app'.codeUnits)),
+        ]);
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to write message to tag:$e')));
-      } finally {
-        NfcManager.instance.stopSession();
+            const SnackBar(content: Text('Message written to tag!')));
+      } else {
+        print('availableabbbb-$uuid');
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to write message to tag')));
       }
-    } else {
+    } catch (e) {
+      print('ablea-$uuid');
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Device not availabe for tagging')));
+          SnackBar(content: Text('Failed to write message to tag:$e')));
+    } finally {
+      try {
+        await FlutterNfcKit.finish();
+      } catch (e) {
+        try {
+          await FlutterNfcKit.finish();
+        } on PlatformException catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Error finishing NFC session: ${e.message}')),
+          );
+        }
+      }
     }
   }
 
   Future<void> _submitForm() async {
-    await _writeNfcTag(uuid);
+    await _writeNfc(uuid);
     // Navigator.of(context)
     //     .push(MaterialPageRoute(builder: (context) => const NFCReadPage()));
 
@@ -128,7 +120,6 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
 
   // @override
   // void dispose() {
-  //   NfcManager.instance.stopSession();
   //   super.dispose();
   // }
   @override
