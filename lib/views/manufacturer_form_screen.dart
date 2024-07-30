@@ -6,9 +6,9 @@ import '../widgets/image_field.dart';
 import 'package:flutter/material.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/veritag_appbar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:veritag_app/services/remote_db.dart';
 
 
 class ManufacturerFormScreen extends StatefulWidget {
@@ -19,37 +19,6 @@ class ManufacturerFormScreen extends StatefulWidget {
 }
 
 class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final LocationService _locationService = LocationService();
-
-  // Form fields controllers
-  final TextEditingController _uuidController = TextEditingController();
-  final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _productPriceController = TextEditingController();
-
-  final TextEditingController _manufacturerNameController =
-      TextEditingController();
-  final TextEditingController _manufacturerLocationController =
-      TextEditingController();
-  final TextEditingController _productDescriptionController =
-      TextEditingController();
-  final TextEditingController _additionalInfoController =
-      TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-
-  List? imageDetailsList;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    final DateTime date = DateTime.now();
-    _dateController.text =
-        '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
-    _uuidController.text = const Uuid().v4();
-    _setAddress();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +79,8 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                                 ? Center(
                                     child: Text(
                                     'Image Selected: ${imageDetailsList![0]}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w500),
@@ -141,9 +112,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter the manufacturer name';
-                            }
-                            if (value.length < 10) {
-                              return 'Please enter a valid name';
                             }
                             return null;
                           },
@@ -208,10 +176,42 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     );
   }
 
-  _submitForm() {
-    // Handle form submission
-    var productservice = ProductService();
+  final _formKey = GlobalKey<FormState>();
+
+  final LocationService _locationService = LocationService();
+
+  // Form fields controllers
+  final TextEditingController _uuidController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productPriceController = TextEditingController();
+
+  final TextEditingController _manufacturerNameController =
+  TextEditingController();
+  final TextEditingController _manufacturerLocationController =
+  TextEditingController();
+  final TextEditingController _productDescriptionController =
+  TextEditingController();
+  final TextEditingController _additionalInfoController =
+  TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  List? imageDetailsList;
+
+  @override
+  void initState() {
+    final DateTime date = DateTime.now();
+    _dateController.text =
+    '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
+    _uuidController.text = const Uuid().v4();
+    _setAddress();
+    super.initState();
   }
+
+
+  // _submitForm() {
+  //   // Handle form submission
+  //   var productservice = ProductService();
+  // }
 
   Future<void> _setAddress() async {
     try {
@@ -222,7 +222,9 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
       });
     } catch (e) {
       // Handle exceptions, possibly showing a message to the user
-      print('Failed to get address: $e');
+      if (kDebugMode) {
+        print('Failed to get address: $e');
+      }
     }
   }
 }
