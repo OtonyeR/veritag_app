@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 32)
+                    padding: EdgeInsets.only(top: 32),
                     height: 195.68,
                     width: 273.31,
                     child: Image.asset(page.image),

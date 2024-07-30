@@ -23,7 +23,7 @@ class NfcRowBox extends StatelessWidget {
         width: 144,
         color: color,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(image),
             Text(
@@ -61,6 +61,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
             width: 246,
             child: Center(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Welcome to VERItag',

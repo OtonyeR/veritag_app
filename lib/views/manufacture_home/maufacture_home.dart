@@ -47,7 +47,6 @@ class ManufactureHome extends StatelessWidget {
                             builder: (context) => const NFCReadPage()));
                       },
                     ),
-                    const SizedBox(width: 12),
                     NfcRowBox(
                       image: 'assets/add.png',
                       title: 'Add product',
