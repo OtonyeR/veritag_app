@@ -21,37 +21,6 @@ class ManufacturerFormScreen extends StatefulWidget {
 }
 
 class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final LocationService _locationService = LocationService();
-
-  // Form fields controllers
-  final TextEditingController _uuidController = TextEditingController();
-  final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _productPriceController = TextEditingController();
-
-  final TextEditingController _manufacturerNameController =
-      TextEditingController();
-  final TextEditingController _manufacturerLocationController =
-      TextEditingController();
-  final TextEditingController _productDescriptionController =
-      TextEditingController();
-  final TextEditingController _additionalInfoController =
-      TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-
-  List? imageDetailsList;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    final DateTime date = DateTime.now();
-    _dateController.text =
-        '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
-    _uuidController.text = const Uuid().v4();
-    _setAddress();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +81,8 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                                 ? Center(
                                     child: Text(
                                     'Image Selected: ${imageDetailsList![0]}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w500),
@@ -150,7 +121,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                         CustomFormField(
                           fieldTitle: 'Manufacturer Location',
                           hintText: 'Your Location',
-                          initialText: 'Getting Your Location',
                           controller: _manufacturerLocationController,
                           readOnly: true,
                           textInputType: TextInputType.text,
@@ -208,10 +178,42 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     );
   }
 
-  _submitForm() {
-    // Handle form submission
-    var productservice = ProductService();
+  final _formKey = GlobalKey<FormState>();
+
+  final LocationService _locationService = LocationService();
+
+  // Form fields controllers
+  final TextEditingController _uuidController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productPriceController = TextEditingController();
+
+  final TextEditingController _manufacturerNameController =
+  TextEditingController();
+  final TextEditingController _manufacturerLocationController =
+  TextEditingController();
+  final TextEditingController _productDescriptionController =
+  TextEditingController();
+  final TextEditingController _additionalInfoController =
+  TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  List? imageDetailsList;
+
+  @override
+  void initState() {
+    final DateTime date = DateTime.now();
+    _dateController.text =
+    '${date.day} - ${date.month} - ${date.year} ${date.hour}:${date.minute} ${date.timeZoneName}';
+    _uuidController.text = const Uuid().v4();
+    _setAddress();
+    super.initState();
   }
+
+
+  // _submitForm() {
+  //   // Handle form submission
+  //   var productservice = ProductService();
+  // }
 
   Future<void> _setAddress() async {
     try {

@@ -9,7 +9,6 @@ class CustomFormField extends StatelessWidget {
   final TextInputType textInputType;
   String? Function(String?)? validator;
   int? maxLines;
-  String? initialText;
 
   CustomFormField({
     super.key,
@@ -20,7 +19,6 @@ class CustomFormField extends StatelessWidget {
     required this.textInputType,
     this.validator,
     this.maxLines,
-    this.initialText
   });
 
   // final TextEditingController _manufacturerLocationController;
@@ -40,7 +38,6 @@ class CustomFormField extends StatelessWidget {
         controller: controller,
         keyboardType: textInputType,
         maxLines: maxLines,
-        initialValue: initialText,
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(

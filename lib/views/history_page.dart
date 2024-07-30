@@ -63,7 +63,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       return ListTile(
                         leading: SizedBox(
                           height: 19.5,
-                          width: 21.3,
+                          width: 21.93,
                           child: Image.asset('assets/box_icon.png'),
                         ),
                         // Assuming productImage is a URL
