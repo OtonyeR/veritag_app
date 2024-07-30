@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';
 import 'package:veritag_app/views/router_screen.dart';
+import 'package:veritag_app/utils/app_state.dart'; // Import AppState
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,7 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final OnboardingController _controller = OnboardingController();
-  
+
   final List<OnboardingModel> onboardingPages = [
     OnboardingModel(
       image: 'assets/illustrations/ndi-nne.png',
@@ -36,6 +37,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void dispose() {
     _controller.pageController.dispose(); 
     super.dispose();
+  }
+
+  void _finishOnboarding() async {
+    await AppState.instance.completeOnboarding();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RouterScreen(),
+      ),
+    );
   }
 
   @override
@@ -107,15 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               top: 30,
               right: 20,
               child: TextButton(
-                onPressed: () {
-                  // Navigates to RouterScreen when "Skip" is pressed
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RouterScreen(),
-                    ),
-                  );
-                },
+                onPressed: _finishOnboarding,
                 child: const Text('Skip'),
               ),
             ),
@@ -155,12 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () {
                 if (_controller.currentPage == onboardingPages.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RouterScreen(),
-                    ),
-                  );
+                  _finishOnboarding();
                 } else {
                   _controller.nextPage();
                 }

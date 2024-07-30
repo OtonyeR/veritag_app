@@ -2,11 +2,8 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/location.dart';
-import 'package:veritag_app/utils/image_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManufacturerForm extends StatefulWidget {
@@ -64,27 +61,23 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
   Future<void> _writeNfcTag(String uuid) async {
     bool isAvailable = await NfcManager.instance.isAvailable();
     if (isAvailable) {
-      NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('NFC Tag Detected: ${tag.data}')));
-
-        var ndef = Ndef.from(tag);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('NDEF Detected: ${ndef}')));
-
-        if (ndef == null || !ndef.isWritable) {
+      try {
+        NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Tag is not writable')));
-          NfcManager.instance.stopSession();
-          return;
-        }
-
-        NdefRecord ndefRecord = NdefRecord.createText(uuid);
-        NdefMessage ndefMessage = NdefMessage([ndefRecord]);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('NFC Message: ${ndefMessage}')));
-
-        try {
+              SnackBar(content: Text('NFC Tag Detected: ${tag.data}')));
+          var ndef = Ndef.from(tag);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('NDEF Detected: ${ndef}')));
+          if (ndef == null || !ndef.isWritable) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Tag is not writable')));
+            NfcManager.instance.stopSession();
+            return;
+          }
+          NdefRecord ndefRecord = NdefRecord.createText(uuid);
+          NdefMessage ndefMessage = NdefMessage([ndefRecord]);
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('NFC Message: ${ndefMessage}')));
           await Ndef.from(tag)?.write(ndefMessage);
           final payload = ndefMessage.records.first.payload;
           String textMsg = String.fromCharCodes(payload);
@@ -94,18 +87,18 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Message written to tag!')));
           NfcManager.instance.stopSession();
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Failed to write message to tag')));
-        } finally {
-          NfcManager.instance.stopSession();
-        }
-      });
+        });
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to write message to tag:$e')));
+      } finally {
+        NfcManager.instance.stopSession();
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Device not availabe for tagging')));
     }
-  }
+  } 
 
   Future<void> _submitForm() async {
     _writeNfcTag(uuid);

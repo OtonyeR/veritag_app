@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:veritag_app/services/remote_db.dart';
-
 import '../services/location.dart';
-import '../utils/constants.dart';
 import '../utils/image_picker.dart';
-import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
 import '../widgets/image_field.dart';
+import 'package:flutter/material.dart';
+import '../widgets/primary_button.dart';
 import '../widgets/veritag_appbar.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:veritag_app/services/remote_db.dart';
+
 
 class ManufacturerFormScreen extends StatefulWidget {
   const ManufacturerFormScreen({super.key});
