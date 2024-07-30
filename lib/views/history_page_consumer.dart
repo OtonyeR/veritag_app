@@ -1,3 +1,5 @@
+import 'package:veritag_app/utils/constants.dart';
+
 import '../models/product.dart';
 import 'product_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,9 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
         appbarTitle: 'Scan History',
         arrowBackRequired: false,
       ),
-      body: SafeArea(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator(color: colorPrimary,))
+          : SafeArea(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
