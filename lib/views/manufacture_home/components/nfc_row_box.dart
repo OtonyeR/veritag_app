@@ -74,6 +74,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
+                  const SizedBox(height: 6),
                   Text(
                     isManufacturer == true
                         ? 'Set and read your product tags and read'

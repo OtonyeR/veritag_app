@@ -14,7 +14,7 @@ const  ScanBottomSheet(
       required this.title,
       required this.icon,
       required this.buttonText,
-      this.buttonPressed, this.subText,});
+      required this.buttonPressed, this.subText,});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +73,8 @@ showScanModal(BuildContext context) {
               fit: BoxFit.cover,
             )),
         buttonText: 'Continue',
+        buttonPressed: (){},
+
         subText:
         'Put your device near the NFC Tag you want to read',
       );
@@ -93,6 +95,8 @@ showDoneModal(BuildContext context) {
               'assets/done_icon.png',
               fit: BoxFit.cover,
             )),
+        buttonPressed: (){},
+
         buttonText: 'See Result',
 
       );
