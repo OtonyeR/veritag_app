@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
@@ -31,9 +32,9 @@ class ManufactureHome extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 200,
-            left: 20,
-            right: 20,
+            top: 200.h,
+            left: 20.w,
+            right: 20.w,
             child: Card(
               color: Colors.white,
               shape: const BeveledRectangleBorder(),

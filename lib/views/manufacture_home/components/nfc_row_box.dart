@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:veritag_app/utils/color.dart';
 
 
@@ -51,16 +52,16 @@ class HomeHeaderBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 267,
+      height: 267.h,
       width: double.maxFinite,
       color: colorsClass.greenColor,
-      child: const Column(
+      child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 246,
-            child: Center(
+            width: 246.w,
+            child: const Center(
               child: Column(
 mainAxisSize: MainAxisSize.max,
                 children: [
