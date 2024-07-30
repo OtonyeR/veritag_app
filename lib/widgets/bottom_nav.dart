@@ -105,7 +105,7 @@ class _BottomNavState extends State<BottomNav> {
       case 0:
         return const ManufactureHome();
       case 1:
-        return const HistoryPage();
+        return  ProductListScreen();
       default:
         return const RouterScreen();
     }
