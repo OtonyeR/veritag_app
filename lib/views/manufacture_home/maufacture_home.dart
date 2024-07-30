@@ -13,7 +13,7 @@ class ManufactureHome extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const HomeHeaderBoxWidget(),
+          const HomeHeaderBoxWidget(isManufacturer: true,),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

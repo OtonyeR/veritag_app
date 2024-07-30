@@ -11,7 +11,7 @@ class ConsumerHomePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const HomeHeaderBoxWidget(),
+          const HomeHeaderBoxWidget(isManufacturer: false,),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
