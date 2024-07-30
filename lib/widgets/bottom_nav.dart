@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/history_page.dart';
-import 'package:veritag_app/views/history_page.dart';
 import 'package:veritag_app/views/router_screen.dart';
 import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
 
