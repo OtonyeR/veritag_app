@@ -48,6 +48,7 @@ dependencies:
   fluid_bottom_nav_bar: ^1.4.0
   google_fonts: ^6.2.1
   firebase_storage: ^12.1.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

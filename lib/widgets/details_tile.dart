@@ -1,6 +1,6 @@
+import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
 
 class DetailTile extends StatelessWidget {
   final String detailTitle;
@@ -16,20 +16,20 @@ class DetailTile extends StatelessWidget {
       children: [
         Text(
           detailTitle,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, color: colorPrimary, fontWeight: FontWeight.w500),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           detailInfo, // Assuming this should be a different text
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 16,
               color: Color.fromRGBO(34, 34, 34, 1),
               fontWeight: FontWeight.w400),
         ),
-        SizedBox(height: 8),
-        Divider(),
-        SizedBox(height: 15),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 15),
       ],
     );
   }

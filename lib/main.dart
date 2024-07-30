@@ -1,19 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'utils/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:veritag_app/firebase_options.dart';
-import 'package:veritag_app/views/onboarding_page.dart';
+import 'package:veritag_app/widgets/bottom_nav.dart';
 import 'package:veritag_app/views/splashscreen.dart';
 import 'package:veritag_app/views/router_screen.dart';
+import 'package:veritag_app/views/onboarding_page.dart';
 
-import 'widgets/bottom_nav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+ await AppState.instance.loadAppState();
+ 
   runApp(const MyApp());
 }
 
@@ -32,8 +34,6 @@ class MyApp extends StatelessWidget {
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         }),
         useMaterial3: true,
-   
-
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: 'splashscreen',

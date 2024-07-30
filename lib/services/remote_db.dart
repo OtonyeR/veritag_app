@@ -1,8 +1,8 @@
 import 'dart:io';
-
+import '../models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/product.dart';
+
 
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

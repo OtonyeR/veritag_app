@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacturer_form.dart';
-import 'package:veritag_app/test_read_page.dart';
-import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/utils/color.dart';
+import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
+import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
+
 
 class ManufactureHome extends StatelessWidget {
   const ManufactureHome({super.key});
@@ -16,11 +16,14 @@ class ManufactureHome extends StatelessWidget {
           const HomeHeaderBoxWidget(),
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                const SizedBox(
+                  height: 300,
+                ),
                 Image.asset(
-                  'assets/veritag.png',
+                  'assets/vgroup.png',
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 100)
@@ -46,6 +49,7 @@ class ManufactureHome extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const NFCReadPage()));
+                        // showScanModal(context);
                       },
                     ),
                     NfcRowBox(
@@ -54,7 +58,8 @@ class ManufactureHome extends StatelessWidget {
                       color: colorsClass.greenColor,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ManufacturerFormScreen()));
+                            builder: (context) =>
+                                const ManufacturerFormScreen()));
                       },
                     ),
                   ],

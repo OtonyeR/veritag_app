@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/utils/color.dart';
 
+
 class NfcRowBox extends StatelessWidget {
   const NfcRowBox({
     super.key,
@@ -61,16 +62,18 @@ class HomeHeaderBoxWidget extends StatelessWidget {
             width: 246,
             child: Center(
               child: Column(
+mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    'Welcome to VERItag',
+                    'Welcome to VeriTag',
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
+                        textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Add or Scan A Product',
+                    'Set/write a Tag as a manufacturer and Read a Tag as a customer',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 12,

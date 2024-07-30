@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import '../models/product.dart';
 import '../utils/size.dart';
+import '../models/product.dart';
 import '../utils/constants.dart';
 import '../widgets/details_tile.dart';
+import 'package:flutter/material.dart';
+
+
 
 class ProductDetailsScreen extends StatelessWidget {
   final Product productInfo;

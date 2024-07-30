@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/onboarding_model.dart';
 import '../utils/onboarding_controller.dart';
 import 'package:veritag_app/views/router_screen.dart';
+import 'package:veritag_app/utils/app_state.dart'; // Import AppState
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,7 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final OnboardingController _controller = OnboardingController();
-  
+
   final List<OnboardingModel> onboardingPages = [
     OnboardingModel(
       image: 'assets/illustrations/ndi-nne.png',
@@ -21,14 +22,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       description: 'We have a solution for you!',
     ),
     OnboardingModel(
-      image: 'assets/illustrations/ndi1.png',
+      image: 'assets/illustrations/scan1.png',
       title: 'With your NFC enabled device',
       description: 'Streamline your production process and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',
       title: 'Simple and Fast',
-      description: 'Just like that, you know your product',
+      description: 'Just like that, you`ve discovered more',
     ),
   ];
 
@@ -36,6 +37,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void dispose() {
     _controller.pageController.dispose(); 
     super.dispose();
+  }
+
+  void _finishOnboarding() async {
+    await AppState.instance.completeOnboarding();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RouterScreen(),
+      ),
+    );
   }
 
   @override
@@ -107,16 +118,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               top: 30,
               right: 20,
               child: TextButton(
-                onPressed: () {
-                  // Navigates to RouterScreen when "Skip" is pressed
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RouterScreen(),
-                    ),
-                  );
-                },
-                child: const Text('Skip'),
+                onPressed: _finishOnboarding,
+                child: const Text('Skip', style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: colorPrimary,
+                  fontSize: 20,
+                ),),
               ),
             ),
 
@@ -155,12 +162,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () {
                 if (_controller.currentPage == onboardingPages.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RouterScreen(),
-                    ),
-                  );
+                  _finishOnboarding();
                 } else {
                   _controller.nextPage();
                 }
@@ -169,7 +171,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _controller.currentPage == onboardingPages.length - 1
                     ? 'Start'
                     : 'Next',
-              ),
+             style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: colorPrimary,
+                  fontSize: 20,
+                ), ),
             ),
           ),
         ],

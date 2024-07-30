@@ -15,17 +15,22 @@ class _NFCReadPageState extends State<NFCReadPage> {
   @override
   void initState() {
     super.initState();
-    _startNFCSession();
+    // _startNFCSession();
   }
 
-  void _startNFCSession() {
-    setState(() {
-      _isScanning = true;
-    });
+  void _startNFCSession() async {
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable) {
+      setState(() {
+        _isScanning = true;
+      });
 
-    NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      await _handleNFCDiscovered(tag);
-    });
+      NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+        await _handleNFCDiscovered(tag);
+      });
+    } else {
+      _showErrorMessage('Device not availabe for nfc');
+    }
   }
 
   Future<void> _handleNFCDiscovered(NfcTag tag) async {
@@ -56,6 +61,8 @@ class _NFCReadPageState extends State<NFCReadPage> {
   }
 
   void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
     setState(() {
       _nfcData = message;
       _isScanning = false;

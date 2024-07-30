@@ -1,17 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:veritag_app/models/product.dart';
-import 'package:veritag_app/services/remote_db.dart';
-
 import '../services/location.dart';
 import '../utils/image_picker.dart';
-import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
 import '../widgets/image_field.dart';
+import 'package:flutter/material.dart';
+import '../widgets/primary_button.dart';
 import '../widgets/veritag_appbar.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/remote_db.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class ManufacturerFormScreen extends StatefulWidget {
   const ManufacturerFormScreen({super.key});
@@ -147,9 +147,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter the manufacturer name';
-                                }
-                                if (value.length < 10) {
-                                  return 'Please enter a valid name';
                                 }
                                 return null;
                               },
