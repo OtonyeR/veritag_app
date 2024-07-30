@@ -119,7 +119,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               right: 20,
               child: TextButton(
                 onPressed: _finishOnboarding,
-                child: const Text('Skip'),
+                child: const Text('Skip', style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: colorPrimary,
+                  fontSize: 20,
+                ),),
               ),
             ),
 
@@ -167,7 +171,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _controller.currentPage == onboardingPages.length - 1
                     ? 'Start'
                     : 'Next',
-              ),
+             style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: colorPrimary,
+                  fontSize: 20,
+                ), ),
             ),
           ),
         ],
