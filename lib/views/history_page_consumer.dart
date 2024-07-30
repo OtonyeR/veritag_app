@@ -26,7 +26,7 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
             ),
           ),
 
-          //TODO: Pull stored products from firebase DB.
+          
 
           //Placeholder
           ListTile(
