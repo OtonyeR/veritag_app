@@ -6,7 +6,8 @@ class Product {
   final String productName; // Name of product
   final String productPrice;
   final String productImage; //Image uploaded with image_picker package
-  final String manufactureDate; //Current date gotten from time of product register
+  final String
+      manufactureDate; //Current date gotten from time of product register
   final String manufactureLocation; //manufacture location from geolocation api
   String? productDescription; //brief description of product (optional)
   String? additionalInfo; //brief description of product (optional)
@@ -31,6 +32,7 @@ class Product {
       'productName': productName,
       'productImage': productImage,
       'manufactureDate': manufactureDate,
+      'productPrice': productPrice,
       'manufactureLocation': manufactureLocation,
       'productDescription': productDescription,
       'additionalInfo': additionalInfo,
@@ -53,5 +55,6 @@ class Product {
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromJson(String source) => Product.fromMap(json.decode(source));
+  factory Product.fromJson(String source) =>
+      Product.fromMap(json.decode(source));
 }

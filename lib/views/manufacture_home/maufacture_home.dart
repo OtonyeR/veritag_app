@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/test_read_page.dart';
-import 'package:veritag_app/manufacturer_form.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
@@ -49,7 +47,7 @@ class ManufactureHome extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const NFCReadPage()));
-                       // showScanModal(context);
+                        // showScanModal(context);
                       },
                     ),
                     NfcRowBox(
@@ -58,12 +56,8 @@ class ManufactureHome extends StatelessWidget {
                       color: colorsClass.greenColor,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ManufacturerFormScreen()));
-                        // Navigator.push(context, MaterialPageRoute(
-                        //   builder: (context) {
-                        //     return const ManufacturerFormScreen();
-                        //   },
-                        // ));
+                            builder: (context) =>
+                                const ManufacturerFormScreen()));
                       },
                     ),
                   ],

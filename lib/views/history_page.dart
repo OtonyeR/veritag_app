@@ -47,6 +47,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 24, top: 40),
@@ -56,33 +57,35 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  ListView.builder(
-                    itemCount: _products.length,
-                    itemBuilder: (context, index) {
-                      final product = _products[index];
-                      return ListTile(
-                        leading: SizedBox(
-                          height: 19.5,
-                          width: 21.93,
-                          child: Image.asset('assets/box_icon.png'),
-                        ),
-                        // Assuming productImage is a URL
-                        title: Text(product.productName),
-                        subtitle: Text(product.manufactureDate),
-                        trailing: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(
-                                    productInfo: product,
-                                  ),
-                                ));
-                          },
-                          child: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      );
-                    },
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _products.length,
+                      itemBuilder: (context, index) {
+                        final product = _products[index];
+                        return ListTile(
+                          leading: SizedBox(
+                            height: 19.5,
+                            width: 21.3,
+                            child: Image.asset('assets/box_icon.png'),
+                          ),
+                          // Assuming productImage is a URL
+                          title: Text(product.productName),
+                          subtitle: Text(product.manufactureDate),
+                          trailing: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailsScreen(
+                                      productInfo: product,
+                                    ),
+                                  ));
+                            },
+                            child: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

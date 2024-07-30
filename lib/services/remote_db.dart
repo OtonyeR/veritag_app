@@ -1,8 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../models/product.dart';
 
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future<String> uploadProductImage(String imageName, String imagePath)  async {
+    final file = File(imagePath);
+    final metadata = SettableMetadata(contentType: "image/jpeg");
+    final storageRef = FirebaseStorage.instance.ref();
+    final uploadTask =
+        storageRef.child("images/$imageName").putFile(file, metadata);
+    final snapshot = await uploadTask.whenComplete(() => null);
+    return snapshot.ref.getDownloadURL();
+  }
 
 //add list of products to db
   Future<void> addDataToDb(List<Product> products) async {
