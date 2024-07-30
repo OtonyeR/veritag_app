@@ -53,7 +53,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 267.h,
+      height: 267,
       width: double.maxFinite,
       color: colorsClass.greenColor,
       child: Column(
