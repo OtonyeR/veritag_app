@@ -77,8 +77,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                       title: 'Verify tag',
                       color: colorsClass.pinkColor,
                       onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => const NFCReadPage()));
                         _showScanModal(context);
                       },
                     ),
