@@ -42,7 +42,7 @@ class ConsumerHomePage extends StatelessWidget {
                   children: [
                     NfcRowBox(
                       image: 'assets/scan_nfc.png',
-                      title: 'Verify tag',
+                      title: 'Verify Product',
                       color: colorsClass.pinkColor,
                       onTap: () {
                         showScanModal(context);

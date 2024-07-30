@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/onboarding_model.dart';
@@ -24,7 +26,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingModel(
       image: 'assets/illustrations/scan1.png',
       title: 'With your NFC enabled device',
-      description: 'Streamline your production process and get the most out of it!',
+      description:
+          'Streamline your production process and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',
@@ -35,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
-    _controller.pageController.dispose(); 
+    _controller.pageController.dispose();
     super.dispose();
   }
 
@@ -56,16 +59,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           // Background image
           Positioned.fill(
-            bottom: 0,
+            bottom: -65,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Image.asset(
-                'assets/illustrations/o-bg.png', 
+                'assets/illustrations/o-bg.png',
                 fit: BoxFit.contain,
               ),
             ),
           ),
-          
+
           // PageView for onboarding
           PageView.builder(
             controller: _controller.pageController,
@@ -89,8 +92,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 150),
                   Text(
                     page.title,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: 20.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
                     ),
@@ -99,8 +102,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 16),
                   Text(
                     page.description,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -119,11 +122,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               right: 20,
               child: TextButton(
                 onPressed: _finishOnboarding,
-                child: const Text('Skip', style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: colorPrimary,
-                  fontSize: 20,
-                ),),
+                child: Text(
+                  'Skip',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: colorPrimary,
+                    fontSize: 20.sp,
+                  ),
+                ),
               ),
             ),
 
@@ -157,8 +163,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // Conditional Next Button
           Positioned(
             top: 30,
-            left: _controller.currentPage == onboardingPages.length - 1 ? null : 20,
-            right: _controller.currentPage == onboardingPages.length - 1 ? 20 : null,
+            left: _controller.currentPage == onboardingPages.length - 1
+                ? null
+                : 20,
+            right: _controller.currentPage == onboardingPages.length - 1
+                ? 20
+                : null,
             child: TextButton(
               onPressed: () {
                 if (_controller.currentPage == onboardingPages.length - 1) {
@@ -171,11 +181,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _controller.currentPage == onboardingPages.length - 1
                     ? 'Start'
                     : 'Next',
-             style: const TextStyle(
+                style:  TextStyle(
                   fontWeight: FontWeight.w500,
                   color: colorPrimary,
-                  fontSize: 20,
-                ), ),
+                  fontSize: 20.sp,
+                ),
+              ),
             ),
           ),
         ],

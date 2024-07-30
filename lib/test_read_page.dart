@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:ndef/ndef.dart' as ndef;
+import 'package:veritag_app/utils/size.dart';
+import 'package:veritag_app/widgets/veritag_appbar.dart';
+
+import 'widgets/primary_button.dart';
 
 class NFCReadPage extends StatefulWidget {
   const NFCReadPage({super.key});
@@ -56,29 +60,37 @@ class _NFCReadPageState extends State<NFCReadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('NFC Reader'),
+      backgroundColor: Colors.white,
+      appBar: const VeritagAppbar(
+        appbarTitle: 'NFC Reader',
+        arrowBackRequired: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_isScanning)
-              const CircularProgressIndicator()
-            else
-              Text(
-                _nfcData,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-              ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _readNfc();
-              },
-              child: const Text('Start Scanning'),
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (_isScanning)
+                const CircularProgressIndicator()
+              else
+                SizedBox(
+                  width: width(context) * 0.45,
+                  child: Text(
+                    _nfcData,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+              const SizedBox(height: 20),
+              PrimaryButton(
+                  buttonText: 'Start Scanning',
+                  buttonFunction: () {
+                    _readNfc();
+                  },
+                  buttonWidth: width(context) * 0.5)
+            ],
+          ),
         ),
       ),
     );

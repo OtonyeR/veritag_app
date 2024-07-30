@@ -38,6 +38,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           const HomeHeaderBoxWidget(
@@ -86,8 +87,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                       title: 'Add product',
                       color: colorsClass.greenColor,
                       onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => const ManufacturerFormNfc()));
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return const ManufacturerFormScreen();
@@ -120,6 +119,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               )),
           buttonText: 'Continue',
           subText: 'Put your device near the NFC Tag you want to read',
+          buttonPressed: () {},
         );
       },
     );
