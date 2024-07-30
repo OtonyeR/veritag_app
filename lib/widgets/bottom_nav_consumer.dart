@@ -1,13 +1,12 @@
-
-import 'package:veritag_app/views/consumer_home_page.dart';
-import 'package:veritag_app/views/history_page.dart';
-import 'package:veritag_app/views/history_page_consumer.dart';
-
 import '../ohome_icons.dart';
+import '../test_read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/router_screen.dart';
+import 'package:veritag_app/views/consumer_home_page.dart';
+import 'package:veritag_app/views/history_page_consumer.dart';
+
 
 class BottomNavConsumer extends StatefulWidget {
   const BottomNavConsumer({super.key});
@@ -56,7 +55,11 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
         shape: const CircleBorder(),
         foregroundColor: colorBgW,
         onPressed: () {
-          // Action for the FloatingActionButton
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const NFCReadPage(),
+            ),
+          );
         },
         backgroundColor: colorPrimary,
         child: const Icon(IconsaxPlusBold.scan),
@@ -65,7 +68,8 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
     );
   }
 
-  Widget _buildNavItem({required IconData icon, required String label, required int index}) {
+  Widget _buildNavItem(
+      {required IconData icon, required String label, required int index}) {
     return Expanded(
       child: InkWell(
         onTap: () => _handleNavigationChange(index),

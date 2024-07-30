@@ -1,52 +1,96 @@
-import 'package:flutter/cupertino.dart';
+import '../models/product.dart';
+import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
-import 'package:veritag_app/views/scan_nfc_result_page.dart';
-import 'package:veritag_app/widgets/veritag_appbar.dart';
+import '../utils/constants.dart';
+import '../widgets/veritag_appbar.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
-
+class ProductListScreen extends StatefulWidget {
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  _ProductListScreenState createState() => _ProductListScreenState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _ProductListScreenState extends State<ProductListScreen> {
+  final ProductService _productService = ProductService();
+  List<Product> _products = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProducts();
+  }
+
+  Future<void> _fetchProducts() async {
+    try {
+      final products = await _productService.getDataFromDb();
+      setState(() {
+        _products = products;
+        _isLoading = false;
+      });
+    } catch (e) {
+      // Handle errors appropriately
+      print("Error fetching products: $e");
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const VeritagAppbar(appbarTitle: 'History', arrowBackRequired: false,),
-      body: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 24, top: 40),
-            child: Text(
-              'Recently Added',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      appBar: const VeritagAppbar(
+        appbarTitle: 'History',
+        arrowBackRequired: false,
+      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator(color: colorPrimary,))
+          :SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 24, top: 40),
+                    child: Text(
+                      'Recently Added',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _products.length,
+                      itemBuilder: (context, index) {
+                        final product = _products[index];
+                        return ListTile(
+                          leading: SizedBox(
+                            height: 19.5,
+                            width: 21.3,
+                            child: Image.asset('assets/box_icon.png'),
+                          ),
+                          // Assuming productImage is a URL
+                          title: Text(product.productName),
+                          subtitle: Text(product.manufactureDate),
+                          trailing: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailsScreen(
+                                      productInfo: product,
+                                    ),
+                                  ));
+                            },
+                            child: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-
-          //TODO: Pull stored products from firebase DB.
-
-          //Placeholder
-          ListTile(
-            leading: const Icon(Icons.check_box),
-            title: const Text('Rolex Submariner'),
-            subtitle: const Text('08-07-2024'),
-            trailing: InkWell(
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) =>
-                  //           const ScanNfcResultPage(isProductAuthentic: false),
-                  //     ));
-                },
-                child: const Icon(Icons.arrow_forward_ios)),
-          )
-        ],
-      )),
     );
   }
 }

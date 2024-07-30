@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 class ConsumerHomePage extends StatelessWidget {
   const ConsumerHomePage({super.key});
@@ -11,7 +11,7 @@ class ConsumerHomePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const HomeHeaderBoxWidget(),
+          const HomeHeaderBoxWidget(isManufacturer: false,),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -21,7 +21,7 @@ class ConsumerHomePage extends StatelessWidget {
                   height: 300,
                 ),
                 Image.asset(
-                  'assets/veritag.png',
+                  'assets/vgroup.png',
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 100)

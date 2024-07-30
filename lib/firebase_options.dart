@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'veritag-5b2cf.appspot.com',
     iosBundleId: 'com.example.veritagApp',
   );
+
 }

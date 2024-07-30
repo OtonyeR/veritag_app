@@ -9,6 +9,7 @@ class NfcRowBox extends StatelessWidget {
     this.color,
     this.onTap,
   });
+
   final String image;
   final String title;
   final Color? color;
@@ -40,11 +41,12 @@ class NfcRowBox extends StatelessWidget {
   }
 }
 
-
-
 class HomeHeaderBoxWidget extends StatelessWidget {
+  final bool isManufacturer;
+
   const HomeHeaderBoxWidget({
     super.key,
+    required this.isManufacturer,
   });
 
   @override
@@ -53,7 +55,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
       height: 267,
       width: double.maxFinite,
       color: colorsClass.greenColor,
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -61,18 +63,22 @@ class HomeHeaderBoxWidget extends StatelessWidget {
             width: 246,
             child: Center(
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    'Welcome to VERItag',
+                  const Text(
+                    'Welcome to VeriTag',
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
+                    textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Get to set/write a Tag as a manufacturer and Read/Scan a Tag as a customer',
+                    isManufacturer == true
+                        ? 'Set and read your product tags and read'
+                        : 'Scan to verify a product',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: Colors.white),
