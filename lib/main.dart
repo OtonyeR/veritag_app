@@ -32,8 +32,6 @@ class MyApp extends StatelessWidget {
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         }),
         useMaterial3: true,
-   
-
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: 'splashscreen',

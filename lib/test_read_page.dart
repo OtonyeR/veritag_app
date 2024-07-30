@@ -15,7 +15,7 @@ class _NFCReadPageState extends State<NFCReadPage> {
   @override
   void initState() {
     super.initState();
-   // _startNFCSession();
+    // _startNFCSession();
   }
 
   void _startNFCSession() {
@@ -56,6 +56,8 @@ class _NFCReadPageState extends State<NFCReadPage> {
   }
 
   void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
     setState(() {
       _nfcData = message;
       _isScanning = false;

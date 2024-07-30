@@ -58,33 +58,44 @@ class _ManufacturerFormState extends State<ManufacturerForm> {
     }
   }
 
-
   Future<void> _writeNfcTag(String uuid) async {
-    NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      var ndef = Ndef.from(tag);
-      if (ndef == null || !ndef.isWritable) {
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable) {
+      NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('NFC Tag Detected: ${tag.data}')));
+        var ndef = Ndef.from(tag);
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Tag is not writable')));
-        NfcManager.instance.stopSession();
-        return;
-      }
-
-      NdefMessage ndefMessage = NdefMessage([NdefRecord.createText(uuid)]);
-      try {
-        await ndef.write(ndefMessage);
+            .showSnackBar(SnackBar(content: Text('NDEF Detected: ${ndef}')));
+        if (ndef == null || !ndef.isWritable) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Tag is not writable')));
+          NfcManager.instance.stopSession();
+          return;
+        }
+        NdefRecord ndefRecord = NdefRecord.createText(uuid);
+        NdefMessage ndefMessage = NdefMessage([ndefRecord]);
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Message written to tag!')));
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to write message to tag')));
-      } finally {
-        NfcManager.instance.stopSession();
-      }
-    });
+            SnackBar(content: Text('NFC Message: ${ndefMessage}')));
+        try {
+          await ndef.write(ndefMessage);
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Message written to tag!')));
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Failed to write message to tag')));
+        } finally {
+          NfcManager.instance.stopSession();
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Device not availabe for tagging')));
+    }
   }
 
   Future<void> _submitForm() async {
-    await _writeNfcTag(uuid);
+    _writeNfcTag(uuid);
     // Navigator.of(context)
     //     .push(MaterialPageRoute(builder: (context) => const NFCReadPage()));
 

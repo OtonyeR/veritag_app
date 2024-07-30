@@ -58,13 +58,13 @@ class ManufactureHome extends StatelessWidget {
                       title: 'Add product',
                       color: colorsClass.greenColor,
                       onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => const ManufacturerForm()));
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const ManufacturerFormScreen();
-                          },
-                        ));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ManufacturerForm()));
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) {
+                        //     return const ManufacturerFormScreen();
+                        //   },
+                        // ));
                       },
                     ),
                   ],
