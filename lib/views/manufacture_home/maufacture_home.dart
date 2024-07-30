@@ -24,7 +24,7 @@ class ManufactureHome extends StatelessWidget {
                   height: 300,
                 ),
                 Image.asset(
-                  'assets/veritag.png',
+                  'assets/vgroup.png',
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 100)
