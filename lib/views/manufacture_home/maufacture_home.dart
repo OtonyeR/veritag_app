@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
@@ -18,7 +20,7 @@ class ManufactureHome extends StatefulWidget {
 class _ManufactureHomeState extends State<ManufactureHome> {
   String nfcData = '';
   final controller = Get.put(ManufaturerHomeController());
-
+  final ProductService _productService = ProductService();
   Future<void> _readNfc() async {
     try {
       NFCTag tag = await FlutterNfcKit.poll();
@@ -155,7 +157,23 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 fit: BoxFit.cover,
               )),
           buttonText: 'Show result',
-          buttonPressed: () {},
+          buttonPressed: () async {
+            final product =
+                await _productService.getSpecificProductByUid(nfcData);
+            if (product != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsScreen(
+                    productInfo: product,
+                  ),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Product not found')),
+              );
+            }
+          },
         );
       },
     );
@@ -168,6 +186,4 @@ class _ManufactureHomeState extends State<ManufactureHome> {
     });
     FlutterNfcKit.finish();
   }
-
-
 }

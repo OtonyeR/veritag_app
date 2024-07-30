@@ -2,8 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
 import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/views/history_page.dart';
 import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   String nfcData = '';
   final controller = Get.put(BottomNavHomeController());
+  final ProductService _productService = ProductService();
 
   @override
   void initState() {
@@ -96,7 +99,23 @@ class _BottomNavState extends State<BottomNav> {
                 fit: BoxFit.cover,
               )),
           buttonText: 'Show result',
-          buttonPressed: () {},
+          buttonPressed: () async {
+            final product =
+                await _productService.getSpecificProductByUid(nfcData);
+            if (product != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsScreen(
+                    productInfo: product,
+                  ),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Product not found')),
+              );
+            }
+          },
         );
       },
     );

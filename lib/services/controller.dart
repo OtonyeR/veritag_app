@@ -14,7 +14,21 @@ class ManufaturerHomeController extends GetxController {
 }
 
 ///CPNTROLLER FOR MANUFACTUE HOME SCREEN
+class ConsumerHomeController extends GetxController {
+  Rx<bool> isScanned = false.obs;
+  Rx<String> resultMsg =
+      'Put your device near the NFC Tag you want to read'.obs;
+}
+
+///CPNTROLLER FOR MANUFACTUE HOME SCREEN
 class BottomNavHomeController extends GetxController {
+  Rx<bool> isScanned = false.obs;
+  Rx<String> resultMsg =
+      'Put your device near the NFC Tag you want to read'.obs;
+}
+
+///CPNTROLLER FOR MANUFACTUE HOME SCREEN
+class BottomNavConsumerController extends GetxController {
   Rx<bool> isScanned = false.obs;
   Rx<String> resultMsg =
       'Put your device near the NFC Tag you want to read'.obs;
