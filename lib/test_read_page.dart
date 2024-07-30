@@ -12,12 +12,6 @@ class _NFCReadPageState extends State<NFCReadPage> {
   String _nfcData = 'Scan an NFC tag to read its data';
   bool _isScanning = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // _startNFCSession();
-  }
-
   Future<void> _readNfc() async {
     setState(() {
       _isScanning = true;
@@ -41,48 +35,6 @@ class _NFCReadPageState extends State<NFCReadPage> {
       await FlutterNfcKit.finish();
     }
   }
-
-  // void _startNFCSession() async {
-  //   bool isAvailable = await NfcManager.instance.isAvailable();
-  //   if (isAvailable) {
-  //     setState(() {
-  //       _isScanning = true;
-  //     });
-
-  //     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-  //       await _handleNFCDiscovered(tag);
-  //     });
-  //   } else {
-  //     _showErrorMessage('Device not availabe for nfc');
-  //   }
-  // }
-
-  // Future<void> _handleNFCDiscovered(NfcTag tag) async {
-  //   var ndef = Ndef.from(tag);
-
-  //   if (ndef == null) {
-  //     _showErrorMessage('NFC tag is not NDEF formatted');
-  //     return;
-  //   }
-
-  //   NdefMessage? ndefMessage = ndef.cachedMessage;
-
-  //   if (ndefMessage == null) {
-  //     _showErrorMessage('NDEF message is empty');
-  //     return;
-  //   }
-
-  //   String tagData = ndefMessage.records.map((record) {
-  //     return String.fromCharCodes(record.payload);
-  //   }).join(', ');
-
-  //   setState(() {
-  //     _nfcData = tagData;
-  //     _isScanning = false;
-  //   });
-
-  //   NfcManager.instance.stopSession();
-  // }
 
   void _showErrorMessage(String message) {
     ScaffoldMessenger.of(context)
