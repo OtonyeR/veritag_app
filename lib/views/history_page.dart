@@ -49,13 +49,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 24, top: 40),
-                    child: Text(
-                      'Recently Added',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    child: Align(
+                      alignment:
+                          Alignment.centerLeft, // Ensures alignment to the left
+                      child: Text(
+                        'Recent History',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
-                  Expanded( // This is the key change
+                  Expanded(
                     child: ListView.builder(
                       itemCount: _products.length,
                       itemBuilder: (context, index) {
