@@ -236,19 +236,22 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
 
   _submitForm() async {
     // Handle form submission
-    var productservice = ProductService();
-    var imageUrl = await productservice.uploadProductImage(
-        imageDetailsList?[0], imageDetailsList?[1]);
-    productservice.addProductToDb(Product(
-      uid: _uuidController.text.trim(),
-      manufacturerName: _manufacturerNameController.text.trim(),
-      productName: _productNameController.text.trim(),
-      productPrice: _productPriceController.text.trim(),
-      productImage: imageUrl,
-      manufactureDate: _dateController.text.trim(),
-      manufactureLocation: _manufacturerLocationController.text.trim(),
-    ));
-    // _writeNfc(_uuidController.text);
+
+    //TODO: Please don't delete this block of code
+
+    // var productservice = ProductService();
+    // var imageUrl = await productservice.uploadProductImage(
+    //     imageDetailsList?[0], imageDetailsList?[1]);
+    // productservice.addProductToDb(Product(
+    //   uid: _uuidController.text.trim(),
+    //   manufacturerName: _manufacturerNameController.text.trim(),
+    //   productName: _productNameController.text.trim(),
+    //   productPrice: _productPriceController.text.trim(),
+    //   productImage: imageUrl,
+    //   manufactureDate: _dateController.text.trim(),
+    //   manufactureLocation: _manufacturerLocationController.text.trim(),
+    // ));
+    _writeNfc(_uuidController.text);
   }
 
   Future<void> _setAddress() async {
