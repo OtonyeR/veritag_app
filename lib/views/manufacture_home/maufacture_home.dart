@@ -3,6 +3,7 @@ import 'package:veritag_app/manufacturer_form.dart';
 import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 import 'package:veritag_app/utils/color.dart';
+import 'package:veritag_app/views/manufacturer_form_screen.dart';
 
 class ManufactureHome extends StatelessWidget {
   const ManufactureHome({super.key});
@@ -53,7 +54,7 @@ class ManufactureHome extends StatelessWidget {
                       color: colorsClass.greenColor,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ManufacturerForm()));
+                            builder: (context) => const ManufacturerFormScreen()));
                       },
                     ),
                   ],
