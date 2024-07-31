@@ -2,27 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'primary_button.dart';
 
-class ScanBottomSheet extends StatefulWidget {
+class ScanBottomSheet extends StatelessWidget {
   final String title;
   final String? subText;
   final Widget icon;
   final String buttonText;
   final void Function()? buttonPressed;
+  final Color? buttonColor;
+  const ScanBottomSheet(
+      {super.key,
+      required this.title,
+      required this.icon,
+      required this.buttonText,
+      required this.buttonPressed,
+      this.subText = "",
+      this.buttonColor});
 
-  const ScanBottomSheet({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.buttonText,
-    required this.buttonPressed,
-    this.subText = "",
-  });
-
-  @override
-  State<ScanBottomSheet> createState() => _ScanBottomSheetState();
-}
-
-class _ScanBottomSheetState extends State<ScanBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +29,7 @@ class _ScanBottomSheetState extends State<ScanBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            widget.title,
+            title,
             style: const TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w500,
@@ -42,11 +37,11 @@ class _ScanBottomSheetState extends State<ScanBottomSheet> {
             ),
           ),
           const SizedBox(height: 36.0),
-          widget.icon,
+          icon,
           const SizedBox(height: 24.0),
-          widget.subText!.isNotEmpty
+          subText!.isNotEmpty
               ? Text(
-                  widget.subText!,
+                  subText!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16.0,
@@ -56,8 +51,9 @@ class _ScanBottomSheetState extends State<ScanBottomSheet> {
               : Container(),
           const SizedBox(height: 18.0),
           PrimaryButton(
-              buttonText: widget.buttonText,
-              buttonFunction: widget.buttonPressed,
+              buttonColor: buttonColor,
+              buttonText: buttonText,
+              buttonFunction: buttonPressed,
               buttonWidth: MediaQuery.sizeOf(context).width)
         ],
       ),

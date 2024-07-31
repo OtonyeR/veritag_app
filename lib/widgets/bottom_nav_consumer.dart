@@ -45,7 +45,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
           setState(() {
             nfcData = ndef.map((e) => e).join(', ');
             controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag:$nfcData';
+            controller.resultMsg.value = 'Succesfully read tag';
           });
         } else {
           _showErrorMessage('Tag is Empty');
@@ -74,8 +74,10 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
+            buttonColor:
+                !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
                 !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
             subText: controller.resultMsg.value,

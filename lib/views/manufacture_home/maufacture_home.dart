@@ -133,6 +133,8 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             buttonPressed: !controller.isScanned.value
                 ? () {}
                 : () => _showDoneModal(context),
+            buttonColor:
+                !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
                 !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
             subText: controller.resultMsg.value,
