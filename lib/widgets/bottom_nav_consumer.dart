@@ -5,7 +5,6 @@ import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
-
 import '../ohome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';

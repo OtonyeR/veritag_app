@@ -159,7 +159,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
             buttonText:
                 !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
