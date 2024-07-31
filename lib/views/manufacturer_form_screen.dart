@@ -205,10 +205,12 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
-                    setState(() {
-                      _submitForm();
-                    });
-
+                    if (_formKey.currentState!.validate() &&
+                        imageDetailsList != null) {
+                      setState(() {
+                        _submitForm();
+                      });
+                    }
                     // if (_formKey.currentState!.validate() &&
                     //     imageDetailsList != null) {
                     //   _showScanModal(context);
