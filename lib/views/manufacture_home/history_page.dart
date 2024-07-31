@@ -1,8 +1,8 @@
-import '../models/product.dart';
-import '../services/remote_db.dart';
+import '../../models/product.dart';
+import '../../services/remote_db.dart';
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
-import '../widgets/veritag_appbar.dart';
+import '../../utils/constants.dart';
+import '../../widgets/veritag_appbar.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 
 class ProductListScreen extends StatefulWidget {

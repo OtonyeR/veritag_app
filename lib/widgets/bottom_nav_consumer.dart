@@ -5,6 +5,7 @@ import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/services/remote_db.dart';
+import 'package:veritag_app/views/consumer_home/history_page_consumer.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import '../ohome_icons.dart';
@@ -12,8 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
 import 'package:veritag_app/views/router_screen.dart';
-import 'package:veritag_app/views/consumer_home_page.dart';
-import 'package:veritag_app/views/history_page_consumer.dart';
+import 'package:veritag_app/views/consumer_home/consumer_home_page.dart';
 
 class BottomNavConsumer extends StatefulWidget {
   const BottomNavConsumer({super.key});
@@ -89,7 +89,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
     );
   }
 
-   _showDoneModal(BuildContext context) {
+  _showDoneModal(BuildContext context) {
     Navigator.of(context).pop(); // Close the previous modal
     showModalBottomSheet(
       context: context,
@@ -176,7 +176,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       extendBody: true,
       body: AnimatedSwitcher(
         switchInCurve: Curves.easeOut,

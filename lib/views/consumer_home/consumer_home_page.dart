@@ -9,8 +9,8 @@ import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
-import '../models/product.dart';
-import '../services/remote_db.dart';
+import '../../models/product.dart';
+import '../../services/remote_db.dart';
 
 class ConsumerHomePage extends StatefulWidget {
   const ConsumerHomePage({super.key});

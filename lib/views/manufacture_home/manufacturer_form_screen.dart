@@ -10,12 +10,12 @@ import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:ndef/ndef.dart' as ndef;
-import '../services/location.dart';
-import '../utils/image_picker.dart';
-import '../widgets/primary_button.dart';
-import '../widgets/form_field.dart';
-import '../widgets/image_field.dart';
-import '../widgets/veritag_appbar.dart';
+import '../../services/location.dart';
+import '../../utils/image_picker.dart';
+import '../../widgets/primary_button.dart';
+import '../../widgets/form_field.dart';
+import '../../widgets/image_field.dart';
+import '../../widgets/veritag_appbar.dart';
 
 class ManufacturerFormScreen extends StatefulWidget {
   const ManufacturerFormScreen({super.key});

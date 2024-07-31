@@ -1,7 +1,7 @@
 import 'package:veritag_app/utils/constants.dart';
 
-import '../models/product.dart';
-import 'product_details_screen.dart';
+import '../../models/product.dart';
+import '../product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/widgets/veritag_appbar.dart';

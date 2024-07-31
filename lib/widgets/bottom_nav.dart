@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
-import 'package:veritag_app/views/history_page.dart';
+import 'package:veritag_app/views/manufacture_home/history_page.dart';
 import 'package:veritag_app/views/manufacture_home/maufacture_home.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
