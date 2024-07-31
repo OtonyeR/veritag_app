@@ -164,7 +164,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+     // backgroundColor: Colors.black,
       extendBody: true,
       body: AnimatedSwitcher(
         switchInCurve: Curves.easeOut,
@@ -240,7 +240,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return ConsumerHomePage();
+        return const ConsumerHomePage();
       case 1:
         return const HistoryPageConsumer();
       default:

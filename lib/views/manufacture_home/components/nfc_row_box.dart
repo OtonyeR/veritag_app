@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:veritag_app/utils/color.dart';
 
 class NfcRowBox extends StatelessWidget {

@@ -6,6 +6,8 @@ import '../widgets/veritag_appbar.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 
 class ProductListScreen extends StatefulWidget {
+  const ProductListScreen({super.key});
+
   @override
   _ProductListScreenState createState() => _ProductListScreenState();
 }
