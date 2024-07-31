@@ -52,6 +52,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   shared_preferences: ^2.2.3
   firebase_storage: ^12.1.2
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

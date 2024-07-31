@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:veritag_app/manufacturer_form%20copy.dart';
-import 'package:veritag_app/test_read_page.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/test_read_page.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:ndef/ndef.dart' as ndef;
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 class ManufactureHome extends StatefulWidget {
@@ -18,6 +19,8 @@ class ManufactureHome extends StatefulWidget {
 
 class _ManufactureHomeState extends State<ManufactureHome> {
   String nfcData = '';
+  final controller = Get.put(ManufaturerHomeController());
+  final ProductService _productService = ProductService();
   Future<void> _readNfc() async {
     try {
       NFCTag tag = await FlutterNfcKit.poll();
@@ -25,13 +28,18 @@ class _ManufactureHomeState extends State<ManufactureHome> {
         var ndef = await FlutterNfcKit.readNDEFRecords();
         if (ndef.isNotEmpty) {
           setState(() {
+            controller.isScanned.value = true;
+            controller.resultMsg.value = 'Succesfully read tag';
             nfcData = ndef.map((e) => e).join(', ');
           });
-          showDoneModal(context);
+        } else {
+          _showErrorMessage('Tag is Empty');
         }
       } else {
         _showErrorMessage('NDEF not available');
       }
+    } on PlatformException catch (e) {
+      _showErrorMessage('${e.message}');
     } catch (e) {
       _showErrorMessage('Error: $e');
     } finally {
@@ -80,10 +88,13 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                       image: 'assets/scan_nfc.png',
                       title: 'Verify tag',
                       color: colorsClass.pinkColor,
-                      onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => const NFCReadPage()));
+                      onTap: () async {
+                        controller.isScanned.value = false;
+                        controller.resultMsg.value =
+                            'Put your device near the NFC Tag you want to read';
                         _showScanModal(context);
+                        await Future.delayed(const Duration(seconds: 2));
+                        _readNfc();
                       },
                     ),
                     NfcRowBox(
@@ -112,28 +123,66 @@ class _ManufactureHomeState extends State<ManufactureHome> {
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        return Obx(
+          () => ScanBottomSheet(
+            title: 'Ready to scan',
+            icon: SizedBox(
+                height: 108,
+                width: 108,
+                child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
+            buttonPressed: !controller.isScanned.value
+                ? () {}
+                : () => _showDoneModal(context),
+            buttonText:
+                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+            subText: controller.resultMsg.value,
+          ),
+        );
+      },
+    );
+  }
+
+  _showDoneModal(BuildContext context) {
+    Navigator.of(context).pop();
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
         return ScanBottomSheet(
-          title: 'Ready to scan',
+          title: 'Done',
           icon: SizedBox(
               height: 108,
               width: 108,
               child: Image.asset(
-                'assets/scan_icon.png',
+                'assets/done_icon.png',
                 fit: BoxFit.cover,
               )),
-          buttonText: 'Continue',
-          buttonPressed: (){},
-          subText: 'Put your device near the NFC Tag you want to write to',
+          buttonText: 'Show result',
+          buttonPressed: () async {
+            final product =
+                await _productService.getSpecificProductByUid(nfcData);
+            if (product != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsScreen(
+                    productInfo: product,
+                  ),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Product not found')),
+              );
+            }
+          },
         );
       },
     );
   }
 
   void _showErrorMessage(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
     setState(() {
-      nfcData = message;
+      controller.isScanned.value = false;
+      controller.resultMsg.value = message;
     });
     FlutterNfcKit.finish();
   }
