@@ -133,7 +133,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic ? 'assets/scan_icon.png' : 'assets/scan_icon.png',
+             authentic ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
