@@ -61,7 +61,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           const HomeHeaderBoxWidget(
@@ -93,6 +92,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween
                   children: [
                     NfcRowBox(
                       image: 'assets/scan_nfc.png',
@@ -107,7 +107,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                         _readNfc();
                       },
                     ),
-                    SizedBox(width: 12),
                     NfcRowBox(
                       image: 'assets/add.png',
                       title: 'Add product',
