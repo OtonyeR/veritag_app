@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
 import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
@@ -21,6 +22,7 @@ class ConsumerHomePage extends StatefulWidget {
 
 class _ConsumerHomePageState extends State<ConsumerHomePage> {
   final ProductService _productService = ProductService();
+  final ScannedProductService _scannedProductService = ScannedProductService();
 
   String nfcData = '';
   final controller = Get.put(ConsumerHomeController());
@@ -189,6 +191,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             if (authentic == true) {
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
+              _scannedProductService.addScannedProduct(product!);
               _showVerifyModal(context, product: product, authentic: true);
             } else {
               _showVerifyModal(context, authentic: false);
