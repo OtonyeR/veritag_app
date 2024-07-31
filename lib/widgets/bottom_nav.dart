@@ -44,7 +44,7 @@ class _BottomNavState extends State<BottomNav> {
           setState(() {
             nfcData = ndef.map((e) => e).join(', ');
             controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag:$nfcData';
+            controller.resultMsg.value = 'Succesfully read tag';
           });
         } else {
           _showErrorMessage('Tag is Empty');
@@ -55,7 +55,7 @@ class _BottomNavState extends State<BottomNav> {
     } on PlatformException catch (e) {
       _showErrorMessage('${e.message}');
     } catch (e) {
-      _showErrorMessage('Error: $e');
+      _showErrorMessage('Error: $e ');
     } finally {
       await FlutterNfcKit.finish();
     }
@@ -73,8 +73,10 @@ class _BottomNavState extends State<BottomNav> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
+            buttonColor:
+                !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
                 !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
             subText: controller.resultMsg.value,
