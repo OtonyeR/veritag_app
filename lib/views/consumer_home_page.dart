@@ -155,7 +155,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           () => ScanBottomSheet(
             title: 'Ready to scan',
             icon: SizedBox(
-                height: 108,
+                height: 108,m
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
