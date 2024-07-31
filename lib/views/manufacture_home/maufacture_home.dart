@@ -7,7 +7,6 @@ import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
-import 'package:veritag_app/views/scan_nfc_result_page.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
