@@ -1,6 +1,6 @@
 # VeriTag App
 
-VeriTag is a mobile application developed using Flutter that leverages NFC technology to ensure product authenticity and track product journeys through the supply chain. The app allows manufacturers, distributors, and consumers to scan NFC tags attached to products, providing real-time information about the product's origin, journey, and authenticity.
+VeriTag is a mobile application developed using Flutter that leverages NFC technology to ensure product authenticity. The app allows manufacturers, distributors, and consumers to scan NFC tags attached to products, providing real-time information about the product's origin, journey, and authenticity.
 
 ## Table of Contents
 
@@ -25,12 +25,12 @@ VeriTag is a mobile application developed using Flutter that leverages NFC techn
 
 ### Frontend
 - **Framework**: Flutter
-- **State Management**: Stateful Widgets
-- **Core Packages**: nfc_manager, image_picker
+- **State Management**: Stateful Widgets, GetX
+- **Core Packages**: nfc_manager, image_picker, shared_preferences
 
 ### Backend
-- **Database**: Firestore / PostgreSQL / MongoDB (specify the chosen solution)
-
+- **Database**: Firestore
+  
 ## Installation
 
 ### Prerequisites
