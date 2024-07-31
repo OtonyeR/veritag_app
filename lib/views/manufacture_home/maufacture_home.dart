@@ -185,6 +185,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
 
   _showVerifyModal(BuildContext context,
       {Product? product, required bool authentic}) {
+    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -196,25 +197,25 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             height: 108,
             width: 108,
             child: Image.asset(
-               authentic ? 'assets/done_icon.png' : 'assets/error.png',
+              authentic ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
           buttonText: authentic ? 'View Details' : 'Back To Home',
           buttonPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => authentic
-                      ? ProductDetailsScreen(
+            if (authentic) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ProductDetailsScreen(
                           productInfo: product!,
-                        )
-                      : _showScanModal(context)),
-            );
+                        )),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         );
       },
     );
   }
-
-
 }
