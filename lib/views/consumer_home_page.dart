@@ -1,17 +1,16 @@
+import 'package:get/get.dart';
+import '../models/product.dart';
+import '../services/local_db.dart';
+import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:veritag_app/services/controller.dart';
-import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
-import '../models/product.dart';
-import '../services/remote_db.dart';
 
 class ConsumerHomePage extends StatefulWidget {
   const ConsumerHomePage({super.key});
@@ -159,7 +158,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
             if (authentic) {
               final product =
-              await _productService.getSpecificProductByUid(nfcData);
+                  await _productService.getSpecificProductByUid(nfcData);
 
               if (product != null) {
                 _scannedProductService.addScannedProduct(product);
@@ -178,6 +177,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
   _showVerifyModal(BuildContext context,
       {Product? product, required bool authentic}) {
+    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -195,14 +195,17 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           ),
           buttonText: authentic == true ? 'View Details' : 'Back To Home',
           buttonPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => authentic
-                      ? ProductDetailsScreen(
+            if (authentic) {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ProductDetailsScreen(
                           productInfo: product!,
-                        )
-                      : _showScanModal(context)),
-            );
+                        )),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         );
       },

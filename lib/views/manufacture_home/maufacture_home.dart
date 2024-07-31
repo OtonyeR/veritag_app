@@ -1,14 +1,14 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:veritag_app/models/product.dart';
-import 'package:veritag_app/services/controller.dart';
-import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/manufacturer_form_screen.dart';
-import 'package:veritag_app/views/product_details_screen.dart';
-import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/remote_db.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 class ManufactureHome extends StatefulWidget {
@@ -137,7 +137,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading NFC Tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
@@ -146,8 +146,8 @@ class _ManufactureHomeState extends State<ManufactureHome> {
   }
 
   _showDoneModal(BuildContext context) {
-    Navigator.of(context).pop();
-    return showModalBottomSheet(
+    Navigator.of(context).pop(); // Close the previous modal
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
@@ -162,10 +162,18 @@ class _ManufactureHomeState extends State<ManufactureHome> {
           buttonText: 'Show result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
-            if (authentic == true) {
+
+            if (!context.mounted) return; // Ensure the context is still valid
+
+            if (authentic) {
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
-              _showVerifyModal(context, product: product, authentic: true);
+
+              if (product != null) {
+                _showVerifyModal(context, product: product, authentic: true);
+              } else {
+                _showVerifyModal(context, authentic: false);
+              }
             } else {
               _showVerifyModal(context, authentic: false);
             }
@@ -190,18 +198,18 @@ class _ManufactureHomeState extends State<ManufactureHome> {
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
-          title: authentic
+          title: authentic == true
               ? 'Your Product is Authentic'
               : 'Your Product is not Authentic',
           icon: SizedBox(
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic ? 'assets/done_icon.png' : 'assets/error.png',
+              authentic == true ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
-          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonText: authentic == true ? 'View Details' : 'Back To Home',
           buttonPressed: () {
             if (authentic) {
               Navigator.of(context).pop();

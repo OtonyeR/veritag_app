@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:veritag_app/models/product.dart';
-import 'package:veritag_app/services/controller.dart';
-import 'package:veritag_app/services/remote_db.dart';
-import 'package:veritag_app/widgets/bottom_sheet.dart';
-import 'package:ndef/ndef.dart' as ndef;
 import '../services/location.dart';
 import '../utils/image_picker.dart';
-import '../widgets/primary_button.dart';
 import '../widgets/form_field.dart';
 import '../widgets/image_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:ndef/ndef.dart' as ndef;
+import '../widgets/primary_button.dart';
 import '../widgets/veritag_appbar.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/remote_db.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
 
 class ManufacturerFormScreen extends StatefulWidget {
   const ManufacturerFormScreen({super.key});
