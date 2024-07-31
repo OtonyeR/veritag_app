@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
+import 'package:veritag_app/widgets/bottom_nav.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:ndef/ndef.dart' as ndef;
 import '../../services/location.dart';
@@ -351,7 +352,9 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                 fit: BoxFit.cover,
               )),
           buttonText: 'done',
-          buttonPressed: () => Navigator.of(context).pop(),
+          buttonPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const BottomNav()),
+          ),
         );
       },
     );

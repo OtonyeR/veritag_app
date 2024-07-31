@@ -32,6 +32,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             controller.isScanned.value = true;
             controller.resultMsg.value = 'Succesfully read tag';
             nfcData = ndef.map((e) => e).join(', ');
+            
           });
         } else {
           _showErrorMessage('Tag is Empty');

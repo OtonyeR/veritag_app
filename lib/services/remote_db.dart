@@ -3,11 +3,10 @@ import '../models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<String> uploadProductImage(String imageName, String imagePath)  async {
+  Future<String> uploadProductImage(String imageName, String imagePath) async {
     final file = File(imagePath);
     final metadata = SettableMetadata(contentType: "image/jpeg");
     final storageRef = FirebaseStorage.instance.ref();
@@ -50,4 +49,5 @@ class ProductService {
     final docSnapshot = await _db.collection("testproducts").doc(uid).get();
     return docSnapshot.exists;
   }
+
 }
