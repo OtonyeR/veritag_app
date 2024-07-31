@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ndef/ndef.dart' as ndef;
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
@@ -22,32 +23,40 @@ class _ManufactureHomeState extends State<ManufactureHome> {
   String nfcData = '';
   final controller = Get.put(ManufaturerHomeController());
   final ProductService _productService = ProductService();
+
   Future<void> _readNfc() async {
     try {
       NFCTag tag = await FlutterNfcKit.poll();
+
       if (tag.ndefAvailable != null) {
-        var ndef = await FlutterNfcKit.readNDEFRecords();
-        if (ndef.isNotEmpty) {
-          setState(() {
-            controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag';
-            nfcData = ndef.map((e) => e).join(', ');
-            
-          });
-        } else {
+        var ndefRecords = await FlutterNfcKit.readNDEFRecords();
+
+        for (var record in ndefRecords) {
+          if (record is ndef.TextRecord) {
+            setState(() {
+              nfcData = record.text!;
+              controller.isScanned.value = true;
+              controller.resultMsg.value = 'Successfully read tag';
+            });
+            return;
+          }
+        }
+
+        if (ndefRecords.isEmpty) {
           _showErrorMessage('Tag is Empty');
         }
       } else {
         _showErrorMessage('NDEF not available');
       }
     } on PlatformException catch (e) {
-      _showErrorMessage('${e.message}');
+      _showErrorMessage('  ${e.message}');
     } catch (e) {
       _showErrorMessage('Error: $e');
     } finally {
       await FlutterNfcKit.finish();
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +146,9 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 : () => _showDoneModal(context),
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
-            buttonText:
-                !controller.isScanned.value ? 'Reading NFC Tag....' : 'Continue',
+            buttonText: !controller.isScanned.value
+                ? 'Reading NFC Tag....'
+                : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );

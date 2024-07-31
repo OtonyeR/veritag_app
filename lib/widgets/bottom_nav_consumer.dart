@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
+import 'package:ndef/ndef.dart' as ndef;
 import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/local_db.dart';
@@ -41,22 +42,29 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   Future<void> _readNfc() async {
     try {
       NFCTag tag = await FlutterNfcKit.poll();
+
       if (tag.ndefAvailable != null) {
-        var ndef = await FlutterNfcKit.readNDEFRecords();
-        if (ndef.isNotEmpty) {
-          setState(() {
-            nfcData = ndef.map((e) => e).join(', ');
-            controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag';
-          });
-        } else {
+        var ndefRecords = await FlutterNfcKit.readNDEFRecords();
+
+        for (var record in ndefRecords) {
+          if (record is ndef.TextRecord) {
+            setState(() {
+              nfcData = record.text!;
+              controller.isScanned.value = true;
+              controller.resultMsg.value = 'Successfully read tag';
+            });
+            return;
+          }
+        }
+
+        if (ndefRecords.isEmpty) {
           _showErrorMessage('Tag is Empty');
         }
       } else {
         _showErrorMessage('NDEF not available');
       }
     } on PlatformException catch (e) {
-      _showErrorMessage('${e.message}');
+      _showErrorMessage('  ${e.message}');
     } catch (e) {
       _showErrorMessage('Error: $e');
     } finally {
