@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
+import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/views/history_page.dart';
@@ -102,22 +103,13 @@ class _BottomNavState extends State<BottomNav> {
               )),
           buttonText: 'Show result',
           buttonPressed: () async {
-            final product =
-                await _productService.getSpecificProductByUid(nfcData);
-            if (product != null) {
-              if (!context.mounted) return;
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
-                ),
-              );
+            final authentic = await _productService.isProductInDb(nfcData);
+            if (authentic == true) {
+              final product =
+                  await _productService.getSpecificProductByUid(nfcData);
+              _showVerifyModal(context, product: product, authentic: true);
             } else {
-              if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Product not found')),
-              );
+              _showVerifyModal(context, authentic: false);
             }
           },
         );
@@ -131,6 +123,39 @@ class _BottomNavState extends State<BottomNav> {
       controller.resultMsg.value = message;
     });
     FlutterNfcKit.finish();
+  }
+
+  _showVerifyModal(BuildContext context,
+      {Product? product, required bool authentic}) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: authentic
+              ? 'Your Product is Authentic'
+              : 'Your Product is not Authentic',
+          icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+              authentic ? 'assets/done_icon.png' : 'assets/error.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => authentic
+                      ? ProductDetailsScreen(
+                          productInfo: product!,
+                        )
+                      : _showScanModal(context)),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
