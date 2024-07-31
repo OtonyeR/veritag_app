@@ -45,4 +45,9 @@ class ProductService {
       return null;
     }
   }
+
+  Future<bool> isProductInDb(String uid) async {
+    final docSnapshot = await _db.collection("testproducts").doc(uid).get();
+    return docSnapshot.exists;
+  }
 }

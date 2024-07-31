@@ -94,7 +94,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                       onTap: () async {
                         controller.isScanned.value = false;
                         controller.resultMsg.value =
-                            'Put your device near the NFC Tag you want to read';
+                            'Put your device near the Product Tag you want to read';
                         _showScanModal(context);
                         await Future.delayed(const Duration(seconds: 2));
                         _readNfc();
@@ -110,6 +110,42 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
     );
   }
 
+  // Future<void> _fetchDataAndNavigate(
+  //     BuildContext context, String nfcData) async {
+  //   final product = await _productService.getSpecificProductByUid(nfcData);
+  //   if (product != null) {
+  //     showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return ScanBottomSheet(
+  //           title: 'Done',
+  //           icon: SizedBox(
+  //               height: 108,
+  //               width: 108,
+  //               child: Image.asset(
+  //                 'assets/done_icon.png',
+  //                 fit: BoxFit.cover,
+  //               )),
+  //           buttonPressed: () {
+  //             Navigator.of(context).push(
+  //               MaterialPageRoute(
+  //                 builder: (context) => ProductDetailsScreen(
+  //                   productInfo: product,
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //           buttonText: 'See Result',
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('Product not found')),
+  //     );
+  //   }
+  // }
+
   _showScanModal(BuildContext context) {
     return showModalBottomSheet(
       context: context,
@@ -124,8 +160,6 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             buttonPressed: !controller.isScanned.value
                 ? () {}
                 : () => _showDoneModal(context),
-            buttonColor:
-                !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
                 !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
             subText: controller.resultMsg.value,
@@ -151,21 +185,47 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
               )),
           buttonText: 'Show result',
           buttonPressed: () async {
-            final product =
-                await _productService.getSpecificProductByUid(nfcData);
-            if (product != null) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
-                ),
-              );
+            final authentic = await _productService.isProductInDb(nfcData);
+            if (authentic == true) {
+              final product =
+                  await _productService.getSpecificProductByUid(nfcData);
+              _showVerifyModal(context, product: product, authentic: true);
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Product not found')),
-              );
+              _showVerifyModal(context, authentic: false);
             }
+          },
+        );
+      },
+    );
+  }
+
+  _showVerifyModal(BuildContext context,
+      {Product? product, required bool authentic}) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: authentic
+              ? 'Your Product is Authentic'
+              : 'Your Product is not Authentic',
+          icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+              authentic ? 'assets/scan_icon.png' : 'assets/scan_icon.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => authentic
+                      ? ProductDetailsScreen(
+                          productInfo: product!,
+                        )
+                      : _showScanModal(context)),
+            );
           },
         );
       },
