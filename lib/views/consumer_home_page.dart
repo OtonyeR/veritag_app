@@ -158,7 +158,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
             if (authentic) {
               final product =
-              await _productService.getSpecificProductByUid(nfcData);
+                  await _productService.getSpecificProductByUid(nfcData);
 
               if (product != null) {
                 _scannedProductService.addScannedProduct(product);
@@ -177,6 +177,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
   _showVerifyModal(BuildContext context,
       {Product? product, required bool authentic}) {
+    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -194,14 +195,17 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           ),
           buttonText: authentic == true ? 'View Details' : 'Back To Home',
           buttonPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => authentic
-                      ? ProductDetailsScreen(
+            if (authentic) {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ProductDetailsScreen(
                           productInfo: product!,
-                        )
-                      : _showScanModal(context)),
-            );
+                        )),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         );
       },
