@@ -21,13 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingModel(
       image: 'assets/illustrations/ndi-nne.png',
       title: 'Tired of fake products?',
-      description: 'We have a solution for you!',
+      description:
+          'We have a solution for you!\nLet’s go unravel those products!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/scan1.png',
       title: 'With your NFC enabled device',
       description:
-          'Streamline your production process and get the most out of it!',
+          'Streamline your production process\n and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',
@@ -44,6 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _finishOnboarding() async {
     await AppState.instance.completeOnboarding();
+    if (!context.mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -181,7 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _controller.currentPage == onboardingPages.length - 1
                     ? 'Start'
                     : 'Next',
-                style:  TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: colorPrimary,
                   fontSize: 20.sp,

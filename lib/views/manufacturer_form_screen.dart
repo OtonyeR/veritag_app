@@ -1,6 +1,21 @@
+<<<<<<< HEAD
+=======
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:geolocator/geolocator.dart';
+>>>>>>> 39a59d47ad855e879f9d9680b36abf8cd7755482
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
+<<<<<<< HEAD
 import '../utils/constants.dart';
+=======
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/remote_db.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:ndef/ndef.dart' as ndef;
+>>>>>>> 39a59d47ad855e879f9d9680b36abf8cd7755482
 import '../services/location.dart';
 import '../utils/image_picker.dart';
 import '../widgets/form_field.dart';

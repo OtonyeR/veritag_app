@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:veritag_app/utils/constants.dart';
 
 import '../models/product.dart';

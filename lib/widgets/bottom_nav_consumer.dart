@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:get/get.dart';
+import 'package:veritag_app/models/product.dart';
 import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
@@ -25,6 +27,8 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   String nfcData = '';
   final controller = Get.put(BottomNavConsumerController());
   final ProductService _productService = ProductService();
+  final ScannedProductService _scannedProductService = ScannedProductService();
+
   @override
   void initState() {
     controller.isScanned.value = false;
@@ -101,21 +105,48 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
               )),
           buttonText: 'Show result',
           buttonPressed: () async {
-            final product =
-                await _productService.getSpecificProductByUid(nfcData);
-            if (product != null) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
-                ),
-              );
+            final authentic = await _productService.isProductInDb(nfcData);
+            if (authentic == true) {
+              final product =
+                  await _productService.getSpecificProductByUid(nfcData);
+              _scannedProductService.addScannedProduct(product!);
+              _showVerifyModal(context, product: product, authentic: true);
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Product not found')),
-              );
+              _showVerifyModal(context, authentic: false);
             }
+          },
+        );
+      },
+    );
+  }
+
+  _showVerifyModal(BuildContext context,
+      {Product? product, required bool authentic}) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: authentic
+              ? 'Your Product is Authentic'
+              : 'Your Product is not Authentic',
+          icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+             authentic ? 'assets/done_icon.png' : 'assets/error.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => authentic
+                      ? ProductDetailsScreen(
+                          productInfo: product!,
+                        )
+                      : _showScanModal(context)),
+            );
           },
         );
       },
@@ -133,7 +164,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+     // backgroundColor: Colors.black,
       extendBody: true,
       body: AnimatedSwitcher(
         switchInCurve: Curves.easeOut,
@@ -209,7 +240,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return ConsumerHomePage();
+        return const ConsumerHomePage();
       case 1:
         return const HistoryPageConsumer();
       default:

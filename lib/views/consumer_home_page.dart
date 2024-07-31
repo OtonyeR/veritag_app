@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import '../models/product.dart';
+import '../models/product.dart';
+import '../services/local_db.dart';
+import '../services/remote_db.dart';
 import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../services/nfc_services.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/services/local_db.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
@@ -13,7 +17,7 @@ import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 
 class ConsumerHomePage extends StatefulWidget {
-  ConsumerHomePage({super.key});
+  const ConsumerHomePage({super.key});
 
   @override
   State<ConsumerHomePage> createState() => _ConsumerHomePageState();
@@ -159,6 +163,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
               _scannedProductService.addScannedProduct(product!);
               _showVerifyModal(context, product: product, authentic: true);
             } else {
+              if (!context.mounted) return;
               _showVerifyModal(context, authentic: false);
             }
           },
