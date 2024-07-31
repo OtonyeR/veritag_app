@@ -1,14 +1,10 @@
 import 'package:get/get.dart';
 import '../models/product.dart';
-import '../models/product.dart';
 import '../services/local_db.dart';
-import '../services/remote_db.dart';
 import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../services/nfc_services.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/services/local_db.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
