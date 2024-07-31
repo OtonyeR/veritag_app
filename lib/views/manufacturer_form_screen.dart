@@ -189,7 +189,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                           hintText: 'E.g., batch number, certifications',
                           controller: _additionalInfoController,
                           textInputType: TextInputType.text,
-                          readOnly: true,
+                          readOnly: false,
                           maxLines: 2,
                         ),
                         const SizedBox(height: 28),
@@ -205,15 +205,11 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
-                    setState(() {
+                    if (_formKey.currentState!.validate() &&
+                        imageDetailsList != null) {
+                      _showScanModal(context);
                       _submitForm();
-                    });
-
-                    // if (_formKey.currentState!.validate() &&
-                    //     imageDetailsList != null) {
-                    //   _showScanModal(context);
-                    //   _submitForm();
-                    // }
+                    }
                   },
                   buttonWidth: MediaQuery.sizeOf(context).width),
             ),
@@ -225,18 +221,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
 
   _submitForm() async {
     // Handle form submission
-    // var productservice = ProductService();
-    // var imageUrl = await productservice.uploadProductImage(
-    //     imageDetailsList?[0], imageDetailsList?[1]);
-    // productservice.addProductToDb(Product(
-    //   uid: _uuidController.text.trim(),
-    //   manufacturerName: _manufacturerNameController.text.trim(),
-    //   productName: _productNameController.text.trim(),
-    //   productPrice: _productPriceController.text.trim(),
-    //   productImage: imageUrl,
-    //   manufactureDate: _dateController.text.trim(),
-    //   manufactureLocation: _manufacturerLocationController.text.trim(),
-    // ));
 
     _showScanModal(context);
 
@@ -269,7 +253,19 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               decodedType: 'Content-type',
               payload: Uint8List.fromList('com.example.veritag_app'.codeUnits)),
         ]);
+        var productservice = ProductService();
+        var imageUrl = await productservice.uploadProductImage(
+            imageDetailsList?[0], imageDetailsList?[1]);
         setState(() {
+          productservice.addProductToDb(Product(
+            uid: _uuidController.text.trim(),
+            manufacturerName: _manufacturerNameController.text.trim(),
+            productName: _productNameController.text.trim(),
+            productPrice: _productPriceController.text.trim(),
+            productImage: imageUrl,
+            manufactureDate: _dateController.text.trim(),
+            manufactureLocation: _manufacturerLocationController.text.trim(),
+          ));
           controller.isScanned.value = true;
           controller.resultMsg.value = 'Message succesfully written to tag!';
         });
