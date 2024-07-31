@@ -57,7 +57,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +91,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     NfcRowBox(
                       image: 'assets/scan_nfc.png',
