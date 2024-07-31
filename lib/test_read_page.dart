@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:ndef/ndef.dart' as ndef;
 import 'package:veritag_app/utils/size.dart';
 import 'package:veritag_app/widgets/veritag_appbar.dart';
 

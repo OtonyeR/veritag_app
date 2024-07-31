@@ -7,7 +7,6 @@ import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 
 import '../ohome_icons.dart';
-import '../test_read_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:veritag_app/utils/constants.dart';
@@ -211,7 +210,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   Widget _getCurrentScreen() {
     switch (_selectedIndex) {
       case 0:
-        return ConsumerHomePage();
+        return const ConsumerHomePage();
       case 1:
         return const HistoryPageConsumer();
       default:

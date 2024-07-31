@@ -212,7 +212,7 @@ class _BottomNavState extends State<BottomNav> {
       case 0:
         return const ManufactureHome();
       case 1:
-        return ProductListScreen(); // Replace with actual screen
+        return const ProductListScreen(); // Replace with actual screen
       default:
         return const RouterScreen();
     }
