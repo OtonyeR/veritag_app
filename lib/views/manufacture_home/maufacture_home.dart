@@ -181,7 +181,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) =>
-                      ScanNfcResultPage(isProductAuthentic: true),
+                      const ScanNfcResultPage(isProductAuthentic: true),
                 ),
               );
             }

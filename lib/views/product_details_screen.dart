@@ -49,7 +49,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 width: width(context),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.fromBorderSide(BorderSide(width: 1.79,)),
+                  border: const Border.fromBorderSide(BorderSide(width: 1.79,)),
                   image: DecorationImage(
                     image: NetworkImage(productInfo.productImage),
                     // Your image asset path

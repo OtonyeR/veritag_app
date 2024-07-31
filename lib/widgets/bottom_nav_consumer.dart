@@ -135,7 +135,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+     // backgroundColor: Colors.black,
       extendBody: true,
       body: AnimatedSwitcher(
         switchInCurve: Curves.easeOut,
