@@ -298,7 +298,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
         } on PlatformException catch (e) {
           setState(() {
             controller.isScanned.value = false;
-            controller.resultMsg.value = '${e.message}';
+            controller.resultMsg.value = '${e.message} try again ';
           });
         }
       }
@@ -321,8 +321,10 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                   child:
                       Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
               buttonPressed: !controller.isScanned.value
-                  ? () {}
+                  ? () => Navigator.of(context).pop()
                   : () => _showDoneModal(context),
+              buttonColor:
+                  !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
               buttonText: !controller.isScanned.value
                   ? 'Writing to tag....'
                   : 'Continue',
