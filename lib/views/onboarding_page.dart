@@ -21,13 +21,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingModel(
       image: 'assets/illustrations/ndi-nne.png',
       title: 'Tired of fake products?',
-      description: 'We have a solution for you!',
+      description: 'We have a solution for you!\nLet’s go unravel those products!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/scan1.png',
       title: 'With your NFC enabled device',
       description:
-          'Streamline your production process and get the most out of it!',
+          'Streamline your production process\n and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',

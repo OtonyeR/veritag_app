@@ -237,7 +237,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
   _submitForm() async {
     // Handle form submission
 
-    //TODO: Please don't delete this block of code
+    //TODO: Please don't delete this block of code.
 
     // var productservice = ProductService();
     // var imageUrl = await productservice.uploadProductImage(
