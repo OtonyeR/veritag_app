@@ -1,12 +1,14 @@
+import 'dart:convert';
+
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:get/get.dart';
-import 'package:veritag_app/services/controller.dart';
-import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:veritag_app/services/local_db.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 import '../../models/product.dart';
@@ -32,10 +34,19 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
       if (tag.ndefAvailable != null) {
         var ndef = await FlutterNfcKit.readNDEFRecords();
         if (ndef.isNotEmpty) {
+          String extractedText = ndef.map((record) {
+            if (record.payload!.isNotEmpty && record.type == 'T') {
+              // Assuming it's a text record
+              int languageCodeLength = record.payload![0];
+              return utf8.decode(record.payload!.sublist(1 + languageCodeLength));
+            }
+            return '';
+          }).join(', ');
+
           setState(() {
             controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag';
-            nfcData = ndef.map((e) => e).join(', ');
+            controller.resultMsg.value = 'Successfully read tag';
+            nfcData = extractedText;
           });
         } else {
           _showErrorMessage('Tag is Empty');
@@ -137,8 +148,8 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
   }
 
   _showDoneModal(BuildContext context) {
-    Navigator.of(context).pop(); // Close the previous modal
-    showModalBottomSheet(
+    Navigator.of(context).pop();
+    return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
@@ -153,20 +164,14 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           buttonText: 'Show result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
-
-            if (!context.mounted) return; // Ensure the context is still valid
-
-            if (authentic) {
+            if (authentic == true) {
+              print(nfcData);
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
-
-              if (product != null) {
-                _scannedProductService.addScannedProduct(product);
-                _showVerifyModal(context, product: product, authentic: true);
-              } else {
-                _showVerifyModal(context, authentic: false);
-              }
+              _scannedProductService.addScannedProduct(product!);
+              _showVerifyModal(context, product: product, authentic: true);
             } else {
+              if (!context.mounted) return;
               _showVerifyModal(context, authentic: false);
             }
           },
@@ -177,35 +182,31 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
   _showVerifyModal(BuildContext context,
       {Product? product, required bool authentic}) {
-    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
-          title: authentic == true
+          title: authentic
               ? 'Your Product is Authentic'
               : 'Your Product is not Authentic',
           icon: SizedBox(
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic == true ? 'assets/done_icon.png' : 'assets/error.png',
+              authentic ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
-          buttonText: authentic == true ? 'View Details' : 'Back To Home',
+          buttonText: authentic ? 'View Details' : 'Back To Home',
           buttonPressed: () {
-            if (authentic) {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => ProductDetailsScreen(
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => authentic
+                      ? ProductDetailsScreen(
                           productInfo: product!,
-                        )),
-              );
-            } else {
-              Navigator.of(context).pop();
-            }
+                        )
+                      : _showScanModal(context)),
+            );
           },
         );
       },

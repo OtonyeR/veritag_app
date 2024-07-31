@@ -28,12 +28,15 @@ class ScanBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.w500,
-              color: Color.fromRGBO(0, 124, 130, 1),
+          Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.w500,
+                color: Color.fromRGBO(0, 124, 130, 1),
+              ),
             ),
           ),
           const SizedBox(height: 36.0),
