@@ -7,10 +7,8 @@ import '../widgets/form_field.dart';
 import '../widgets/image_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ndef/ndef.dart' as ndef;
-import 'package:flutter/cupertino.dart';
 import 'package:ndef/ndef.dart' as ndef;
 import '../widgets/primary_button.dart';
 import '../widgets/veritag_appbar.dart';
@@ -27,9 +25,6 @@ import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
-<<<<<<< HEAD
-=======
->>>>>>> 39a59d47ad855e879f9d9680b36abf8cd7755482
 
 class ManufacturerFormScreen extends StatefulWidget {
   const ManufacturerFormScreen({super.key});
