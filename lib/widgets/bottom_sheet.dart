@@ -71,7 +71,7 @@ showScanModal(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return ScanBottomSheet(
-        title: 'Ready to scan',
+        title: 'Ready to Scan',
         icon: SizedBox(
             height: 108,
             width: 108,
