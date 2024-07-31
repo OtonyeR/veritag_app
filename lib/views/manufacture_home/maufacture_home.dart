@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:veritag_app/utils/color.dart';
+import 'package:veritag_app/models/product.dart';
+import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
-import 'package:veritag_app/widgets/bottom_sheet.dart';
-import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:veritag_app/views/scan_nfc_result_page.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
@@ -138,7 +138,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
@@ -197,7 +197,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic ? 'assets/scan_icon.png' : 'assets/scan_icon.png',
+               authentic ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -216,4 +216,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
       },
     );
   }
+
+
 }

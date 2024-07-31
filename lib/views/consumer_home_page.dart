@@ -1,19 +1,13 @@
 import 'package:get/get.dart';
 import '../models/product.dart';
-import '../models/product.dart';
-import '../services/local_db.dart';
-import '../services/remote_db.dart';
 import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../services/nfc_services.dart';
-import '../services/nfc_services.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/services/local_db.dart';
 import 'package:veritag_app/services/local_db.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/services/controller.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
@@ -186,7 +180,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic ? 'assets/scan_icon.png' : 'assets/scan_icon.png',
+              authentic ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
