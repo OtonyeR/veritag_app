@@ -8,6 +8,7 @@ import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
+import '../models/product.dart';
 import '../services/local_db.dart';
 import '../services/remote_db.dart';
 
@@ -189,8 +190,10 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             if (authentic == true) {
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
+              if (!context.mounted) return;
               _showVerifyModal(context, product: product, authentic: true);
             } else {
+              if (!context.mounted) return;
               _showVerifyModal(context, authentic: false);
             }
           },

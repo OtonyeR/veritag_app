@@ -105,6 +105,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
             final product =
                 await _productService.getSpecificProductByUid(nfcData);
             if (product != null) {
+              if (!context.mounted) return;
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ProductDetailsScreen(
@@ -113,6 +114,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
                 ),
               );
             } else {
+              if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Product not found')),
               );
