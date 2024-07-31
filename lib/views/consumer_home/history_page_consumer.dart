@@ -20,6 +20,7 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   List<Product> _scannedProducts = [];
   ProductHistoryState productHistoryState = ProductHistoryState.loading;
   String error = '';
+
   @override
   void initState() {
     super.initState();
@@ -27,14 +28,14 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
   }
 
   Future<void> _fetchScannedProducts() async {
-     productHistoryState = ProductHistoryState.loading;
+    productHistoryState = ProductHistoryState.loading;
     try {
       final scannedProducts = await _scannedProductService.getScannedProducts();
       setState(() {
         _scannedProducts = scannedProducts;
         productHistoryState = ProductHistoryState.loaded;
       });
-    }catch (e) {
+    } catch (e) {
       // Handle errors appropriately
       // print("Error fetching scanned products: $e");
       setState(() {
@@ -51,57 +52,65 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
           appbarTitle: 'Scan History',
           arrowBackRequired: false,
         ),
-        body: switch (productHistoryState) {
-          ProductHistoryState.loading => const Center(
-              child: CircularProgressIndicator(
-                color: colorPrimary,
-              ),
-            ),
-          ProductHistoryState.loaded => SafeArea(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 24, top: 40),
-                  child: Text(
-                    'Recent Scans',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        body: _scannedProducts.isEmpty
+            ? const Center(
+                child: Text('No Products Scanned'),
+              )
+            : switch (productHistoryState) {
+                ProductHistoryState.loading => const Center(
+                    child: CircularProgressIndicator(
+                      color: colorPrimary,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: _scannedProducts.length,
-                      itemBuilder: (context, index) {
-                        final product = _scannedProducts[index];
-                        return ListTile(
-                          leading: SizedBox(
-                            height: 19.5,
-                            width: 21.3,
-                            child: Image.asset('assets/box_icon.png'),
+                ProductHistoryState.loaded => SafeArea(
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 40),
+                          child: Text(
+                            'Recent Scans',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
                           ),
-                          title: Text(product.productName),
-                          subtitle: Text(product.manufactureDate),
-                          trailing: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailsScreen(
-                                      productInfo: product,
-                                    ),
-                                  ));
-                            },
-                            child: const Icon(Icons.arrow_forward_ios),
-                          ),
-                        );
-                      }),
-                )
-                //Placeholder
-              ],
-            )),
-          ProductHistoryState.error => Center(
-              child: Text(error),
-            )
-        });
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: _scannedProducts.length,
+                              itemBuilder: (context, index) {
+                                final product = _scannedProducts[index];
+                                return ListTile(
+                                  leading: SizedBox(
+                                    height: 19.5,
+                                    width: 21.3,
+                                    child: Image.asset('assets/box_icon.png'),
+                                  ),
+                                  title: Text(product.productName),
+                                  subtitle: Text(product.manufactureDate),
+                                  trailing: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetailsScreen(
+                                              productInfo: product,
+                                            ),
+                                          ));
+                                    },
+                                    child: const Icon(Icons.arrow_forward_ios),
+                                  ),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
+                  )),
+                ProductHistoryState.error => Center(
+                    child: Text(error),
+                  )
+              });
   }
 }

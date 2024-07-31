@@ -263,6 +263,8 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
             productImage: imageUrl,
             manufactureDate: _dateController.text.trim(),
             manufactureLocation: _manufacturerLocationController.text.trim(),
+            productDescription: _productDescriptionController.text.trim(),
+            additionalInfo: _additionalInfoController.text.trim(),
           ));
           controller.isScanned.value = true;
           controller.resultMsg.value = 'Message succesfully written to tag!';

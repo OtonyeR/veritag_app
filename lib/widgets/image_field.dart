@@ -62,7 +62,7 @@ class ImageField extends StatelessWidget {
             const SizedBox(height: 12),
             PrimaryButton(
               buttonText: 'Choose from gallery',
-              buttonWidth: 209,
+              buttonWidth: 214,
               buttonFunction: onPressedGallery,
             ),
             const SizedBox(height: 20),
