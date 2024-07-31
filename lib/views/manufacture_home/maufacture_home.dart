@@ -1,13 +1,13 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:veritag_app/services/controller.dart';
-import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/views/manufacturer_form_screen.dart';
-import 'package:veritag_app/views/product_details_screen.dart';
-import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/services/remote_db.dart';
+import 'package:veritag_app/services/controller.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 class ManufactureHome extends StatefulWidget {
@@ -134,7 +134,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 ? () {}
                 : () => _showDoneModal(context),
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
