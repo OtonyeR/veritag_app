@@ -183,7 +183,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                           hintText: 'E.g., batch number, certifications',
                           controller: _additionalInfoController,
                           textInputType: TextInputType.text,
-                          readOnly: true,
+                          readOnly: false,
                           maxLines: 2,
                         ),
                         const SizedBox(height: 28),
