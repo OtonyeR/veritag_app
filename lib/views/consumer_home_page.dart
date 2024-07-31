@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import '../models/product.dart';
 import '../models/product.dart';
@@ -36,10 +38,19 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
       if (tag.ndefAvailable != null) {
         var ndef = await FlutterNfcKit.readNDEFRecords();
         if (ndef.isNotEmpty) {
+          String extractedText = ndef.map((record) {
+            if (record.payload!.isNotEmpty && record.type == 'T') {
+              // Assuming it's a text record
+              int languageCodeLength = record.payload![0];
+              return utf8.decode(record.payload!.sublist(1 + languageCodeLength));
+            }
+            return '';
+          }).join(', ');
+
           setState(() {
             controller.isScanned.value = true;
-            controller.resultMsg.value = 'Succesfully read tag';
-            nfcData = ndef.map((e) => e).join(', ');
+            controller.resultMsg.value = 'Successfully read tag';
+            nfcData = extractedText;
           });
         } else {
           _showErrorMessage('Tag is Empty');
@@ -158,6 +169,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
             if (authentic == true) {
+              print(nfcData);
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
               _scannedProductService.addScannedProduct(product!);
