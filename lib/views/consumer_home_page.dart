@@ -137,8 +137,8 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
   }
 
   _showDoneModal(BuildContext context) {
-    Navigator.of(context).pop();
-    return showModalBottomSheet(
+    Navigator.of(context).pop(); // Close the previous modal
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
@@ -153,13 +153,20 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
           buttonText: 'Show result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
-            if (authentic == true) {
+
+            if (!context.mounted) return; // Ensure the context is still valid
+
+            if (authentic) {
               final product =
                   await _productService.getSpecificProductByUid(nfcData);
-              _scannedProductService.addScannedProduct(product!);
-              _showVerifyModal(context, product: product, authentic: true);
+
+              if (product != null) {
+                _scannedProductService.addScannedProduct(product);
+                _showVerifyModal(context, product: product, authentic: true);
+              } else {
+                _showVerifyModal(context, authentic: false);
+              }
             } else {
-              if (!context.mounted) return;
               _showVerifyModal(context, authentic: false);
             }
           },
@@ -170,31 +177,35 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
 
   _showVerifyModal(BuildContext context,
       {Product? product, required bool authentic}) {
+    Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ScanBottomSheet(
-          title: authentic
+          title: authentic == true
               ? 'Your Product is Authentic'
               : 'Your Product is not Authentic',
           icon: SizedBox(
             height: 108,
             width: 108,
             child: Image.asset(
-              authentic ? 'assets/done_icon.png' : 'assets/error.png',
+              authentic == true ? 'assets/done_icon.png' : 'assets/error.png',
               fit: BoxFit.cover,
             ),
           ),
-          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonText: authentic == true ? 'View Details' : 'Back To Home',
           buttonPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => authentic
-                      ? ProductDetailsScreen(
+            if (authentic) {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ProductDetailsScreen(
                           productInfo: product!,
-                        )
-                      : _showScanModal(context)),
-            );
+                        )),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         );
       },

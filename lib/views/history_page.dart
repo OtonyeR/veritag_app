@@ -74,27 +74,33 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       itemCount: _products.length,
                       itemBuilder: (context, index) {
                         final product = _products[index];
-                        return ListTile(
-                          leading: SizedBox(
-                            height: 19.5,
-                            width: 21.3,
-                            child: Image.asset('assets/box_icon.png'),
-                          ),
-                          // Assuming productImage is a URL
-                          title: Text(product.productName),
-                          subtitle: Text(product.manufactureDate),
-                          trailing: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailsScreen(
-                                      productInfo: product,
-                                    ),
-                                  ));
-                            },
-                            child: const Icon(Icons.arrow_forward_ios),
-                          ),
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: SizedBox(
+                                height: 19.5,
+                                width: 21.3,
+                                child: Image.asset('assets/box_icon.png'),
+                              ),
+                              // Assuming productImage is a URL
+                              title: Text(product.productName),
+                              subtitle: Text(product.manufactureDate),
+                              trailing: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProductDetailsScreen(
+                                          productInfo: product,
+                                        ),
+                                      ));
+                                },
+                                child: const Icon(Icons.arrow_forward_ios),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Divider(color: Colors.grey,)
+                          ],
                         );
                       },
                     ),

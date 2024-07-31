@@ -339,6 +339,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     Navigator.of(context).pop();
     return showModalBottomSheet(
       context: context,
+      isDismissible: false,
       builder: (BuildContext context) {
         return ScanBottomSheet(
           title: 'Done',
