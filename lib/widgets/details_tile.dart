@@ -28,7 +28,7 @@ class DetailTile extends StatelessWidget {
               fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 8),
-        const Divider(),
+        const Divider(height: ,),
         const SizedBox(height: 15),
       ],
     );
