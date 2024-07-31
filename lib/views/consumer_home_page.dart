@@ -122,7 +122,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
@@ -156,9 +156,8 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             if (product != null) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
+                  builder: (context) =>
+                      ProductDetailsScreen(productInfo: product),
                 ),
               );
             } else {

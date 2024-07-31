@@ -6,6 +6,7 @@ import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/utils/color.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
+import 'package:veritag_app/views/scan_nfc_result_page.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
@@ -131,7 +132,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
@@ -165,14 +166,22 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             if (product != null) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
+                  builder: (context) =>
+                      ProductDetailsScreen(productInfo: product),
+                ),
+              );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ScanNfcResultPage(
+                      isProductAuthentic: true, productInfo: product),
                 ),
               );
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Product not found')),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ScanNfcResultPage(isProductAuthentic: true),
+                ),
               );
             }
           },
