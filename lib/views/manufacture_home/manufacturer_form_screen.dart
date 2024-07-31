@@ -206,7 +206,6 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                   buttonFunction: () {
                     if (_formKey.currentState!.validate() &&
                         imageDetailsList != null) {
-                      _showScanModal(context);
                       _submitForm();
                     }
                   },
