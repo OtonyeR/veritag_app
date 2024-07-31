@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:veritag_app/utils/color.dart';
-import 'package:veritag_app/services/remote_db.dart';
 import 'package:veritag_app/services/controller.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/widgets/bottom_sheet.dart';
+import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/product_details_screen.dart';
 import 'package:veritag_app/views/manufacturer_form_screen.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
@@ -131,8 +133,10 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                 width: 108,
                 child: Image.asset('assets/scan_icon.png', fit: BoxFit.cover)),
             buttonPressed: !controller.isScanned.value
-                ? () {}
+                ? () => Navigator.of(context).pop()
                 : () => _showDoneModal(context),
+            buttonColor:
+                !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
                 !controller.isScanned.value ? 'Reading tag....' : 'Continue',
             subText: controller.resultMsg.value,
@@ -158,20 +162,13 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               )),
           buttonText: 'Show result',
           buttonPressed: () async {
-            final product =
-                await _productService.getSpecificProductByUid(nfcData);
-            if (product != null) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(
-                    productInfo: product,
-                  ),
-                ),
-              );
+            final authentic = await _productService.isProductInDb(nfcData);
+            if (authentic == true) {
+              final product =
+                  await _productService.getSpecificProductByUid(nfcData);
+              _showVerifyModal(context, product: product, authentic: true);
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Product not found')),
-              );
+              _showVerifyModal(context, authentic: false);
             }
           },
         );
@@ -185,5 +182,38 @@ class _ManufactureHomeState extends State<ManufactureHome> {
       controller.resultMsg.value = message;
     });
     FlutterNfcKit.finish();
+  }
+
+  _showVerifyModal(BuildContext context,
+      {Product? product, required bool authentic}) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ScanBottomSheet(
+          title: authentic
+              ? 'Your Product is Authentic'
+              : 'Your Product is not Authentic',
+          icon: SizedBox(
+            height: 108,
+            width: 108,
+            child: Image.asset(
+              authentic ? 'assets/scan_icon.png' : 'assets/scan_icon.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          buttonText: authentic ? 'View Details' : 'Back To Home',
+          buttonPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => authentic
+                      ? ProductDetailsScreen(
+                          productInfo: product!,
+                        )
+                      : _showScanModal(context)),
+            );
+          },
+        );
+      },
+    );
   }
 }

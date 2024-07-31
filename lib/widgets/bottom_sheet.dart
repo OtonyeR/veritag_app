@@ -8,15 +8,15 @@ class ScanBottomSheet extends StatelessWidget {
   final Widget icon;
   final String buttonText;
   final void Function()? buttonPressed;
-
-  const ScanBottomSheet({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.buttonText,
-    required this.buttonPressed,
-    this.subText = "",
-  });
+  final Color? buttonColor;
+  const ScanBottomSheet(
+      {super.key,
+      required this.title,
+      required this.icon,
+      required this.buttonText,
+      required this.buttonPressed,
+      this.subText = "",
+      this.buttonColor});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +51,7 @@ class ScanBottomSheet extends StatelessWidget {
               : Container(),
           const SizedBox(height: 18.0),
           PrimaryButton(
+              buttonColor: buttonColor,
               buttonText: buttonText,
               buttonFunction: buttonPressed,
               buttonWidth: MediaQuery.sizeOf(context).width)
