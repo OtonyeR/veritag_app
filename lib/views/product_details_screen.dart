@@ -80,10 +80,10 @@ class ProductDetailsScreen extends StatelessWidget {
                           detailInfo: productInfo.productPrice),
                       DetailTile(
                           detailTitle: 'Product Description',
-                          detailInfo: productInfo.productDescription!),
+                          detailInfo: productInfo.productDescription == '' ? 'No info avainlable' : productInfo.productDescription!),
                       DetailTile(
                           detailTitle: 'Additional Info',
-                          detailInfo: productInfo.additionalInfo!),
+                          detailInfo: productInfo.additionalInfo == '' ? 'No info avainlable' : productInfo.additionalInfo!),
                     ],
                   ),
                 ),
