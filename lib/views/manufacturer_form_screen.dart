@@ -189,7 +189,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                           hintText: 'E.g., batch number, certifications',
                           controller: _additionalInfoController,
                           textInputType: TextInputType.text,
-                          readOnly: true,
+                          readOnly: false,
                           maxLines: 2,
                         ),
                         const SizedBox(height: 28),
@@ -205,10 +205,12 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               child: PrimaryButton(
                   buttonText: 'Submit',
                   buttonFunction: () {
-                    setState(() {
-                      _submitForm();
-                    });
-
+                    if (_formKey.currentState!.validate() &&
+                        imageDetailsList != null) {
+                      setState(() {
+                        _submitForm();
+                      });
+                    }
                     // if (_formKey.currentState!.validate() &&
                     //     imageDetailsList != null) {
                     //   _showScanModal(context);

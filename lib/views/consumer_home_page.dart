@@ -9,6 +9,7 @@ import 'package:veritag_app/widgets/bottom_sheet.dart';
 import 'package:veritag_app/views/manufacture_home/components/nfc_row_box.dart';
 
 import '../models/product.dart';
+import '../services/local_db.dart';
 import '../services/nfc_services.dart';
 import '../services/remote_db.dart';
 
@@ -21,6 +22,7 @@ class ConsumerHomePage extends StatefulWidget {
 
 class _ConsumerHomePageState extends State<ConsumerHomePage> {
   final ProductService _productService = ProductService();
+  final ScannedProductService _scannedProductService = ScannedProductService();
 
   String nfcData = '';
   final controller = Get.put(ConsumerHomeController());
@@ -110,8 +112,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
     );
   }
 
-  Future<void> _fetchDataAndNavigate(
-      BuildContext context, String nfcData) async {
+  Future<void> _fetchDataAndNavigate(BuildContext context, String nfcData) async {
     final product = await _productService.getSpecificProductByUid(nfcData);
     if (product != null) {
       showModalBottomSheet(
@@ -127,6 +128,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                   fit: BoxFit.cover,
                 )),
             buttonPressed: () {
+              _scannedProductService.addScannedProduct(product);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ProductDetailsScreen(
