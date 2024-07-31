@@ -137,7 +137,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading NFC Tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
