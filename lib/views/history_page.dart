@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../models/product.dart';
 import '../services/remote_db.dart';
 import 'package:flutter/material.dart';
@@ -61,12 +63,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 24, top: 40),
+                   Padding(
+                    padding: const EdgeInsets.only(left: 24, top: 40),
                     child: Text(
                       'Recently Added',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Expanded(

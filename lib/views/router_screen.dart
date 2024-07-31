@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,10 +18,10 @@ class RouterScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+             Text(
               'What is your role?',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 20.sp,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
@@ -60,7 +62,7 @@ class RouterScreen extends StatelessWidget {
                           'Manufacturer',
                           style: GoogleFonts.montserrat(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

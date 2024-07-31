@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:veritag_app/utils/constants.dart';
 
 import '../models/product.dart';
@@ -61,11 +62,11 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 24, top: 40),
+                 Padding(
+                  padding: const EdgeInsets.only(left: 24, top: 40),
                   child: Text(
                     'Recent Scans',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
                   ),
                 ),
                 Expanded(

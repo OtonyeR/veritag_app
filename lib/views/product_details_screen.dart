@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../utils/size.dart';
 import '../models/product.dart';
 import '../utils/constants.dart';
@@ -25,10 +27,10 @@ class ProductDetailsScreen extends StatelessWidget {
               Icons.arrow_back,
               color: colorBg,
             )),
-        title: const Text(
+        title:  Text(
           'Product Details',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w600,
             color: colorBg,
           ),
