@@ -204,6 +204,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
           buttonText: authentic ? 'View Details' : 'Back To Home',
           buttonPressed: () {
             if (authentic) {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ProductDetailsScreen(
