@@ -60,7 +60,7 @@ class HomeHeaderBoxWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 246,
+            width: 260,
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -73,14 +73,14 @@ class HomeHeaderBoxWidget extends StatelessWidget {
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   Text(
                     isManufacturer == true
-                        ? 'Set and read your product tags'
-                        : 'Scan to verify a product',
+                        ? 'Set and Read your Product Tags'
+                        : 'Scan to Verify a Product',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         fontWeight: FontWeight.w400,
                         color: Colors.white),
                   ),

@@ -36,7 +36,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             setState(() {
               nfcData = record.text!;
               controller.isScanned.value = true;
-              controller.resultMsg.value = 'Successfully read tag';
+              controller.resultMsg.value = 'Successfully Read Tag';
             });
             return;
           }
@@ -46,7 +46,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
           _showErrorMessage('Tag is Empty');
         }
       } else {
-        _showErrorMessage('NDEF not available');
+        _showErrorMessage('NDEF Not Available');
       }
     } on PlatformException catch (e) {
       _showErrorMessage('  ${e.message}');
@@ -93,7 +93,6 @@ class _ManufactureHomeState extends State<ManufactureHome> {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     NfcRowBox(
                       image: 'assets/scan_nfc.png',
@@ -108,6 +107,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
                         _readNfc();
                       },
                     ),
+                    SizedBox(width: 12),
                     NfcRowBox(
                       image: 'assets/add.png',
                       title: 'Add product',

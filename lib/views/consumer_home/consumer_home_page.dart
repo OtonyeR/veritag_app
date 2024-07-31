@@ -41,7 +41,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             setState(() {
               nfcData = record.text!;
               controller.isScanned.value = true;
-              controller.resultMsg.value = 'Successfully read tag';
+              controller.resultMsg.value = 'Successfully Read Tag';
             });
             return;
           }
@@ -54,7 +54,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
         _showErrorMessage('NDEF not available');
       }
     } on PlatformException catch (e) {
-      _showErrorMessage('  ${e.message}');
+      _showErrorMessage('${e.message}');
     } catch (e) {
       _showErrorMessage('Error: $e');
     } finally {
@@ -65,6 +65,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           const HomeHeaderBoxWidget(
@@ -105,7 +106,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                       onTap: () async {
                         controller.isScanned.value = false;
                         controller.resultMsg.value =
-                            'Put your device near the Product Tag you want to read';
+                            'Put your device near the product tag you want to read';
                         _showScanModal(context);
                         await Future.delayed(const Duration(seconds: 2));
                         _readNfc();
@@ -127,7 +128,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
       builder: (BuildContext context) {
         return Obx(
           () => ScanBottomSheet(
-            title: 'Ready to scan',
+            title: 'Ready to Scan',
             icon: SizedBox(
                 height: 108,
                 width: 108,
@@ -138,7 +139,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading to Tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
@@ -160,7 +161,7 @@ class _ConsumerHomePageState extends State<ConsumerHomePage> {
                 'assets/done_icon.png',
                 fit: BoxFit.cover,
               )),
-          buttonText: 'Show result',
+          buttonText: 'Show Result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
             if (authentic == true) {

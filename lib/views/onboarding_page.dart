@@ -20,20 +20,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingModel> onboardingPages = [
     OnboardingModel(
       image: 'assets/illustrations/ndi-nne.png',
-      title: 'Tired of fake products?',
+      title: 'Tired Of Fake Products?',
       description:
           'We have a solution for you!\nLet’s go unravel those products!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/scan1.png',
-      title: 'With your NFC enabled device',
+      title: 'With Your NFC Enabled Device',
       description:
           'Streamline your production process\n and get the most out of it!',
     ),
     OnboardingModel(
       image: 'assets/illustrations/ndi1.png',
-      title: 'Simple and Fast',
-      description: 'Just like that, you`ve discovered more',
+      title: 'Simple And Fast',
+      description: 'Just like that, you\'ve discovered more',
     ),
   ];
 
@@ -164,7 +164,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           // Conditional Next Button
           Positioned(
-            top: 30,
+            top: 31,
             left: _controller.currentPage == onboardingPages.length - 1
                 ? null
                 : 20,

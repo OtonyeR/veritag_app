@@ -49,7 +49,7 @@ class _BottomNavState extends State<BottomNav> {
             setState(() {
               nfcData = record.text!;
               controller.isScanned.value = true;
-              controller.resultMsg.value = 'Successfully read tag';
+              controller.resultMsg.value = 'Successfully Read Tag';
             });
             return;
           }
@@ -59,7 +59,7 @@ class _BottomNavState extends State<BottomNav> {
           _showErrorMessage('Tag is Empty');
         }
       } else {
-        _showErrorMessage('NDEF not available');
+        _showErrorMessage('NDEF Not Available');
       }
     } on PlatformException catch (e) {
       _showErrorMessage('  ${e.message}');
@@ -77,7 +77,7 @@ class _BottomNavState extends State<BottomNav> {
       builder: (BuildContext context) {
         return Obx(
           () => ScanBottomSheet(
-            title: 'Ready to scan',
+            title: 'Ready to Scan',
             icon: SizedBox(
                 height: 108,
                 width: 108,
@@ -88,7 +88,7 @@ class _BottomNavState extends State<BottomNav> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading to Tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
@@ -110,7 +110,7 @@ class _BottomNavState extends State<BottomNav> {
                 'assets/done_icon.png',
                 fit: BoxFit.cover,
               )),
-          buttonText: 'Show result',
+          buttonText: 'Show Result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
 
@@ -151,7 +151,7 @@ class _BottomNavState extends State<BottomNav> {
         return ScanBottomSheet(
           title: authentic == true
               ? 'Your Product is Authentic'
-              : 'Your Product is not Authentic',
+              : 'Your Product is Not Authentic',
           icon: SizedBox(
             height: 108,
             width: 108,
@@ -191,6 +191,8 @@ class _BottomNavState extends State<BottomNav> {
         child: _getCurrentScreen(),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        elevation: 4,
         child: Row(
           children: <Widget>[
             _buildNavItem(
