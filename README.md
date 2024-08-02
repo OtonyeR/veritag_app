@@ -42,7 +42,7 @@ VeriTag is a mobile application developed using Flutter that leverages NFC techn
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/yourusername/veritag.git
+   git clone https://github.com/OtonyeR/veritag.git
    cd veritag
    ```
 
@@ -81,6 +81,18 @@ veritag/
 ├── assets/             # Images, icons, fonts, etc.
 └── README.md           # This file
 ```
+
+## App Screenshots
+
+![Manufacturer Home](https://github.com/OtonyeR/veritag_app/tree/main/screenshots/6%20Manufacturer%20home.jpg)
+![Manufacturer Form](https://github.com/OtonyeR/veritag_app/tree/main/screenshots/7%20Manufacturer%20form.jpg)
+![Read Complete](https://github.com/OtonyeR/veritag_app/tree/main/screenshots/12%20read%20complete.jpg)
+![Authentic Product](https://github.com/OtonyeR/veritag_app/tree/main/screenshots/13%20Authentic%20Product.jpg)
+
+
+## APK DOWNLOAD LINK
+
+https://drive.google.com/file/d/1BtWZ6DAYDplIQgf1GUdIJ-Jgaa4JKbCz/view?usp=sharing
 
 ## Contributing
 
