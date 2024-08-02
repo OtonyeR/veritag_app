@@ -21,7 +21,6 @@ class CustomFormField extends StatelessWidget {
     this.maxLines,
   });
 
-  // final TextEditingController _manufacturerLocationController;
 
   @override
   Widget build(BuildContext context) {

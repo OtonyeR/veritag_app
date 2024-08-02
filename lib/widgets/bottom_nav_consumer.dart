@@ -51,7 +51,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
             setState(() {
               nfcData = record.text!;
               controller.isScanned.value = true;
-              controller.resultMsg.value = 'Successfully read tag';
+              controller.resultMsg.value = 'Successfully Read Tag';
             });
             return;
           }
@@ -61,7 +61,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
           _showErrorMessage('Tag is Empty');
         }
       } else {
-        _showErrorMessage('NDEF not available');
+        _showErrorMessage('NDEF Not Available');
       }
     } on PlatformException catch (e) {
       _showErrorMessage('  ${e.message}');
@@ -78,7 +78,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
       builder: (BuildContext context) {
         return Obx(
           () => ScanBottomSheet(
-            title: 'Ready to scan',
+            title: 'Ready to Scan',
             icon: SizedBox(
                 height: 108,
                 width: 108,
@@ -89,7 +89,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
             buttonColor:
                 !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
             buttonText:
-                !controller.isScanned.value ? 'Reading to tag....' : 'Continue',
+                !controller.isScanned.value ? 'Reading to Tag....' : 'Continue',
             subText: controller.resultMsg.value,
           ),
         );
@@ -111,7 +111,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
                 'assets/done_icon.png',
                 fit: BoxFit.cover,
               )),
-          buttonText: 'Show result',
+          buttonText: 'Show Result',
           buttonPressed: () async {
             final authentic = await _productService.isProductInDb(nfcData);
 
@@ -184,7 +184,6 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black,
       extendBody: true,
       body: AnimatedSwitcher(
         switchInCurve: Curves.easeOut,
@@ -193,6 +192,8 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
         child: _getCurrentScreen(),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        elevation: 4,
         child: Row(
           children: <Widget>[
             _buildNavItem(
@@ -215,7 +216,7 @@ class _BottomNavConsumerState extends State<BottomNavConsumer> {
         onPressed: () async {
           controller.isScanned.value = false;
           controller.resultMsg.value =
-              'Put your device near the NFC Tag you want to read';
+              'Put your device near the Product you want to read';
           _showScanModal(context);
           await Future.delayed(const Duration(seconds: 2));
           _readNfc();

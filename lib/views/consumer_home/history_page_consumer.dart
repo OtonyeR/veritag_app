@@ -54,7 +54,7 @@ class _HistoryPageConsumerState extends State<HistoryPageConsumer> {
         ),
         body: _scannedProducts.isEmpty
             ? const Center(
-                child: Text('No Products Scanned'),
+                child: Text('No Products Scanned', style: TextStyle(fontSize: 16),),
               )
             : switch (productHistoryState) {
                 ProductHistoryState.loading => const Center(

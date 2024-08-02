@@ -49,7 +49,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 width: width(context),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.fromBorderSide(BorderSide(width: 1.79, )),
+                  border: const Border.fromBorderSide(BorderSide()),
                   image: DecorationImage(
                     image: NetworkImage(productInfo.productImage),
                     // Your image asset path
@@ -80,10 +80,10 @@ class ProductDetailsScreen extends StatelessWidget {
                           detailInfo: productInfo.productPrice),
                       DetailTile(
                           detailTitle: 'Product Description',
-                          detailInfo: productInfo.productDescription == '' ? 'No info avainlable' : productInfo.productDescription!),
+                          detailInfo: productInfo.productDescription == '' ? 'No info available' : productInfo.productDescription!),
                       DetailTile(
                           detailTitle: 'Additional Info',
-                          detailInfo: productInfo.additionalInfo == '' ? 'No info avainlable' : productInfo.additionalInfo!),
+                          detailInfo: productInfo.additionalInfo == '' ? 'No info available' : productInfo.additionalInfo!),
                     ],
                   ),
                 ),

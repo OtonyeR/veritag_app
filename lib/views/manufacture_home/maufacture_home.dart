@@ -36,7 +36,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
             setState(() {
               nfcData = record.text!;
               controller.isScanned.value = true;
-              controller.resultMsg.value = 'Successfully read tag';
+              controller.resultMsg.value = 'Successfully Read Tag';
             });
             return;
           }
@@ -46,7 +46,7 @@ class _ManufactureHomeState extends State<ManufactureHome> {
           _showErrorMessage('Tag is Empty');
         }
       } else {
-        _showErrorMessage('NDEF not available');
+        _showErrorMessage('NDEF Not Available');
       }
     } on PlatformException catch (e) {
       _showErrorMessage('  ${e.message}');
@@ -57,11 +57,9 @@ class _ManufactureHomeState extends State<ManufactureHome> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           const HomeHeaderBoxWidget(

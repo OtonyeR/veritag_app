@@ -55,7 +55,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
     _uuidController.text = const Uuid().v4();
     controller.isScanned.value = false;
     controller.resultMsg.value =
-        'Put your device near the NFC Tag you want to write to';
+        'Put your Device near the Product Tag you want to write to';
 
     _setAddress();
     super.initState();
@@ -90,7 +90,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                         CustomFormField(
                           controller: _productNameController,
                           fieldTitle: 'Enter Product Name',
-                          hintText: 'Eg. Broli Lotion',
+                          hintText: 'Eg. Eclair Lotion',
                           readOnly: false,
                           textInputType: TextInputType.text,
                           validator: (value) {
@@ -267,10 +267,9 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
             additionalInfo: _additionalInfoController.text.trim(),
           ));
           controller.isScanned.value = true;
-          controller.resultMsg.value = 'Message succesfully written to tag!';
+          controller.resultMsg.value = 'Message successfully written to tag!';
         });
       } else {
-        print('availableabbbb-$uuid');
         setState(() {
           controller.isScanned.value = false;
           controller.resultMsg.value =
@@ -278,13 +277,11 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
         });
       }
     } on PlatformException catch (e) {
-      print('abbbb-$uuid');
       setState(() {
         controller.isScanned.value = false;
         controller.resultMsg.value = '${e.message}';
       });
     } catch (e) {
-      print('ablea-$e');
       setState(() {
         controller.isScanned.value = false;
         controller.resultMsg.value = 'Failed to write message to tag';
@@ -326,7 +323,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
               buttonColor:
                   !controller.isScanned.value ? const Color(0xffD5D4DB) : null,
               buttonText: !controller.isScanned.value
-                  ? 'Writing to tag....'
+                  ? 'Writing to Tag....'
                   : 'Continue',
               subText: controller.resultMsg.value,
             ),
@@ -352,7 +349,7 @@ class _ManufacturerFormScreenState extends State<ManufacturerFormScreen> {
                 'assets/done_icon.png',
                 fit: BoxFit.cover,
               )),
-          buttonText: 'done',
+          buttonText: 'Done',
           buttonPressed: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const BottomNav()),
           ),

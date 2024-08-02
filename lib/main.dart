@@ -1,4 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:veritag_app/utils/constants.dart';
 import 'utils/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'VeriTag',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            colorScheme: ColorScheme.fromSeed(seedColor: colorPrimary),
             textTheme: GoogleFonts.poppinsTextTheme(
                 ThemeData.light().textTheme.apply()),
             pageTransitionsTheme: const PageTransitionsTheme(builders: {
