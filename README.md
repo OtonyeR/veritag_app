@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>VeriTag App</title>
-</head>
-<body>
-
 <h1>VeriTag App</h1>
 
 <p>VeriTag is a mobile application developed using Flutter that leverages NFC technology to ensure product authenticity and track product journeys through the supply chain. The app allows manufacturers, distributors, and consumers to scan NFC tags attached to products, providing real-time information about the product's origin, journey, and authenticity.</p>
